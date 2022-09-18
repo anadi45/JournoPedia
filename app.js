@@ -3,9 +3,11 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const { connectDB } = require('./src/config/db');
-const {router} = require("./src/routes/testRoute");
+const {router} = require("./src/routes/routes");
 
-app.get("/",router);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/",router);
 
 connectDB();
 
