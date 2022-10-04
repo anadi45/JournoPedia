@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 
 const journalSchema = new mongoose.Schema({
+    journal_name: {
+        type: String
+    },
+    original_name: {
+        type: String
+    },
     submitted_by: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
@@ -18,7 +24,13 @@ const journalSchema = new mongoose.Schema({
     },
     topics: [{
         type: String
-    }]
+    }],
+    path: {
+        type: String
+    },
+    size: {
+        type: Number
+    }
 });
 
 const Journal = mongoose.model("Journal",journalSchema);
