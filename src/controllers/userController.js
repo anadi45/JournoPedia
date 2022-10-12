@@ -11,7 +11,7 @@ const jwt = require("jsonwebtoken");
 const signup = async(req, res) => {
     try {
         const { name, email, phone, password } = req.body;
-
+        
         if (!name || !email || !phone || !password) {
             return res.status(400).send({
                 message: "Fill all details"

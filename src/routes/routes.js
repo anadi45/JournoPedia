@@ -11,6 +11,6 @@ router.post("/login", login);
 router.get("/logout", logout);
 
 //Journal Operations
-router.post("/addJournal",upload.single('journal'), isLoggedIn, addJournal);
+router.post("/addJournal",isLoggedIn, upload.single('journal'), addJournal);
 
 module.exports = {router};
