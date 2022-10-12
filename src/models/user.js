@@ -5,7 +5,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    email : {
+    email: {
+        type: String,
+        required: true
+    },
+    phone: {
         type: String,
         required: true
     },
@@ -31,10 +35,6 @@ const userSchema = new mongoose.Schema({
     score: {
         type: Number
     },
-    journals: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Journal'
-    }],
     preferences: [{
         type: String
     }],
