@@ -13,7 +13,7 @@ const signup = async(req, res) => {
         const { name, email, phone, password } = req.body;
         
         if (!name || !email || !phone || !password) {
-            return res.status(400).send({
+            return res.send({
                 message: "Fill all details"
             });
         }
@@ -21,7 +21,7 @@ const signup = async(req, res) => {
         const findEmail = await User.findOne({ email: email });
 
         if (findEmail) {
-            return res.status(400).send({
+            return res.send({
                 message: "Email already registered"
             });
         }
@@ -29,7 +29,7 @@ const signup = async(req, res) => {
         const findPhone = await User.findOne({ phone: phone });
 
         if (findPhone) {
-            return res.status(400).send({
+            return res.send({
                 message: "Phone already registered"
             });
         }
@@ -47,11 +47,11 @@ const signup = async(req, res) => {
                 const signedUp = await newUser.save();
 
                 if (signedUp) {
-                    return res.status(201).send({
+                    return res.send({
                         message: "User successfully signed up",
                     });
                 } else {
-                    return res.status(406).send({
+                    return res.send({
                         message: "Sign up failed"
                     });
                 }
@@ -72,7 +72,7 @@ const login = async(req, res) => {
         const { loginCred, password } = req.body;
 
         if (!loginCred || !password) {
-            return res.status(400).send({
+            return res.send({
                 message: "Fill all details"
             });
         }
@@ -92,19 +92,19 @@ const login = async(req, res) => {
                         httpOnly: true,
                         sameSite: 'none',
                         secure: true
-                    }).status(201).send({ token });
+                    }).send({ token });
                 } else {
-                    return res.status(406).send({
+                    return res.send({
                         message: "Error"
                     });
                 }
             } else {
-                return res.status(400).send({
+                return res.send({
                     message: "Invalid credentials"
                 });
             }
         } else {
-            return res.status(400).send({
+            return res.send({
                 message: "Invalid credentials"
             });
         }
@@ -120,7 +120,7 @@ const login = async(req, res) => {
 const logout = (req, res) => {
     try {
         res.clearCookie("jwtoken", { path: "/" });
-        return res.status(200).send({
+        return res.send({
             message: "User logged out"
         });
     } catch (error) {
