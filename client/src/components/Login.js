@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "../css/Login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessageDisplay, setErrorMessageDisplay] = useState("none");
+  let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,9 +17,15 @@ function Login() {
         password: password,
       })
       .then((res) => {
-        // const animals = res.data;
-        // this.setState({ animals });
         console.log(res.data);
+        if (res.data.token) {
+          setErrorMessageDisplay("none");
+          navigate("/account");
+        } else if (res.data.message) {
+          setErrorMessageDisplay("block");
+        } else {
+          console.log(res.data);
+        }
       });
   };
 
@@ -66,6 +76,9 @@ function Login() {
         >
           Log In
         </button>
+      </div>
+      <div className="error-message" style={{ display: errorMessageDisplay }}>
+        Invalid Login Credentials
       </div>
       <p className="forgot-password text-right">
         Forgot <a href="#">password?</a>
