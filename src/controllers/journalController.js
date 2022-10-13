@@ -1,9 +1,12 @@
 const {Journal} = require("../models/journal");
 const {User} = require("../models/user");
 
+//@route    POST /addJournal
+//@descr    Add a journal
+//@access   Private
+
 const addJournal = async (req,res) => {
     try {
-        
         const newJournal = new Journal({
             journal_name: req.file.filename,
             original_name: req.file.originalname,
@@ -28,4 +31,18 @@ const addJournal = async (req,res) => {
     }
 }
 
-module.exports = {addJournal};
+//@route    POST /getJournal
+//@descr    Get Journal
+//@access   Public
+
+const getJournal = async (req,res) => {
+    try {
+        const {journal_id} = req.body;
+        const findJournal = await Journal.findById(journal_id);
+        
+        res.download(findJournal.path);
+    } catch (error) {
+        console.log(error);
+    }
+}
+module.exports = {addJournal, getJournal};
