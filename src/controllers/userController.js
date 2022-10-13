@@ -55,22 +55,20 @@ const signup = async (req, res) => {
             }
         }
     });
-        const signedUp = await newUser.save();
+    const signedUp = await newUser.save();
 
-        if (signedUp) {
-          return res.status(201).send({
-            message: "User successfully signed up",
-          });
-        } else {
-          return res.status(406).send({
-            message: "Sign up failed",
-          });
-        }
-      }
-    
-   catch (error) {
-    console.error(error);
-  }
+    if (signedUp) {
+        return res.send({
+        message: "User successfully signed up",
+        });
+    } else {
+        return res.send({
+        message: "Sign up failed",
+        });
+    }
+    } catch (error) {
+        console.error(error);
+      } 
 };
 
 //@route    POST /login
@@ -79,7 +77,7 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    console.log(req.body);
+    
     const { loginCred, password } = req.body;
 
     if (!loginCred || !password) {

@@ -3,7 +3,7 @@ const {isLoggedIn} = require("../middlewares/auth");
 const {upload} = require("../middlewares/multer");
 
 const {signup,login,logout} = require("../controllers/userController");
-const {addJournal,getJournal} = require("../controllers/journalController");
+const {addJournal,getJournal,getAllJournals} = require("../controllers/journalController");
 
 // User Routes
 router.post("/signup", signup);
@@ -12,6 +12,7 @@ router.get("/logout", logout);
 
 //Journal Operations
 router.post("/addJournal",isLoggedIn, upload.single('journal'), addJournal);
-router.post("/getJournal", getJournal);
+router.get("/getJournal/:journal_id", getJournal);
+router.get("/getAllJournals", getAllJournals);
 
 module.exports = {router};

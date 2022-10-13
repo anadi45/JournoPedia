@@ -32,12 +32,12 @@ const addJournal = async (req,res) => {
 }
 
 //@route    POST /getJournal
-//@descr    Get Journal
+//@descr    Get Journal by Id
 //@access   Public
 
 const getJournal = async (req,res) => {
     try {
-        const {journal_id} = req.body;
+        const {journal_id} = req.params;
         const findJournal = await Journal.findById(journal_id);
         
         res.download(findJournal.path);
@@ -45,4 +45,18 @@ const getJournal = async (req,res) => {
         console.log(error);
     }
 }
-module.exports = {addJournal, getJournal};
+
+//@route    GET /getAllJournals
+//@descr    Get all Journals
+//@access   Public
+
+const getAllJournals = async (req,res) => {
+    try {
+        const allJournals = await Journal.find().sort({date_of_submission: -1});
+        res.send(allJournals);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = {addJournal, getJournal, getAllJournals};
