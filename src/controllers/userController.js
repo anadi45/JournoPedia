@@ -13,12 +13,19 @@ const signup = async (req, res) => {
     const { name, email, phone, password } = req.body;
 
     if (!name || !email || !phone || !password) {
-      return res.status(400).send({
+      return res.send({
+        message: "Fill all details",
+      });
+    }
+
+    if (!name || !email || !phone || !password) {
+      return res.send({
         message: "Fill all details",
       });
     }
 
     const findEmail = await User.findOne({ email: email });
+    const findPhone = await User.findOne({ phone: phone });
 
     if (findEmail) {
       return res.send({
@@ -27,11 +34,12 @@ const signup = async (req, res) => {
     }
 
     if (findPhone) {
-        return res.send({
-            message: "Phone already registered"
-        });
+      return res.send({
+        message: "Phone already registered",
+      });
     }
 
+<<<<<<< HEAD
     bcrypt.hash(password, saltRounds, async function(err, hash) {
         if (err) {
             console.error("Password unable to be hashed");
@@ -69,6 +77,45 @@ const signup = async (req, res) => {
     } catch (error) {
         console.error(error);
       } 
+=======
+    bcrypt.hash(password, saltRounds, async function (err, hash) {
+      if (err) {
+        console.error("Password unable to be hashed");
+      } else {
+        const newUser = new User({
+          name: name,
+          email: email,
+          phone: phone,
+          password: hash,
+        });
+        const signedUp = await newUser.save();
+
+        if (signedUp) {
+          return res.send({
+            message: "User successfully signed up",
+          });
+        } else {
+          return res.send({
+            message: "Sign up failed",
+          });
+        }
+      }
+    });
+    const signedUp = await newUser.save();
+
+    if (signedUp) {
+      return res.send({
+        message: "User successfully signed up",
+      });
+    } else {
+      return res.send({
+        message: "Sign up failed",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+>>>>>>> e1144c8c7aa658238e5ff9153565ad4571c6a7b6
 };
 
 //@route    POST /login
@@ -81,40 +128,43 @@ const login = async (req, res) => {
     const { loginCred, password } = req.body;
 
     if (!loginCred || !password) {
-        return res.send({
-            message: "Fill all details"
-        });
+      return res.send({
+        message: "Fill all details",
+      });
     }
 
-    const findUser = await User.findOne({ $or: [{ email: loginCred }, { phone: loginCred }] });
+    const findUser = await User.findOne({
+      $or: [{ email: loginCred }, { phone: loginCred }],
+    });
 
     if (findUser) {
-        const match = await bcrypt.compare(password, findUser.password);
+      const match = await bcrypt.compare(password, findUser.password);
 
-        if (match) {
-            let token = jwt.sign({ _id: findUser._id }, jwtSecret);
+      if (match) {
+        let token = jwt.sign({ _id: findUser._id }, jwtSecret);
 
-            const saveToken = await findUser.save();
+        const saveToken = await findUser.save();
 
-            if (saveToken) {
-                return res.cookie("jwtoken", token, {
-                    httpOnly: true,
-                    sameSite: 'none',
-                    secure: true
-                }).send({ token });
-            } else {
-                return res.send({
-                    message: "Error"
-                });
-            }
+        if (saveToken) {
+          return res
+            .cookie("jwtoken", token, {
+              httpOnly: true,
+              sameSite: "none",
+              secure: true,
+            })
+            .send({ token });
         } else {
-            return res.send({
-                message: "Invalid credentials"
-            });
+          return res.send({
+            message: "Error",
+          });
         }
-      } 
+      } else {
+        return res.send({
+          message: "Invalid credentials",
+        });
+      }
     }
-  catch (error) {
+  } catch (error) {
     console.error(error);
   }
 };
@@ -124,14 +174,14 @@ const login = async (req, res) => {
 //access    Public
 
 const logout = (req, res) => {
-    try {
-        res.clearCookie("jwtoken", { path: "/" });
-        return res.send({
-            message: "User logged out"
-        });
-    } catch (error) {
-        console.log(error);
-    }
-}
+  try {
+    res.clearCookie("jwtoken", { path: "/" });
+    return res.send({
+      message: "User logged out",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-module.exports = {signup, login, logout};
+module.exports = { signup, login, logout };
