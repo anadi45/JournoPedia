@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
 
 function AccountPage() {
-  const [posts, setPosts] = useState([]);
+  // const [posts, setPosts] = useState([]);
   // const fetchChats = async () => {
   //   const chats = await axios.get("/api/chats");
   //   console.log(chats);
