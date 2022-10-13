@@ -39,18 +39,16 @@ const signup = async (req, res) => {
       });
     }
 
-    let newUser = new User();
-
     bcrypt.hash(password, saltRounds, async function (err, hash) {
-      newUser = {
-        name: name,
-        email: email,
-        phone: phone,
-        password: hash,
-      };
       if (err) {
         console.error("Password unable to be hashed");
       } else {
+        const newUser = new User({
+          name: name,
+          email: email,
+          phone: phone,
+          password: hash,
+        });
         const signedUp = await newUser.save();
 
         if (signedUp) {
@@ -125,10 +123,6 @@ const login = async (req, res) => {
           message: "Invalid credentials",
         });
       }
-    } else {
-      return res.send({
-        message: "Invalid credentials",
-      });
     }
   } catch (error) {
     console.error(error);
