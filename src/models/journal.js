@@ -30,6 +30,10 @@ const journalSchema = new mongoose.Schema({
     },
     size: {
         type: Number
+    },
+    downloads: {
+        type: Number,
+        default: 0
     }
 });
 
