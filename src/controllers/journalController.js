@@ -101,6 +101,7 @@ const deleteJournal = async (req,res) => {
         const deleted = await Journal.deleteOne({id: journal_id});
 
         if(deleted) {
+            //Add deletion from server
             res.send({
                 message: "Journal deleted succesfully!"
             });
