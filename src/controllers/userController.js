@@ -39,43 +39,43 @@ const signup = async (req, res) => {
       });
     }
 
-    bcrypt.hash(password, saltRounds, async function(err, hash) {
-        if (err) {
-            console.error("Password unable to be hashed");
-        } else {
-            const newUser = new User({
-                name: name,
-                email: email,
-                phone: phone,
-                password: hash
-            });
-            const signedUp = await newUser.save();
+    bcrypt.hash(password, saltRounds, async function (err, hash) {
+      if (err) {
+        console.error("Password unable to be hashed");
+      } else {
+        const newUser = new User({
+          name: name,
+          email: email,
+          phone: phone,
+          password: hash,
+        });
+        const signedUp = await newUser.save();
 
-            if (signedUp) {
-                return res.send({
-                    message: "User successfully signed up",
-                });
-            } else {
-                return res.send({
-                    message: "Sign up failed"
-                });
-            }
+        if (signedUp) {
+          return res.send({
+            message: "User successfully signed up",
+          });
+        } else {
+          return res.send({
+            message: "Sign up failed",
+          });
         }
+      }
     });
     const signedUp = await newUser.save();
 
     if (signedUp) {
-        return res.send({
+      return res.send({
         message: "User successfully signed up",
-        });
+      });
     } else {
-        return res.send({
+      return res.send({
         message: "Sign up failed",
-        });
+      });
     }
-    } catch (error) {
-        console.error(error);
-      } 
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 //@route    POST /login
@@ -84,7 +84,6 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    
     const { loginCred, password } = req.body;
 
     if (!loginCred || !password) {
