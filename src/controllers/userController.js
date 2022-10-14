@@ -123,6 +123,10 @@ const login = async (req, res) => {
           message: "Invalid credentials",
         });
       }
+    } else {
+      return res.send({
+        message: "Invalid credentials",
+      });
     }
   } catch (error) {
     console.error(error);
