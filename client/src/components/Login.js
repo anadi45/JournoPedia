@@ -40,6 +40,7 @@ function Login() {
           placeholder="Enter email"
           value={email}
           onChange={(e) => {
+            setErrorMessageDisplay("none");
             setEmail(e.target.value);
           }}
         />
@@ -52,6 +53,7 @@ function Login() {
           placeholder="Enter password"
           value={password}
           onChange={(e) => {
+            setErrorMessageDisplay("none");
             setPassword(e.target.value);
           }}
         />
