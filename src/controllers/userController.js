@@ -18,12 +18,6 @@ const signup = async (req, res) => {
       });
     }
 
-    if (!name || !email || !phone || !password) {
-      return res.send({
-        message: "Fill all details",
-      });
-    }
-
     const findEmail = await User.findOne({ email: email });
     const findPhone = await User.findOne({ phone: phone });
 
@@ -52,9 +46,9 @@ const signup = async (req, res) => {
         const signedUp = await newUser.save();
 
         if (signedUp) {
-          return res.send({
-            message: "User successfully signed up",
-          });
+          req.body.loginCred = email;
+          req.body.password = password;
+          login(req,res);
         } else {
           return res.send({
             message: "Sign up failed",
@@ -62,17 +56,6 @@ const signup = async (req, res) => {
         }
       }
     });
-    const signedUp = await newUser.save();
-
-    if (signedUp) {
-      return res.send({
-        message: "User successfully signed up",
-      });
-    } else {
-      return res.send({
-        message: "Sign up failed",
-      });
-    }
   } catch (error) {
     console.error(error);
   }
@@ -84,6 +67,7 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    
     const { loginCred, password } = req.body;
 
     if (!loginCred || !password) {
