@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
 function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -8,10 +10,14 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [emailExists, setEmailExists] = useState(false);
   const [phoneExists, setPhoneExists] = useState(false);
+  const [spinnerVisible, setSpinnerVisible] = useState("hidden");
+  const [cookies, setCookie] = useCookies(["token"]);
+
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSpinnerVisible("visible");
     console.log(email, password);
     setEmailExists(false);
     setPhoneExists(false);
@@ -23,8 +29,10 @@ function SignUp() {
         password: password,
       })
       .then((res) => {
+        setSpinnerVisible("hidden");
         console.log(res.data);
         if (res.data.message === "User successfully signed up") {
+          setCookie("token", res.data.token, { path: "/" });
           navigate("/account");
         } else if (res.data.message === "Email already registered") {
           console.log("email already");
@@ -90,11 +98,17 @@ function SignUp() {
       </div>
       <div className="d-grid">
         <button
-          type="submit"
           className="btn btn-primary"
+          type="submit"
           onClick={handleSubmit}
         >
           Sign Up
+          <span
+            style={{ visibility: spinnerVisible }}
+            className="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          />
         </button>
       </div>
       <div className="error-message">
