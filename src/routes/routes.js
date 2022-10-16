@@ -17,4 +17,6 @@ router.get("/getAllJournals", getAllJournals);
 router.get("/viewJournal/:journal_id", viewJournal);
 router.delete("/deleteJournal/:journal_id", deleteJournal);
 
+//Issue Operations
+
 module.exports = {router};

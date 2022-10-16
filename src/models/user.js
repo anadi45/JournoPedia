@@ -39,7 +39,13 @@ const userSchema = new mongoose.Schema({
     }],
     expertise: [{
         type: String
-    }]
+    }],
+    institute: {
+        type: String
+    },
+    country: {
+        type: String
+    }
 });
 
 const User = mongoose.model("User",userSchema);
