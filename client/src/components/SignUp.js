@@ -31,11 +31,12 @@ function SignUp() {
       .then((res) => {
         setSpinnerVisible("hidden");
         console.log(res.data);
-        if (res.data.message === "User successfully signed up") {
+        if (res.data.token) {
           setCookie("token", res.data.token, { path: "/" });
+          setEmailExists(false);
+          setPhoneExists(false);
           navigate("/account");
         } else if (res.data.message === "Email already registered") {
-          console.log("email already");
           setEmailExists(true);
         } else if (res.data.message === "Phone already registered") {
           setPhoneExists(true);
@@ -68,6 +69,8 @@ function SignUp() {
           placeholder="Enter email"
           value={email}
           onChange={(e) => {
+            setEmailExists(false);
+            setPhoneExists(false);
             setEmail(e.target.value);
           }}
         />
@@ -80,6 +83,8 @@ function SignUp() {
           placeholder="Phone No"
           value={phone}
           onChange={(e) => {
+            setEmailExists(false);
+            setPhoneExists(false);
             setPhone(e.target.value);
           }}
         />
