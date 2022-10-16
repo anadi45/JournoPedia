@@ -1,12 +1,11 @@
-const { Journal } = require("../models/journal");
-const { User } = require("../models/user");
+const { Journal } = require("../middlewares/models/journal");
+const { User } = require("../middlewares/models/user");
 
 //@route    POST /addJournal
 //@descr    Add a journal
 //@access   Private
 
 const addJournal = async (req, res) => {
-  console.log(req.body);
   try {
     const newJournal = new Journal({
       journal_name: req.file.filename,

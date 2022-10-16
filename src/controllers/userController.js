@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const { User } = require("../models/user");
+const { User } = require("../middlewares/models/user");
 const jwtSecret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 
@@ -48,7 +48,7 @@ const signup = async (req, res) => {
         if (signedUp) {
           req.body.loginCred = email;
           req.body.password = password;
-          login(req,res);
+          login(req, res);
         } else {
           return res.send({
             message: "Sign up failed",
@@ -67,7 +67,6 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    
     const { loginCred, password } = req.body;
 
     if (!loginCred || !password) {
