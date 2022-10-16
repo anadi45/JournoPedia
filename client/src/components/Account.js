@@ -5,7 +5,7 @@ function Account(props) {
     props.setDisplayItems(["none", "none", "inline"]);
   }, []);
 
-  return <div>Account</div>;
+  return <div>Topics</div>;
 }
 
 export default Account;
