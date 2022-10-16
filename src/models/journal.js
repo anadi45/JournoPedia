@@ -18,7 +18,10 @@ const journalSchema = new mongoose.Schema({
     },
     synopsis: {
         type: String
-    }
+    },
+    topics_covered: [{
+        type: String
+    }]
 });
 
 const Journal = mongoose.model("Journal",journalSchema);
