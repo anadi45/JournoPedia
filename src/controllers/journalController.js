@@ -61,61 +61,6 @@ const editJournal = async (req,res) => {
         console.log(error);
     }
 }
-// ------------ Change ------------
-
-//@route    POST /addJournal
-//@descr    Add a journal
-//@access   Private
-
-const addJournal = async (req,res) => {
-    try {
-        const newJournal = new Journal({
-            journal_name: req.file.filename,
-            original_name: req.file.originalname,
-            submitted_by: req.rootuser,
-            topics: ["NULL"],
-            path: req.file.path,
-            size: req.file.size
-        });
-        const save = await newJournal.save();
-
-        if(save) {
-            const id = req.rootuser._id;
-            const total_submitted = req.rootuser.total_submitted;
-            const update = await User.findByIdAndUpdate(id,{total_submitted: total_submitted+1});
-            res.send({
-                message: "Journal added successfully!"
-            });
-        } else {
-            res.send({
-                message: "Journal not added!"
-            });
-        }
-
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-//@route    POST /downloadJournal/:journal_id
-//@descr    Download Journal by Id
-//@access   Public
-
-const downloadJournal = async (req,res) => {
-    try {
-        const {journal_id} = req.params;
-        const findJournal = await Journal.findById(journal_id);
-        let downloads = findJournal.downloads;
-        
-        const update = await Journal.findByIdAndUpdate(journal_id,{downloads: downloads+1});
-        if(update) {
-            res.download(findJournal.path);
-        }
-
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 //@route    GET /getAllJournals
 //@descr    Get all Journals
@@ -123,7 +68,7 @@ const downloadJournal = async (req,res) => {
 
 const getAllJournals = async (req,res) => {
     try {
-        const allJournals = await Journal.find().sort({date_of_submission: -1});
+        const allJournals = await Journal.find().sort({created_on: -1});
         res.send(allJournals);
 
     } catch (error) {
@@ -153,30 +98,48 @@ const viewJournal = async (req,res) => {
     }
 }
 
-//@route    DELETE /deleteJournal/:journal_id
-//@descr    Delete a journal by Id
+//@route    PATCH /addAuthors/journal_id
+//@descr    Add authors to a journal
 //@access   Private
 
-const deleteJournal = async (req,res) => {
+const addEditors = async (req,res) => {
     try {
         const {journal_id} = req.params;
-        const deleted = await Journal.deleteOne({id: journal_id});
+        const {editors} = req.body;
 
-        if(deleted) {
-            //Add deletion from server
+        let editorId = [];
+        let oldEditorList = [];
+        const journal = await Journal.findById(journal_id);
+        if(journal) {
+            const editorObj = await User.find({email: {$in:editors}});
+            for(let i=0;i<editorObj.length;i++) {
+                editorId.push(editorObj[i]._id);
+            }
+            oldEditorList = journal.editors;
+        }
+
+        let newEditorList = [...oldEditorList];
+        
+        editorId.forEach((id)=> {
+            if(oldEditorList.includes(id) == false) {
+                newEditorList.push(id);
+            } 
+        })
+        
+        const add = await Journal.findByIdAndUpdate(journal_id,{editors: newEditorList});
+
+        if(add) {
             res.send({
-                message: "Journal deleted succesfully!"
+                message: "Editor list updated"
             });
         } else {
             res.send({
-                message: "Journal not found!"
+                message: "Unable to update editor list"
             });
         }
-
     } catch (error) {
         console.log(error);
     }
 }
 
-
-module.exports = {createJournal, editJournal};
+module.exports = {createJournal, editJournal, getAllJournals, viewJournal, addEditors };
