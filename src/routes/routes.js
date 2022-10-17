@@ -20,7 +20,7 @@ router.patch("/editJournal/:journal_id", isLoggedIn, editJournal);
 // --------- Change ----------
 // router.post("/addJournal", isLoggedIn, upload.single('journal'), addJournal);
 // router.get("/downloadJournal/:journal_id", downloadJournal);
-router.get("/getAllJournals", getAllJournals);
+// router.get("/getAllJournals", getAllJournals);
 // router.get("/viewJournal/:journal_id", viewJournal);
 // router.delete("/deleteJournal/:journal_id", deleteJournal);
 
