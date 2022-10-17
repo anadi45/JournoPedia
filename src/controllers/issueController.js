@@ -1,32 +1,45 @@
 const {Issue} = require("../models/issue");
+const {User} = require("../models/user");
 
-
-//@route    POST /addJournal
-//@descr    Add a journal
+//@route    POST /addIssue
+//@descr    Add a issue
 //@access   Private
 
-const addJournal = async (req,res) => {
+const addIssue = async (req,res) => {
     try {
-        const newJournal = new Journal({
-            journal_name: req.file.filename,
+        const {volume} = req.body;
+        
+        if(!volume) {
+            return res.send({
+                message: "Volume cannot be empty"
+            });
+        } 
+        if(!req.file) {
+            return res.send({
+                message: "File cannot be empty"
+            });
+        } 
+
+        const newIssue = new Issue({
             original_name: req.file.originalname,
             submitted_by: req.rootuser,
-            topics: ["NULL"],
+            volume: volume,
             path: req.file.path,
             size: req.file.size
         });
-        const save = await newJournal.save();
+        const save = await newIssue.save();
 
         if(save) {
             const id = req.rootuser._id;
             const total_submitted = req.rootuser.total_submitted;
             const update = await User.findByIdAndUpdate(id,{total_submitted: total_submitted+1});
             res.send({
-                message: "Journal added successfully!"
+                message: "Issue added successfully!"
             });
         } else {
+            console.log(req.file.path);
             res.send({
-                message: "Journal not added!"
+                message: "Issue not added!"
             });
         }
 
@@ -34,6 +47,8 @@ const addJournal = async (req,res) => {
         console.log(error);
     }
 }
+
+// ----Change----
 
 //@route    POST /downloadJournal/:journal_id
 //@descr    Download Journal by Id
@@ -83,3 +98,5 @@ const deleteJournal = async (req,res) => {
         console.log(error);
     }
 }
+
+module.exports = {addIssue}
