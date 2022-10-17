@@ -7,12 +7,14 @@ import SignUp from "./components/SignUp";
 import Account from "./components/Account";
 import { useCookies } from "react-cookie";
 import Logout from "./components/Logout";
+import AddJournal from "./components/AddJournal";
 
 function App() {
   const [cookies, setCookie] = useCookies(["token"]);
   const [displayItems, setDisplayItems] = useState([
     "inline",
     "inline",
+    "none",
     "none",
   ]);
 
@@ -42,9 +44,14 @@ function App() {
                 <li className="nav-item">
                   <Link className="nav-link" to={"/account"} />
                 </li>
+                <li className="nav-item" style={{ display: displayItems[3] }}>
+                  <Link className="nav-link" to={"/publish-journal"}>
+                    Publish Journal
+                  </Link>
+                </li>
                 <li
                   className="nav-item logout-link"
-                  style={{ display: displayItems[2] }}
+                  style={{ display: displayItems[3] }}
                 >
                   <Link className="nav-link" to={"/logout"}>
                     Log out
@@ -75,6 +82,16 @@ function App() {
                 element={
                   cookies.token ? (
                     <Account setDisplayItems={setDisplayItems} />
+                  ) : (
+                    <Login />
+                  )
+                }
+              />
+              <Route
+                path="/publish-journal"
+                element={
+                  cookies.token ? (
+                    <AddJournal setDisplayItems={setDisplayItems} />
                   ) : (
                     <Login />
                   )

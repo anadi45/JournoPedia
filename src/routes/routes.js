@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const {isLoggedIn} = require("../middlewares/auth");
-const {upload} = require("../middlewares/multer");
+const { isLoggedIn } = require("../middlewares/auth");
+const { upload } = require("../middlewares/multer");
 
 const {signup, login, logout} = require("../controllers/userController");
 const {createJournal, editJournal, getAllJournals, viewJournal, addEditors} = require("../controllers/journalController");
@@ -23,8 +23,7 @@ router.post("/addIssue", isLoggedIn, upload.single('issue'), addIssue);
 
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);
-
 // router.delete("/deleteJournal/:journal_id", deleteJournal);
 
 
-module.exports = {router};
+module.exports = { router };

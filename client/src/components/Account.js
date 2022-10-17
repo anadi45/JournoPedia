@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 
 function Account(props) {
   useEffect(() => {
-    props.setDisplayItems(["none", "none", "inline"]);
+    props.setDisplayItems(["none", "none", "inline", "inline"]);
   }, []);
 
-  return <div>Account</div>;
+  return <div>Topics</div>;
 }
 
 export default Account;
