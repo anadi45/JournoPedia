@@ -4,7 +4,7 @@ const { upload } = require("../middlewares/multer");
 
 const {signup, login, logout} = require("../controllers/userController");
 const {createJournal, editJournal, getAllJournals, viewJournal, addEditors} = require("../controllers/journalController");
-const {addIssue} = require("../controllers/issueController");
+const {addIssue, downloadIssue, deleteIssue} = require("../controllers/issueController");
 
 // User Routes
 router.post("/signup", signup);
@@ -20,6 +20,8 @@ router.patch("/addEditors/:journal_id", isLoggedIn, addEditors);
 
 //Issue Operations
 router.post("/addIssue", isLoggedIn, upload.single('issue'), addIssue);
+router.get("/downloadIssue/:issue_id", downloadIssue);
+router.delete("/deleteIssue/:issue_id", isLoggedIn, deleteIssue);
 
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);
