@@ -89,7 +89,13 @@ function App() {
               />
               <Route
                 path="/publish-journal"
-                element={cookies.token ? <AddJournal /> : <Login />}
+                element={
+                  cookies.token ? (
+                    <AddJournal setDisplayItems={setDisplayItems} />
+                  ) : (
+                    <Login />
+                  )
+                }
               />
               <Route
                 path="/logout"

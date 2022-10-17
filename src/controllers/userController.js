@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const { User } = require("../middlewares/models/user");
+const { User } = require("../models/user");
 const jwtSecret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 

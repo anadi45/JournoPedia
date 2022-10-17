@@ -1,5 +1,73 @@
-const { Journal } = require("../middlewares/models/journal");
-const { User } = require("../middlewares/models/user");
+const { Journal } = require("../models/journal");
+const { User } = require("../models/user");
+
+//@route    POST /createJournal
+//@descr    Create a journal
+//@access   Private
+
+const createJournal = async (req, res) => {
+  try {
+    const { journal_name, synopsis, topics_covered } = req.body;
+    const newJournal = new Journal({
+      journal_name: journal_name,
+      synopsis: synopsis,
+      topics_covered: topics_covered,
+      author: req.rootuser,
+    });
+
+    const created = await newJournal.save();
+    if (created) {
+      res.send({
+        message: "Journal created successfully",
+      });
+    } else {
+      res.send({
+        message: "Unable to create journal",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//@route    PATCH /editJournal/:journal_id
+//@descr    Edit a journal by Id
+//@access   Private
+
+const editJournal = async (req, res) => {
+  try {
+    const { synopsis, topics_covered } = req.body;
+    const { journal_id } = req.params;
+
+    if (!topics_covered) {
+      edit = await Journal.findByIdAndUpdate(journal_id, {
+        synopsis: synopsis,
+      });
+    } else if (!synopsis) {
+      edit = await Journal.findByIdAndUpdate(journal_id, {
+        topics_covered: topics_covered,
+      });
+    } else {
+      edit = await Journal.findByIdAndUpdate(journal_id, {
+        synopsis: synopsis,
+        topics_covered: topics_covered,
+      });
+    }
+
+    if (edit) {
+      res.send({
+        message: "Journal edited successfully",
+      });
+    } else {
+      res.send({
+        message: "Unable to edit journal",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+// ------------ Change ------------
 
 //@route    POST /addJournal
 //@descr    Add a journal
@@ -115,23 +183,4 @@ const deleteJournal = async (req, res) => {
   }
 };
 
-//@route    PATCH /editJournal/:journal_id
-//@descr    Edit a journal by Id
-//@access   Private
-
-const editJournal = async (req, res) => {
-  try {
-    const { journal_id } = req.params;
-    //After topic array is finalised
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-module.exports = {
-  addJournal,
-  downloadJournal,
-  getAllJournals,
-  viewJournal,
-  deleteJournal,
-};
+module.exports = { createJournal, editJournal };
