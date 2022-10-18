@@ -6,6 +6,9 @@ const { signup, login, logout } = require("../controllers/userController");
 const {
   createJournal,
   editJournal,
+  getAllJournals,
+  viewJournal,
+  addEditors,
 } = require("../controllers/journalController");
 
 // User Routes
@@ -16,6 +19,9 @@ router.get("/logout", logout);
 //Journal Operations
 router.post("/createJournal", isLoggedIn, createJournal);
 router.patch("/editJournal/:journal_id", isLoggedIn, editJournal);
+router.get("/getAllJournals", getAllJournals);
+router.get("/viewJournal/:journal_id", viewJournal);
+router.patch("/addEditors/:journal_id", isLoggedIn, addEditors);
 
 // --------- Change ----------
 // router.post("/addJournal", isLoggedIn, upload.single('journal'), addJournal);

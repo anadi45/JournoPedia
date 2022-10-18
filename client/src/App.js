@@ -8,12 +8,15 @@ import Account from "./components/Account";
 import { useCookies } from "react-cookie";
 import Logout from "./components/Logout";
 import AddJournal from "./components/AddJournal";
+import JournalPage from "./components/JournalPage";
 
 function App() {
   const [cookies, setCookie] = useCookies(["token"]);
+  const [journalId, setJournalId] = useState("");
   const [displayItems, setDisplayItems] = useState([
     "inline",
     "inline",
+    "none",
     "none",
     "none",
   ]);
@@ -23,7 +26,7 @@ function App() {
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
-            <Link className="navbar-brand" to={"/sign-in"}>
+            <Link className="navbar-brand" to={"/"}>
               JournoPedia
             </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -41,8 +44,10 @@ function App() {
                     Sign up
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/account"} />
+                <li className="nav-item" style={{ display: displayItems[2] }}>
+                  <Link className="nav-link" to={"/account"}>
+                    Home
+                  </Link>
                 </li>
                 <li className="nav-item" style={{ display: displayItems[3] }}>
                   <Link className="nav-link" to={"/publish-journal"}>
@@ -51,7 +56,7 @@ function App() {
                 </li>
                 <li
                   className="nav-item logout-link"
-                  style={{ display: displayItems[3] }}
+                  style={{ display: displayItems[4] }}
                 >
                   <Link className="nav-link" to={"/logout"}>
                     Log out
@@ -100,6 +105,19 @@ function App() {
               <Route
                 path="/logout"
                 element={<Logout setDisplayItems={setDisplayItems} />}
+              />
+              <Route
+                path="/journal:journalId"
+                element={
+                  cookies.token ? (
+                    <JournalPage
+                      setDisplayItems={setDisplayItems}
+                      setJournalId={setJournalId}
+                    />
+                  ) : (
+                    <Login />
+                  )
+                }
               />
             </Routes>
           </div>

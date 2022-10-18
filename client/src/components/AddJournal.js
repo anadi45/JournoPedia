@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 
 function AddJournal(props) {
   useEffect(() => {
-    props.setDisplayItems(["none", "none", "inline", "inline"]);
+    props.setDisplayItems(["none", "none", "inline", "inline", "inline"]);
   }, []);
 
   const [journalName, setJournalName] = useState("");
