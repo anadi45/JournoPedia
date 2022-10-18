@@ -77,12 +77,20 @@ const downloadIssue = async (req,res) => {
 const deleteIssue = async (req,res) => {
     try {
         const {issue_id} = req.params;
+        const issue = await Issue.findById(issue_id);
+        const path = issue.path;
+        
         const deleted = await Issue.deleteOne({id: issue_id});
 
         if(deleted) {
-            //Add deletion from server
-            res.send({
-                message: "Issue deleted succesfully!"
+            fs.unlink(path,(err) => {
+                if(err) {
+                    console.log(err);
+                } else {
+                    res.send({
+                        message: "Issue deleted succesfully!"
+                    });
+                }
             });
         } else {
             res.send({
