@@ -10,9 +10,9 @@ const jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
   try {
-    const { name, email, phone, password } = req.body;
+    const { name, email, phone, password, institute, country, expertise } = req.body;
 
-    if (!name || !email || !phone || !password) {
+    if (!name || !email || !phone || !password || !institute || !country || !expertise) {
       return res.send({
         message: "Fill all details",
       });
@@ -42,6 +42,9 @@ const signup = async (req, res) => {
           email: email,
           phone: phone,
           password: hash,
+          institute: institute,
+          country: country,
+          expertise: expertise
         });
         const signedUp = await newUser.save();
 
