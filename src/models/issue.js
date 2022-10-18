@@ -4,6 +4,10 @@ const issueSchema = new mongoose.Schema({
     original_name: {
         type: String
     },
+    journal:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Journal'
+    },
     number: {
         type: Number
     },

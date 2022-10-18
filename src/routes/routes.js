@@ -10,6 +10,11 @@ const {
   viewJournal,
   addEditors,
 } = require("../controllers/journalController");
+const {
+  addIssue,
+  downloadIssue,
+  deleteIssue,
+} = require("../controllers/issueController");
 
 // User Routes
 router.post("/signup", signup);
@@ -23,13 +28,13 @@ router.get("/getAllJournals", getAllJournals);
 router.get("/viewJournal/:journal_id", viewJournal);
 router.patch("/addEditors/:journal_id", isLoggedIn, addEditors);
 
-// --------- Change ----------
-// router.post("/addJournal", isLoggedIn, upload.single('journal'), addJournal);
-// router.get("/downloadJournal/:journal_id", downloadJournal);
-// router.get("/getAllJournals", getAllJournals);
-// router.get("/viewJournal/:journal_id", viewJournal);
-// router.delete("/deleteJournal/:journal_id", deleteJournal);
-
 //Issue Operations
+router.post("/addIssue", isLoggedIn, upload.single("issue"), addIssue);
+router.get("/downloadIssue/:issue_id", downloadIssue);
+router.delete("/deleteIssue/:issue_id", isLoggedIn, deleteIssue);
+
+// --------- Change ----------
+// router.get("/downloadJournal/:journal_id", downloadJournal);
+// router.delete("/deleteJournal/:journal_id", deleteJournal);
 
 module.exports = { router };

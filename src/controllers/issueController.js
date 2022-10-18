@@ -1,32 +1,47 @@
 const {Issue} = require("../models/issue");
+const {User} = require("../models/user");
+const fs = require("fs");
 
-
-//@route    POST /addJournal
-//@descr    Add a journal
+//@route    POST /addIssue
+//@descr    Add a issue
 //@access   Private
 
-const addJournal = async (req,res) => {
+const addIssue = async (req,res) => {
     try {
-        const newJournal = new Journal({
-            journal_name: req.file.filename,
+        const {volume,journal_id} = req.body;
+        
+        if(!volume || !journal_id) {
+            return res.send({
+                message: "Volume or journal_id cannot be empty"
+            });
+        } 
+        if(!req.file) {
+            return res.send({
+                message: "File cannot be empty"
+            });
+        } 
+
+        const newIssue = new Issue({
             original_name: req.file.originalname,
+            journal: journal_id,
             submitted_by: req.rootuser,
-            topics: ["NULL"],
+            volume: volume,
             path: req.file.path,
             size: req.file.size
         });
-        const save = await newJournal.save();
+        const save = await newIssue.save();
 
         if(save) {
             const id = req.rootuser._id;
             const total_submitted = req.rootuser.total_submitted;
             const update = await User.findByIdAndUpdate(id,{total_submitted: total_submitted+1});
             res.send({
-                message: "Journal added successfully!"
+                message: "Issue added successfully!"
             });
         } else {
+            console.log(req.file.path);
             res.send({
-                message: "Journal not added!"
+                message: "Issue not added!"
             });
         }
 
@@ -35,47 +50,43 @@ const addJournal = async (req,res) => {
     }
 }
 
-//@route    POST /downloadJournal/:journal_id
-//@descr    Download Journal by Id
+//@route    GET /downloadIssue/:issue_id
+//@descr    Download Issue by Id
 //@access   Public
 
-const downloadJournal = async (req,res) => {
+const downloadIssue = async (req,res) => {
     try {
-        const {journal_id} = req.params;
-        const findJournal = await Journal.findById(journal_id);
-        let downloads = findJournal.downloads;
-        
-        const update = await Journal.findByIdAndUpdate(journal_id,{downloads: downloads+1});
-        if(update) {
-            res.download(findJournal.path);
-        }
+        const {issue_id} = req.params;
+        const findIssue = await Issue.findById(issue_id);
+        let downloads = findIssue.downloads;
 
+        const update = await Issue.findByIdAndUpdate(issue_id,{downloads: downloads+1});
+        if(update) {
+            res.download(findIssue.path);
+        }
+        
     } catch (error) {
         console.log(error);
     }
 }
 
-
-
-
-
-//@route    DELETE /deleteJournal/:journal_id
-//@descr    Delete a journal by Id
+//@route    DELETE /deleteIssue/:issue_id
+//@descr    Delete a issue by Id
 //@access   Private
 
-const deleteJournal = async (req,res) => {
+const deleteIssue = async (req,res) => {
     try {
-        const {journal_id} = req.params;
-        const deleted = await Journal.deleteOne({id: journal_id});
+        const {issue_id} = req.params;
+        const deleted = await Issue.deleteOne({id: issue_id});
 
         if(deleted) {
             //Add deletion from server
             res.send({
-                message: "Journal deleted succesfully!"
+                message: "Issue deleted succesfully!"
             });
         } else {
             res.send({
-                message: "Journal not found!"
+                message: "Issue not found!"
             });
         }
 
@@ -83,3 +94,5 @@ const deleteJournal = async (req,res) => {
         console.log(error);
     }
 }
+
+module.exports = {addIssue, downloadIssue, deleteIssue};

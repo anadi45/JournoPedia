@@ -148,10 +148,4 @@ const addEditors = async (req, res) => {
   }
 };
 
-module.exports = {
-  createJournal,
-  editJournal,
-  getAllJournals,
-  viewJournal,
-  addEditors,
-};
+module.exports = {createJournal, editJournal, getAllJournals, viewJournal, addEditors};
