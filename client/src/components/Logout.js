@@ -8,7 +8,7 @@ function Logout(props) {
   useEffect(() => {
     removeCookie("token");
     navigate("/");
-    props.setDisplayItems(["inline", "inline", "none", "none"]);
+    props.setDisplayItems(["inline", "inline", "none", "none", "none"]);
   }, []);
 }
 
