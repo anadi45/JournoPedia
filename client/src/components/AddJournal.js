@@ -3,6 +3,8 @@ import MultiSelect from "react-multiple-select-dropdown-lite";
 import "react-multiple-select-dropdown-lite/dist/index.css";
 import "../css/AddJournal.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 import { useCookies } from "react-cookie";
 
 function AddJournal(props) {
@@ -18,6 +20,8 @@ function AddJournal(props) {
   const [messageColor, setMessageColor] = useState("");
   const [spinnerVisible, setSpinnerVisible] = useState("hidden");
   const [cookies, setCookie] = useCookies(["token"]);
+  let navigate = useNavigate();
+
 
   const handleOnchange = (topics) => {
     let str = "";
@@ -60,8 +64,11 @@ function AddJournal(props) {
         setSpinnerVisible("hidden");
         setMessage(res.data.message);
         setMessageDisplay("inline");
-        if (res.data.message === "Journal created successfully")
+        if (res.data.message === "Journal created successfully"){
           setMessageColor("green");
+          navigate("/")
+        }
+          
         else setMessageColor("red");
       });
   };
