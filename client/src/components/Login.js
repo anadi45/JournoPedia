@@ -27,7 +27,7 @@ function Login() {
         if (res.data.token) {
           setCookie("token", res.data.token, { path: "/" });
           setErrorMessageDisplay("none");
-          navigate("/account");
+          navigate("/home");
         } else if (res.data.message) {
           setErrorMessageDisplay("block");
         } else {
@@ -37,68 +37,70 @@ function Login() {
   };
 
   return (
-    <form>
-      <h3>Log In</h3>
-      <div className="mb-3">
-        <label>Email address</label>
-        <input
-          type="email"
-          className="form-control"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => {
-            setErrorMessageDisplay("none");
-            setEmail(e.target.value);
-          }}
-        />
-      </div>
-      <div className="mb-3">
-        <label>Password</label>
-        <input
-          type="password"
-          className="form-control"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => {
-            setErrorMessageDisplay("none");
-            setPassword(e.target.value);
-          }}
-        />
-      </div>
-      <div className="mb-3">
-        <div className="custom-control custom-checkbox">
+    <div className="auth-inner">
+      <form>
+        <h3>Log In</h3>
+        <div className="mb-3">
+          <label>Email address</label>
           <input
-            type="checkbox"
-            className="custom-control-input"
-            id="customCheck1"
+            type="email"
+            className="form-control"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => {
+              setErrorMessageDisplay("none");
+              setEmail(e.target.value);
+            }}
           />
-          <label className="custom-control-label" htmlFor="customCheck1">
-            Remember me
-          </label>
         </div>
-      </div>
-      <div className="d-grid">
-        <button
-          className="btn btn-primary"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Log In
-          <span
-            style={{ visibility: spinnerVisible }}
-            className="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
+        <div className="mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => {
+              setErrorMessageDisplay("none");
+              setPassword(e.target.value);
+            }}
           />
-        </button>
-      </div>
-      <div className="error-message" style={{ display: errorMessageDisplay }}>
-        Invalid Login Credentials
-      </div>
-      <p className="forgot-password text-right">
-        Forgot <a href="#">password?</a>
-      </p>
-    </form>
+        </div>
+        <div className="mb-3">
+          <div className="custom-control custom-checkbox">
+            <input
+              type="checkbox"
+              className="custom-control-input"
+              id="customCheck1"
+            />
+            <label className="custom-control-label" htmlFor="customCheck1">
+              Remember me
+            </label>
+          </div>
+        </div>
+        <div className="d-grid">
+          <button
+            className="btn btn-primary"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Log In
+            <span
+              style={{ visibility: spinnerVisible }}
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+        <div className="error-message" style={{ display: errorMessageDisplay }}>
+          Invalid Login Credentials
+        </div>
+        <p className="forgot-password text-right">
+          Forgot <a href="#">password?</a>
+        </p>
+      </form>
+    </div>
   );
 }
 export default Login;

@@ -4,11 +4,12 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Account from "./components/Account";
+import Home from "./components/Home";
 import { useCookies } from "react-cookie";
 import Logout from "./components/Logout";
 import AddJournal from "./components/AddJournal";
 import JournalPage from "./components/JournalPage";
+import { topics } from "../src/utils/topics";
 
 function App() {
   const [cookies, setCookie] = useCookies(["token"]);
@@ -45,7 +46,7 @@ function App() {
                   </Link>
                 </li>
                 <li className="nav-item" style={{ display: displayItems[2] }}>
-                  <Link className="nav-link" to={"/account"}>
+                  <Link className="nav-link" to={"/home"}>
                     Home
                   </Link>
                 </li>
@@ -67,46 +68,46 @@ function App() {
           </div>
         </nav>
         <div className="auth-wrapper">
-          <div className="auth-inner">
-            <Routes>
-              <Route
-                exact
-                path="/"
-                element={
-                  cookies.token ? (
-                    <Account setDisplayItems={setDisplayItems} />
-                  ) : (
-                    <Login />
-                  )
-                }
-              />
-              <Route path="/sign-in" element={<Login />} />
-              <Route path="/sign-up" element={<SignUp />} />
-              <Route
-                path="/account"
-                element={
-                  cookies.token ? (
-                    <Account setDisplayItems={setDisplayItems} />
-                  ) : (
-                    <Login />
-                  )
-                }
-              />
-              <Route
-                path="/publish-journal"
-                element={
-                  cookies.token ? (
-                    <AddJournal setDisplayItems={setDisplayItems} />
-                  ) : (
-                    <Login />
-                  )
-                }
-              />
-              <Route
-                path="/logout"
-                element={<Logout setDisplayItems={setDisplayItems} />}
-              />
-              <Route
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                cookies.token ? (
+                  <Home setDisplayItems={setDisplayItems} />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route path="/sign-in" element={<Login />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route
+              path="/home"
+              element={
+                cookies.token ? (
+                  <Home setDisplayItems={setDisplayItems} />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route
+              path="/publish-journal"
+              element={
+                cookies.token ? (
+                  <AddJournal setDisplayItems={setDisplayItems} />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+
+            <Route
+              path="/logout"
+              element={<Logout setDisplayItems={setDisplayItems} />}
+            />
+            {/* <Route
                 path="/journal:journalId"
                 element={
                   cookies.token ? (
@@ -118,9 +119,17 @@ function App() {
                     <Login />
                   )
                 }
-              />
-            </Routes>
-          </div>
+              /> */}
+            {topics.map((item) => {
+              return (
+                <Route
+                  key={item}
+                  path={`/${item}`}
+                  element={<JournalPage setDisplayItems={setDisplayItems} />}
+                />
+              );
+            })}
+          </Routes>
         </div>
       </div>
     </Router>
