@@ -19,9 +19,9 @@ const journalSchema = new mongoose.Schema({
     synopsis: {
         type: String
     },
-    topics_covered: [{
-        type: String
-    }],
+    // topics_covered: [{
+    //     type: String
+    // }],
     image: {
         type: String
     }
