@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { isLoggedIn, isAdmin } = require("../middlewares/auth");
-const { upload, imageUpload } = require("../middlewares/multer");
+const { articleUpload, imageUpload } = require("../middlewares/multer");
 
 const { signup, login, logout } = require("../controllers/userController");
 const {
@@ -13,10 +13,10 @@ const {
   deleteJournal
 } = require("../controllers/journalController");
 const {
-  addIssue,
-  downloadIssue,
-  deleteIssue,
-} = require("../controllers/issueController");
+  addArticle,
+  downloadArticle,
+  deleteArticle,
+} = require("../controllers/articleController");
 
 // User Routes
 router.post("/signup", signup);
@@ -32,10 +32,10 @@ router.patch("/addEditors/:journal_id", isLoggedIn, addEditors);
 router.patch("/changeAuthor/:journal_id", isAdmin, changeAuthor);
 router.delete("/deleteJournal/:journal_id", isAdmin, deleteJournal);
 
-//Issue Operations
-router.post("/addIssue", isLoggedIn, upload.single("issue"), addIssue);
-router.get("/downloadIssue/:issue_id", downloadIssue);
-router.delete("/deleteIssue/:issue_id", isLoggedIn, deleteIssue);
+//Article Operations
+router.post("/addArticle", isLoggedIn, articleUpload.single("article"), addArticle);
+router.get("/downloadArticle/:issue_id", downloadArticle);
+router.delete("/deleteArticle/:issue_id", isLoggedIn, deleteArticle);
 
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);

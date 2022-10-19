@@ -1,12 +1,12 @@
-const {Issue} = require("../models/issue");
+const {Article} = require("../models/article");
 const {User} = require("../models/user");
 const fs = require("fs");
 
-//@route    POST /addIssue
-//@descr    Add a issue
+//@route    POST /addArticle
+//@descr    Add a article
 //@access   Private
 
-const addIssue = async (req,res) => {
+const addArticle = async (req,res) => {
     try {
         const {volume,journal_id} = req.body;
         
@@ -21,7 +21,7 @@ const addIssue = async (req,res) => {
             });
         } 
 
-        const newIssue = new Issue({
+        const newArticle = new Article({
             original_name: req.file.originalname,
             journal: journal_id,
             submitted_by: req.rootuser,
@@ -29,19 +29,18 @@ const addIssue = async (req,res) => {
             path: req.file.path,
             size: req.file.size
         });
-        const save = await newIssue.save();
+        const save = await newArticle.save();
 
         if(save) {
             const id = req.rootuser._id;
             const total_submitted = req.rootuser.total_submitted;
             const update = await User.findByIdAndUpdate(id,{total_submitted: total_submitted+1});
             res.send({
-                message: "Issue added successfully!"
+                message: "Article added successfully!"
             });
-        } else {
-            console.log(req.file.path);
+        } else {            
             res.send({
-                message: "Issue not added!"
+                message: "Article not added!"
             });
         }
 
@@ -50,19 +49,19 @@ const addIssue = async (req,res) => {
     }
 }
 
-//@route    GET /downloadIssue/:issue_id
-//@descr    Download Issue by Id
+//@route    GET /downloadArticle/:article_id
+//@descr    Download Article by Id
 //@access   Public
 
-const downloadIssue = async (req,res) => {
+const downloadArticle = async (req,res) => {
     try {
-        const {issue_id} = req.params;
-        const findIssue = await Issue.findById(issue_id);
-        let downloads = findIssue.downloads;
+        const {article_id} = req.params;
+        const findArticle = await Article.findById(article_id);
+        let downloads = findArticle.downloads;
 
-        const update = await Issue.findByIdAndUpdate(issue_id,{downloads: downloads+1});
+        const update = await Article.findByIdAndUpdate(article_id,{downloads: downloads+1});
         if(update) {
-            res.download(findIssue.path);
+            res.download(findArticle.path);
         }
         
     } catch (error) {
@@ -70,17 +69,17 @@ const downloadIssue = async (req,res) => {
     }
 }
 
-//@route    DELETE /deleteIssue/:issue_id
-//@descr    Delete a issue by Id
+//@route    DELETE /deleteArticle/:article_id
+//@descr    Delete a article by Id
 //@access   Private
 
-const deleteIssue = async (req,res) => {
+const deleteArticle = async (req,res) => {
     try {
-        const {issue_id} = req.params;
-        const issue = await Issue.findById(issue_id);
-        const path = issue.path;
+        const {article_id} = req.params;
+        const article = await Article.findById(article_id);
+        const path = article.path;
         
-        const deleted = await Issue.deleteOne({id: issue_id});
+        const deleted = await Article.deleteOne({id: article_id});
 
         if(deleted) {
             fs.unlink(path,(err) => {
@@ -88,13 +87,13 @@ const deleteIssue = async (req,res) => {
                     console.log(err);
                 } else {
                     res.send({
-                        message: "Issue deleted succesfully!"
+                        message: "Article deleted succesfully!"
                     });
                 }
             });
         } else {
             res.send({
-                message: "Issue not found!"
+                message: "Article not found!"
             });
         }
 
@@ -103,4 +102,4 @@ const deleteIssue = async (req,res) => {
     }
 }
 
-module.exports = {addIssue, downloadIssue, deleteIssue};
+module.exports = {addArticle, downloadArticle, deleteArticle};
