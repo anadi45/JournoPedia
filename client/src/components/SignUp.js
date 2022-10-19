@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import MultiSelect from "react-multiple-select-dropdown-lite";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+import { countries } from "../utils/countries";
 
 function SignUp() {
   const [name, setName] = useState("");
@@ -10,15 +14,34 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [emailExists, setEmailExists] = useState(false);
   const [phoneExists, setPhoneExists] = useState(false);
+  const [institute, setInstitute] = useState("");
+  const [country, setCountry] = useState("");
+  const [topics, setTopics] = useState([]);
   const [spinnerVisible, setSpinnerVisible] = useState("hidden");
   const [cookies, setCookie] = useCookies(["token"]);
 
   let navigate = useNavigate();
 
+  const handleOnTopicChange = (topics) => {
+    let str = "";
+    let topicsArr = [];
+    for (let c of topics) {
+      if (c === ",") {
+        topicsArr.push(str);
+        str = "";
+      } else {
+        str += c;
+      }
+    }
+    topicsArr.push(str);
+    setTopics(topicsArr);
+    console.log(topicsArr);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSpinnerVisible("visible");
-    console.log(email, password);
+    console.log(email, password, topics, country);
     setEmailExists(false);
     setPhoneExists(false);
     await axios
@@ -27,6 +50,9 @@ function SignUp() {
         email: email,
         phone: phone,
         password: password,
+        institute: institute,
+        country: country,
+        expertise: topics,
       })
       .then((res) => {
         setSpinnerVisible("hidden");
@@ -45,6 +71,13 @@ function SignUp() {
         }
       });
   };
+
+  const options = [
+    { label: "Machine Learning", value: "ML" },
+    { label: "Data Mining", value: "DMCT" },
+    { label: "Computer Networks", value: "CN" },
+    { label: "Image Processing", value: "IP" },
+  ];
 
   return (
     <div className="auth-inner">
@@ -101,6 +134,57 @@ function SignUp() {
               setPassword(e.target.value);
             }}
           />
+        </div>
+        <div className="mb-3">
+          <label>Expertise</label>
+          <MultiSelect
+            width={"100%"}
+            onChange={handleOnTopicChange}
+            options={options}
+          />
+        </div>
+        <div className="mb-3">
+          <label>Institute</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Institute"
+            value={institute}
+            onChange={(e) => {
+              setEmailExists(false);
+              setPhoneExists(false);
+              setInstitute(e.target.value);
+            }}
+          />
+        </div>
+        <div className="mb-3">
+          <label>Country</label>
+          <Dropdown
+            options={countries}
+            onChange={(e) => {
+              setCountry(e.label);
+            }}
+            // value={defaultOption}
+            placeholder="Select an option"
+          />
+          {/* <select
+            id="country"
+            name="country"
+            className="form-control"
+            value={country}
+            onChange={(e) => {
+              setCountry(e.target.value);
+            }}
+            defaultValue="-- select an option --"
+          >
+            {countries.map((country) => {
+              return (
+                <option key={country.label} value={country.label}>
+                  {country.label}
+                </option>
+              );
+            })}
+          </select> */}
         </div>
         <div className="d-grid">
           <button
