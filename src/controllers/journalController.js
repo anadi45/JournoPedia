@@ -1,9 +1,10 @@
 const { Journal } = require("../models/journal");
 const { User } = require("../models/user");
+const fs = require("fs");
 
 //@route    POST /createJournal
 //@descr    Create a journal
-//@access   Private
+//@access   Admin
 
 const createJournal = async (req, res) => {
   try {
@@ -12,17 +13,17 @@ const createJournal = async (req, res) => {
 				message: "File cannot be empty"
 			});
 		} 
-		const { journal_name, synopsis, topics_covered } = req.body;
+		const { journal_name, synopsis } = req.body;
 		
-		if(!journal_name || !synopsis || !topics_covered) {
+		if(!journal_name || !synopsis) {
 			return res.send({
-				message: "journal_name or synopsis or topics_covered cannot be empty"
+				message: "journal_name or synopsis cannot be empty"
 			});
 		}
 		const newJournal = new Journal({
 			journal_name: journal_name,
 			synopsis: synopsis,
-			topics_covered: topics_covered,
+			// topics_covered: topics_covered,
 			author: req.rootuser,
 			image: req.file.path
 		});
@@ -160,4 +161,63 @@ const addEditors = async (req, res) => {
   }
 };
 
-module.exports = {createJournal, editJournal, getAllJournals, viewJournal, addEditors};
+//@route	PATCH /changeAuthor/journal_id
+//@descr	Change author/editor-in-chief
+//@access	Admin
+
+const changeAuthor = async (req,res) => {
+	try {
+		const {journal_id} = req.params;
+		const {email} = req.body;
+
+		const author = await User.find({email: email});
+		if(author) {
+			const change = await Journal.findByIdAndUpdate(journal_id,{author: author[0]._id});
+			if(change) {
+				return res.send({
+					message: "Author changed"
+				});
+			} else {
+				return res.send({
+					message: "Author not changed"
+				});
+			}
+		} else {
+			return res.send({
+				message: "User not found"
+			});
+		}
+	} catch (error) {
+		console.log(error);		
+	}
+}
+
+//@route	DELETE	/deleteJournal/journal_id
+//@descr	Delete a journal
+//@access	Admin
+
+const deleteJournal = async (req,res) => {
+	try {
+		const {journal_id} = req.params;
+
+		const journal = await Journal.findById(journal_id);
+		const image = journal.image;
+
+		const deleted = await Journal.deleteOne({id: journal_id});
+		if(deleted) {
+			fs.unlink(image,(err) => {
+                if(err) {
+                    console.log(err);
+                } else {
+                    res.send({
+                        message: "Journal deleted succesfully!"
+                    });
+                }
+            });
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+module.exports = {createJournal, editJournal, getAllJournals, viewJournal, addEditors, changeAuthor, deleteJournal};

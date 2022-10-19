@@ -9,6 +9,8 @@ const {
   getAllJournals,
   viewJournal,
   addEditors,
+  changeAuthor,
+  deleteJournal
 } = require("../controllers/journalController");
 const {
   addIssue,
@@ -27,6 +29,8 @@ router.patch("/editJournal/:journal_id", isLoggedIn, editJournal);
 router.get("/getAllJournals", getAllJournals);
 router.get("/viewJournal/:journal_id", viewJournal);
 router.patch("/addEditors/:journal_id", isLoggedIn, addEditors);
+router.patch("/changeAuthor/:journal_id", isAdmin, changeAuthor);
+router.delete("/deleteJournal/:journal_id", isAdmin, deleteJournal);
 
 //Issue Operations
 router.post("/addIssue", isLoggedIn, upload.single("issue"), addIssue);
