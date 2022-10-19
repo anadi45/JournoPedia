@@ -21,7 +21,10 @@ const journalSchema = new mongoose.Schema({
     },
     topics_covered: [{
         type: String
-    }]
+    }],
+    image: {
+        type: String
+    }
 });
 
 const Journal = mongoose.model("Journal",journalSchema);
