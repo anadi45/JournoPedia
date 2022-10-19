@@ -35,7 +35,7 @@ function SignUp() {
           setCookie("token", res.data.token, { path: "/" });
           setEmailExists(false);
           setPhoneExists(false);
-          navigate("/account");
+          navigate("/home");
         } else if (res.data.message === "Email already registered") {
           setEmailExists(true);
         } else if (res.data.message === "Phone already registered") {
@@ -47,86 +47,88 @@ function SignUp() {
   };
 
   return (
-    <form>
-      <h3>Sign Up</h3>
-      <div className="mb-3">
-        <label>Name</label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-      </div>
-      <div className="mb-3">
-        <label>Email address</label>
-        <input
-          type="email"
-          className="form-control"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => {
-            setEmailExists(false);
-            setPhoneExists(false);
-            setEmail(e.target.value);
-          }}
-        />
-      </div>
-      <div className="mb-3">
-        <label>Phone No</label>
-        <input
-          type="number"
-          className="form-control"
-          placeholder="Phone No"
-          value={phone}
-          onChange={(e) => {
-            setEmailExists(false);
-            setPhoneExists(false);
-            setPhone(e.target.value);
-          }}
-        />
-      </div>
-      <div className="mb-3">
-        <label>Password</label>
-        <input
-          type="password"
-          className="form-control"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-      </div>
-      <div className="d-grid">
-        <button
-          className="btn btn-primary"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Sign Up
-          <span
-            style={{ visibility: spinnerVisible }}
-            className="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
+    <div className="auth-inner">
+      <form>
+        <h3>Sign Up</h3>
+        <div className="mb-3">
+          <label>Name</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
-        </button>
-      </div>
-      <div className="error-message">
-        {emailExists
-          ? "Email already exists"
-          : phoneExists
-          ? "Phone No already exists"
-          : ""}
-      </div>
-      <p className="forgot-password text-right">
-        Already registered <a href="/sign-in">sign in?</a>
-      </p>
-    </form>
+        </div>
+        <div className="mb-3">
+          <label>Email address</label>
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => {
+              setEmailExists(false);
+              setPhoneExists(false);
+              setEmail(e.target.value);
+            }}
+          />
+        </div>
+        <div className="mb-3">
+          <label>Phone No</label>
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Phone No"
+            value={phone}
+            onChange={(e) => {
+              setEmailExists(false);
+              setPhoneExists(false);
+              setPhone(e.target.value);
+            }}
+          />
+        </div>
+        <div className="mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+        </div>
+        <div className="d-grid">
+          <button
+            className="btn btn-primary"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Sign Up
+            <span
+              style={{ visibility: spinnerVisible }}
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+        <div className="error-message">
+          {emailExists
+            ? "Email already exists"
+            : phoneExists
+            ? "Phone No already exists"
+            : ""}
+        </div>
+        <p className="forgot-password text-right">
+          Already registered <a href="/sign-in">sign in?</a>
+        </p>
+      </form>
+    </div>
   );
 }
 
