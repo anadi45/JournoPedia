@@ -7,6 +7,7 @@ const {
   createJournal,
   editJournal,
   getAllJournals,
+  getAllJournalIds,
   viewJournal,
   addEditors,
   changeAuthor,
@@ -27,6 +28,7 @@ router.get("/logout", logout);
 router.post("/createJournal", isAdmin, imageUpload.single("image"), createJournal);
 router.patch("/editJournal/:journal_id", isLoggedIn, editJournal);
 router.get("/getAllJournals", getAllJournals);
+router.get("/getAllJournalIds", getAllJournalIds);
 router.get("/viewJournal/:journal_id", viewJournal);
 router.patch("/addEditors/:journal_id", isLoggedIn, addEditors);
 router.patch("/changeAuthor/:journal_id", isAdmin, changeAuthor);

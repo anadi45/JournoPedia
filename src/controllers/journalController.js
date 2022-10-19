@@ -94,6 +94,25 @@ const getAllJournals = async (req, res) => {
 	}
 };
 
+//@route	GET /getAllJournalIds
+//@descr	Get all journal ids
+//@access	Public
+
+const getAllJournalIds = async (req,res) => {
+	try {
+		const allJournals = await Journal.find();
+		let ids = [];
+		
+		for(let i=0;i<allJournals.length;i++) {
+			ids.push(allJournals[i]._id);
+		}
+
+		return res.send(ids);
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 //@route    GET /viewJournal/:journal_id
 //@descr    View a journal by Id
 //@access   Public
@@ -220,4 +239,4 @@ const deleteJournal = async (req,res) => {
 	}
 }
 
-module.exports = {createJournal, editJournal, getAllJournals, viewJournal, addEditors, changeAuthor, deleteJournal};
+module.exports = {createJournal, editJournal, getAllJournals, getAllJournalIds, viewJournal, addEditors, changeAuthor, deleteJournal};
