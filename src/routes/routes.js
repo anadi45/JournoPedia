@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { isLoggedIn, isAdmin } = require("../middlewares/auth");
-const { upload } = require("../middlewares/multer");
+const { upload, imageUpload } = require("../middlewares/multer");
 
 const { signup, login, logout } = require("../controllers/userController");
 const {
@@ -22,7 +22,7 @@ router.post("/login", login);
 router.get("/logout", logout);
 
 //Journal Operations
-router.post("/createJournal", isLoggedIn, createJournal);
+router.post("/createJournal", isAdmin, imageUpload.single("image"), createJournal);
 router.patch("/editJournal/:journal_id", isLoggedIn, editJournal);
 router.get("/getAllJournals", getAllJournals);
 router.get("/viewJournal/:journal_id", viewJournal);

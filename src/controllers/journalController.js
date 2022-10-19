@@ -7,27 +7,39 @@ const { User } = require("../models/user");
 
 const createJournal = async (req, res) => {
   try {
-    const { journal_name, synopsis, topics_covered } = req.body;
-    const newJournal = new Journal({
-      journal_name: journal_name,
-      synopsis: synopsis,
-      topics_covered: topics_covered,
-      author: req.rootuser,
-    });
+		if(!req.file) {
+			return res.send({
+				message: "File cannot be empty"
+			});
+		} 
+		const { journal_name, synopsis, topics_covered } = req.body;
+		
+		if(!journal_name || !synopsis || !topics_covered) {
+			return res.send({
+				message: "journal_name or synopsis or topics_covered cannot be empty"
+			});
+		}
+		const newJournal = new Journal({
+			journal_name: journal_name,
+			synopsis: synopsis,
+			topics_covered: topics_covered,
+			author: req.rootuser,
+			image: req.file.path
+		});
 
-    const created = await newJournal.save();
-    if (created) {
-      res.send({
-        message: "Journal created successfully",
-      });
-    } else {
-      res.send({
-        message: "Unable to create journal",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
+		const created = await newJournal.save();
+		if (created) {
+			res.send({
+				message: "Journal created successfully",
+			});
+		} else {
+			res.send({
+				message: "Unable to create journal",
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 //@route    PATCH /editJournal/:journal_id
@@ -36,36 +48,36 @@ const createJournal = async (req, res) => {
 
 const editJournal = async (req, res) => {
   try {
-    const { synopsis, topics_covered } = req.body;
-    const { journal_id } = req.params;
+		const { synopsis, topics_covered } = req.body;
+		const { journal_id } = req.params;
 
-    if (!topics_covered) {
-      edit = await Journal.findByIdAndUpdate(journal_id, {
-        synopsis: synopsis,
-      });
-    } else if (!synopsis) {
-      edit = await Journal.findByIdAndUpdate(journal_id, {
-        topics_covered: topics_covered,
-      });
-    } else {
-      edit = await Journal.findByIdAndUpdate(journal_id, {
-        synopsis: synopsis,
-        topics_covered: topics_covered,
-      });
-    }
+		if (!topics_covered) {
+			edit = await Journal.findByIdAndUpdate(journal_id, {
+				synopsis: synopsis,
+			});
+		} else if (!synopsis) {
+			edit = await Journal.findByIdAndUpdate(journal_id, {
+				topics_covered: topics_covered,
+			});
+		} else {
+			edit = await Journal.findByIdAndUpdate(journal_id, {
+				synopsis: synopsis,
+				topics_covered: topics_covered,
+			});
+		}
 
-    if (edit) {
-      res.send({
-        message: "Journal edited successfully",
-      });
-    } else {
-      res.send({
-        message: "Unable to edit journal",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
+		if (edit) {
+			res.send({
+				message: "Journal edited successfully",
+			});
+		} else {
+			res.send({
+				message: "Unable to edit journal",
+			});
+		}
+	} catch (error) {
+			console.log(error);
+	}
 };
 
 //@route    GET /getAllJournals
@@ -73,12 +85,12 @@ const editJournal = async (req, res) => {
 //@access   Public
 
 const getAllJournals = async (req, res) => {
-  try {
-    const allJournals = await Journal.find().sort({ created_on: -1 });
-    res.send(allJournals);
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const allJournals = await Journal.find().sort({ created_on: -1 });
+		res.send(allJournals);
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 //@route    GET /viewJournal/:journal_id
@@ -86,20 +98,20 @@ const getAllJournals = async (req, res) => {
 //@access   Public
 
 const viewJournal = async (req, res) => {
-  try {
-    const { journal_id } = req.params;
-    const journal = await Journal.findById(journal_id);
+	try {
+		const { journal_id } = req.params;
+		const journal = await Journal.findById(journal_id);
 
-    if (journal) {
-      res.send(journal);
-    } else {
-      res.send({
-        message: "Journal not found!",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
+		if (journal) {
+		res.send(journal);
+		} else {
+		res.send({
+			message: "Journal not found!",
+		});
+		}
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 //@route    PATCH /addAuthors/journal_id
