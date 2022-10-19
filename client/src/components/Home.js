@@ -41,7 +41,7 @@ function Home(props) {
                   <div className="card">
                     <img
                       className="card-img-top"
-                      src={``}
+                      src={item.image.substr(14)}
                       alt={item.journal_name}
                     />
                     <div className="card-body">

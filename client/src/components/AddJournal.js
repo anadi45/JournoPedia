@@ -14,7 +14,7 @@ function AddJournal(props) {
 
   const [journalName, setJournalName] = useState("");
   const [synopsis, setSynopsis] = useState("");
-  const [topics, setTopics] = useState([]);
+  const [image, setImage] = useState([]);
   const [message, setMessage] = useState("");
   const [messageDisplay, setMessageDisplay] = useState("none");
   const [messageColor, setMessageColor] = useState("");
@@ -22,23 +22,24 @@ function AddJournal(props) {
   const [cookies, setCookie] = useCookies(["token"]);
   let navigate = useNavigate();
 
-  const handleOnchange = (topics) => {
-    let str = "";
-    let topicsArr = [];
-    for (let c of topics) {
-      if (c === ",") {
-        topicsArr.push(str);
-        str = "";
-      } else {
-        str += c;
-      }
-    }
-    topicsArr.push(str);
-    setTopics(topicsArr);
-    console.log(topicsArr);
-  };
+  //   const handleOnchange = (topics) => {
+  //     let str = "";
+  //     let topicsArr = [];
+  //     for (let c of topics) {
+  //       if (c === ",") {
+  //         topicsArr.push(str);
+  //         str = "";
+  //       } else {
+  //         str += c;
+  //       }
+  //     }
+  //     topicsArr.push(str);
+  //     setTopics(topicsArr);
+  //     console.log(topicsArr);
+  //   };
 
   const handleSubmit = async (e) => {
+    console.log(image);
     e.preventDefault();
     setSpinnerVisible("visible");
     const config = {
@@ -54,7 +55,8 @@ function AddJournal(props) {
         {
           journal_name: journalName,
           synopsis: synopsis,
-          topics_covered: topics,
+          image: image,
+          //   topics_covered: topics,
         },
         config
       )
@@ -70,12 +72,12 @@ function AddJournal(props) {
       });
   };
 
-  const options = [
-    { label: "Machine Learning", value: "ML" },
-    { label: "Data Mining", value: "DMCT" },
-    { label: "Computer Networks", value: "CN" },
-    { label: "Image Processing", value: "IP" },
-  ];
+  //   const options = [
+  //     { label: "Machine Learning", value: "ML" },
+  //     { label: "Data Mining", value: "DMCT" },
+  //     { label: "Computer Networks", value: "CN" },
+  //     { label: "Image Processing", value: "IP" },
+  //   ];
 
   return (
     <div className="auth-inner">
@@ -93,19 +95,6 @@ function AddJournal(props) {
             }}
           />
         </div>
-        <div className="mb-3">
-          <label>Topics Covered</label>
-          {/* <div  className="preview-values">
-        <h4>Values</h4>
-        {topics}
-      </div> */}
-
-          <MultiSelect
-            width={"100%"}
-            onChange={handleOnchange}
-            options={options}
-          />
-        </div>
 
         <div className="mb-3">
           <label>Synopsis</label>
@@ -120,6 +109,15 @@ function AddJournal(props) {
           />
         </div>
 
+        <div className="mb-3">
+          <label>Upload Image</label>
+          <input
+            type="file"
+            onChange={(e) => {
+              setImage(URL.createObjectURL(e.target.files[0]));
+            }}
+          />
+        </div>
         <div className="d-grid">
           <button
             className="btn btn-primary"
