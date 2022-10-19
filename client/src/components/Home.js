@@ -37,7 +37,7 @@ function Home(props) {
         {topics.map((item, i) => {
           return (
             <div key={item} className="col col-md-3 card-div">
-              <Link to={`/${item}`}>
+              <Link to={`/${item}`} className="card-link">
                 <div className="card">
                   <img
                     className="card-img-top"

@@ -11,8 +11,13 @@
   transition: transform 0.2s;
 }
 .card:hover {
-  transform: scale(1.2);
+  transform: scale(1.15);
   z-index: 2;
+  color: black;
+}
+.card-link {
+  text-decoration: none;
+  color: var(--bs-navbar-brand-color);
 }
 .card-img-top {
   height: 180px;
