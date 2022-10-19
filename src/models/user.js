@@ -30,12 +30,12 @@ const userSchema = new mongoose.Schema({
     userRole: {
         type: String
     },
-    score: {
-        type: Number
-    },
-    preferences: [{
-        type: String
-    }],
+    // score: {
+    //     type: Number
+    // },
+    // preferences: [{
+    //     type: String
+    // }],
     expertise: [{
         type: String
     }],
