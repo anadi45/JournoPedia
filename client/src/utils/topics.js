@@ -3,7 +3,7 @@ export const topics = [
   "Artificial Intelligence",
   "Web Development",
   "Big Data",
-  "DataMining",
+  "Data Mining",
   "Network Security",
   "Cloud Computing",
   "Mobile Computing",
