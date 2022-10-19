@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { isLoggedIn } = require("../middlewares/auth");
+const { isLoggedIn, isAdmin } = require("../middlewares/auth");
 const { upload } = require("../middlewares/multer");
 
 const { signup, login, logout } = require("../controllers/userController");

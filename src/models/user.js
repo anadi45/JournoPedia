@@ -28,7 +28,8 @@ const userSchema = new mongoose.Schema({
         default: 0
     },
     userRole: {
-        type: String
+        type: String,
+        default: "Author"
     },
     // score: {
     //     type: Number
