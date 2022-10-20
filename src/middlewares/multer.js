@@ -14,7 +14,7 @@ function uniqueKey (length) {
 
 const articleStorage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, UPLOAD_PATH);
+        cb(null, ARTICLE_UPLOAD_PATH);
     },
     filename: function(req, file, cb) {
         let fileNameArray = (file.originalname.split('.'));

@@ -113,7 +113,12 @@ const referArticle = async (req,res) => {
         const {option} = req.body;
         
         const article = await Article.findById(article_id);
-        console.log(article)//find journal and then check for editors
+        // console.log(article)
+        //find journal and then check for editors
+        const journal_id = article.journal;
+        const journal = await Journal.findById(journal_id);
+        console.log(journal)
+        return;
         //Mailing 
         if(option) {
             updateStatus = await Article.findByIdAndUpdate(article_id,{status: "Under Peer Review"});

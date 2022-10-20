@@ -121,13 +121,15 @@ const viewJournal = async (req, res) => {
 	try {
 		const { journal_id } = req.params;
 		const journal = await Journal.findById(journal_id);
-
-		if (journal) {
-		res.send(journal);
+		
+		const author_id = journal.author;
+		const author = await User.findById(author_id);
+		if (journal && author) {
+			res.send({journal,author});
 		} else {
-		res.send({
-			message: "Journal not found!",
-		});
+			res.send({
+				message: "Journal not found!",
+			});
 		}
 	} catch (error) {
 		console.log(error);

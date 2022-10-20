@@ -17,6 +17,7 @@ const {
   addArticle,
   downloadArticle,
   deleteArticle,
+  referArticle
 } = require("../controllers/articleController");
 
 // User Routes
@@ -37,8 +38,9 @@ router.delete("/deleteJournal/:journal_id", isAdmin, deleteJournal);
 
 //Article Operations
 router.post("/addArticle", isLoggedIn, articleUpload.single("article"), addArticle);
-router.get("/downloadArticle/:issue_id", downloadArticle);
-router.delete("/deleteArticle/:issue_id", isLoggedIn, deleteArticle);
+router.get("/downloadArticle/:article_id", downloadArticle);
+router.delete("/deleteArticle/:article_id", isLoggedIn, deleteArticle);
+router.post("/referArticle/:article_id", isLoggedIn, referArticle);
 
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);
