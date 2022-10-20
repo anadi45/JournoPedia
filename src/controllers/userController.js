@@ -140,7 +140,7 @@ const logout = (req, res) => {
 const userDetails = async (req,res) => {
 	try {
 		const {id} = req.params;
-		const user = User.findById(id);
+		const user = await User.findById(id);
 
 		if(user) {
 			res.send(user);

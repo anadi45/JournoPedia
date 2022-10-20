@@ -23,7 +23,7 @@ const {
 router.post("/signup", signup);
 router.post("/login", login);
 router.get("/logout", logout);
-router.get("/userDetails", userDetails);
+router.get("/userDetails/:id", userDetails);
 
 //Journal Operations
 router.post("/createJournal", isAdmin, imageUpload.single("image"), createJournal);
