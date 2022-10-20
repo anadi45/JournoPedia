@@ -34,15 +34,10 @@ function Home(props) {
         {/* <div class="container"> */}
         <div className="row">
           {journals.map((item) => {
+            console.log(item.image.substr(14));
             return (
               <div key={item._id} className="col col-md-3 card-div">
-                <Link
-                  to={`/journal/${item._id}`}
-                  className="card-link"
-                  onClick={() => {
-                    props.setJournalId(item._id);
-                  }}
-                >
+                <Link to={`/journal/${item._id}`} className="card-link">
                   <div className="card">
                     <img
                       className="card-img-top"

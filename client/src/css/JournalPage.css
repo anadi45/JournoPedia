@@ -1,0 +1,16 @@
+.journal-page-div {
+  padding: 20px;
+}
+.journal-heading {
+  text-align: left;
+  margin-bottom: 40px;
+}
+.journal-info-div {
+  margin-top: 20px;
+  margin-left: 230px;
+}
+.journal-img {
+  height: 200px;
+  width: 200px;
+  float: left;
+}

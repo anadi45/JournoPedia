@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 // import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -10,10 +10,11 @@ import Logout from "./components/Logout";
 import AddJournal from "./components/AddJournal";
 import JournalPage from "./components/JournalPage";
 import { topics } from "../src/utils/topics";
+import axios from "axios";
 
 function App() {
   const [cookies, setCookie] = useCookies(["token"]);
-  const [journalId, setJournalId] = useState("");
+  const [journalIds, setJournalIds] = useState([]);
   const [displayItems, setDisplayItems] = useState([
     "inline",
     "inline",
@@ -22,6 +23,12 @@ function App() {
     "none",
   ]);
 
+  useEffect(() => {
+    axios.get(`http://localhost:5000/getAllJournalIds`).then((res) => {
+      console.log(res.data);
+      setJournalIds(res.data);
+    });
+  }, []);
   return (
     <Router>
       <div className="App">
@@ -86,10 +93,7 @@ function App() {
               path="/home"
               element={
                 cookies.token ? (
-                  <Home
-                    setDisplayItems={setDisplayItems}
-                    setJournalId={setJournalId}
-                  />
+                  <Home setDisplayItems={setDisplayItems} />
                 ) : (
                   <Login />
                 )
@@ -110,16 +114,25 @@ function App() {
               path="/logout"
               element={<Logout setDisplayItems={setDisplayItems} />}
             />
-            <Route
-              path="/journal:journalId"
-              element={
-                cookies.token ? (
-                  <JournalPage setDisplayItems={setDisplayItems} />
-                ) : (
-                  <Login />
-                )
-              }
-            />
+            {journalIds.map((item) => {
+              return (
+                <Route
+                  key={item}
+                  path={`/journal/${item}`}
+                  element={
+                    cookies.token ? (
+                      <JournalPage
+                        setDisplayItems={setDisplayItems}
+                        journalId={item}
+                      />
+                    ) : (
+                      <Login />
+                    )
+                  }
+                />
+              );
+            })}
+
             {/* {topics.map((item) => {
               return (
                 <Route
