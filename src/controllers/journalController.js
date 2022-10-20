@@ -124,6 +124,7 @@ const viewJournal = async (req, res) => {
 		
 		const author_id = journal.author;
 		const author = await User.findById(author_id);
+		
 		if (journal && author) {
 			res.send({journal,author});
 		} else {
@@ -181,6 +182,54 @@ const addEditors = async (req, res) => {
     console.log(error);
   }
 };
+
+//@route	PATCH /removeEditors/journal_id
+//@descr	Remove editors from journal
+//@access	Admin
+
+const removeEditors = async (req,res) => {
+	try {
+		const {journal_id} = req.params;
+		const {editors} = req.body;
+		console.log(editors)
+		let editorId = [];
+		let oldEditorList = [];
+		const journal = await Journal.findById(journal_id);
+		if (journal) {
+		  const editorObj = await User.find({ email: { $in: editors } });
+		  for (let i = 0; i < editorObj.length; i++) {
+			editorId.push(editorObj[i]._id);
+		  }
+		  oldEditorList = journal.editors;
+		}
+		console.log(editorId)
+		console.log(oldEditorList)
+		return;
+		let newEditorList = [...oldEditorList];
+	
+		editorId.forEach((id) => {
+		  if (oldEditorList.includes(id) == false) {
+			newEditorList.push(id);
+		  }
+		});
+	
+		const add = await Journal.findByIdAndUpdate(journal_id, {
+		  editors: newEditorList,
+		});
+	
+		if (add) {
+		  res.send({
+			message: "Editor list updated",
+		  });
+		} else {
+		  res.send({
+			message: "Unable to update editor list",
+		  });
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
 
 //@route	PATCH /changeAuthor/journal_id
 //@descr	Change author/editor-in-chief
@@ -241,4 +290,14 @@ const deleteJournal = async (req,res) => {
 	}
 }
 
-module.exports = {createJournal, editJournal, getAllJournals, getAllJournalIds, viewJournal, addEditors, changeAuthor, deleteJournal};
+module.exports = {
+	createJournal, 
+	editJournal, 
+	getAllJournals, 
+	getAllJournalIds, 
+	viewJournal, 
+	addEditors, 
+	removeEditors,
+	changeAuthor, 
+	deleteJournal
+};
