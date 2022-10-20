@@ -1,18 +1,12 @@
 const mongoose = require("mongoose");
 
-const issueSchema = new mongoose.Schema({
+const articleSchema = new mongoose.Schema({
     original_name: {
         type: String
     },
     journal:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Journal'
-    },
-    number: {
-        type: Number
-    },
-    volume: {
-        type: Number
     },
     date_of_submission: {
         type: Date,
@@ -22,11 +16,24 @@ const issueSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    reviewed_by : [{
+    reviewed_by : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }],   
-    date_of_approval: {
+    },   
+    peer_choice: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    status: {
+        type: String //Accepted,Rejected,Withdrawn,Under Review
+    },
+    date_of_acceptence: {
+        type: Date
+    },
+    date_of_rejection: {
+        type: Date
+    },
+    date_of_withdrawal: {
         type: Date
     },
     path: {
@@ -41,6 +48,6 @@ const issueSchema = new mongoose.Schema({
     }
 });
 
-const Issue = new mongoose.model("Issue",issueSchema);
+const Article = new mongoose.model("Article",articleSchema);
 
-module.exports = {Issue};
+module.exports = {Article};
