@@ -10,6 +10,7 @@ const {
   getAllJournalIds,
   viewJournal,
   addEditors,
+  removeEditors,
   changeAuthor,
   deleteJournal
 } = require("../controllers/journalController");
@@ -33,6 +34,7 @@ router.get("/getAllJournals", getAllJournals);
 router.get("/getAllJournalIds", getAllJournalIds);
 router.get("/viewJournal/:journal_id", viewJournal);
 router.patch("/addEditors/:journal_id", isLoggedIn, addEditors);
+router.patch("/removeEditors/:jounal_id", isAdmin, removeEditors);
 router.patch("/changeAuthor/:journal_id", isAdmin, changeAuthor);
 router.delete("/deleteJournal/:journal_id", isAdmin, deleteJournal);
 

@@ -9,7 +9,7 @@ const fs = require("fs");
 
 const addArticle = async (req,res) => {
     try {
-        const {journal_id} = req.body;
+        const {journal_id, peer_choice} = req.body;
         
         if(!journal_id) {
             return res.send({
@@ -28,7 +28,8 @@ const addArticle = async (req,res) => {
             submitted_by: req.rootuser,
             path: req.file.path,
             size: req.file.size,
-            status:"Under Review"
+            status:"Under Review",
+            peer_choice: peer_choice
         });
         const save = await newArticle.save();
 
@@ -113,17 +114,26 @@ const referArticle = async (req,res) => {
         const {option} = req.body;
         
         const article = await Article.findById(article_id);
-        // console.log(article)
-        //find journal and then check for editors
         const journal_id = article.journal;
         const journal = await Journal.findById(journal_id);
-        console.log(journal)
-        return;
-        //Mailing 
-        if(option) {
-            updateStatus = await Article.findByIdAndUpdate(article_id,{status: "Under Peer Review"});
+        const editorList = journal.editors;
+        
+        if(editorList.includes(req.rootuser._id)) {
+            if(option == "Yes") {
+                //Mailing
+                updateStatus = await Article.findByIdAndUpdate(article_id,{status: "Under Peer Review"});
+            } else {
+                updateStatus = await Article.findByIdAndUpdate(article_id,{status: "Rejected"});
+            }
         } else {
-            updateStatus = await Article.findByIdAndUpdate(article_id,{status: "Rejected"});
+            return res.send({
+                message: "Unauthorized"
+            });
+        }
+        if(updateStatus) {
+            res.send({
+                message: "Article status updated"
+            });
         }
     } catch (error) {
         console.log(error);
