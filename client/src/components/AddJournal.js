@@ -14,7 +14,7 @@ function AddJournal(props) {
 
   const [journalName, setJournalName] = useState("");
   const [synopsis, setSynopsis] = useState("");
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState();
   const [message, setMessage] = useState("");
   const [messageDisplay, setMessageDisplay] = useState("none");
   const [messageColor, setMessageColor] = useState("");
@@ -22,29 +22,13 @@ function AddJournal(props) {
   const [cookies, setCookie] = useCookies(["token"]);
   let navigate = useNavigate();
 
-  //   const handleOnchange = (topics) => {
-  //     let str = "";
-  //     let topicsArr = [];
-  //     for (let c of topics) {
-  //       if (c === ",") {
-  //         topicsArr.push(str);
-  //         str = "";
-  //       } else {
-  //         str += c;
-  //       }
-  //     }
-  //     topicsArr.push(str);
-  //     setTopics(topicsArr);
-  //     console.log(topicsArr);
-  //   };
-
   const handleSubmit = async (e) => {
-    console.log(image);
     e.preventDefault();
+    console.log(image);
     setSpinnerVisible("visible");
     const config = {
       headers: {
-        "Content-Type": "application/json; charset=utf-8",
+        "Content-Type": "multipart/form-data",
         "access-control-allow-origin": "*",
         Authorization: "Bearer " + cookies.token,
       },
@@ -89,6 +73,7 @@ function AddJournal(props) {
             type="text"
             className="form-control"
             value={journalName}
+            name="journal_name"
             onChange={(e) => {
               setMessageDisplay("none");
               setJournalName(e.target.value);
@@ -102,6 +87,7 @@ function AddJournal(props) {
             type="text"
             className="form-control"
             value={synopsis}
+            name="synopsis"
             onChange={(e) => {
               setMessageDisplay("none");
               setSynopsis(e.target.value);
@@ -113,8 +99,9 @@ function AddJournal(props) {
           <label>Upload Image</label>
           <input
             type="file"
+            name="image"
             onChange={(e) => {
-              setImage(URL.createObjectURL(e.target.files[0]));
+              setImage(e.target.files[0]);
             }}
           />
         </div>

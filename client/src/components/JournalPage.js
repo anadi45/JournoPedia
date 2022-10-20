@@ -5,7 +5,6 @@ import "../css/JournalPage.css";
 function JournalPage(props) {
   const [img, setImg] = useState("");
   const [journalName, setJournalName] = useState("");
-  const [authorId, setAuthorId] = useState("");
   const [author, setAuthor] = useState("");
   const [synopsis, setSynopsis] = useState("");
 
@@ -14,11 +13,11 @@ function JournalPage(props) {
     axios
       .get(`http://localhost:5000/viewJournal/${props.journalId}`)
       .then((res) => {
-        // console.log(res.data.image.substr(14));
-        setImg(res.data.image.substr(14));
-        setJournalName(res.data.journal_name);
-        setSynopsis(res.data.synopsis);
-        setAuthorId(res.data.author);
+        console.log(res.data);
+        setImg(res.data.journal.image.substr(14));
+        setJournalName(res.data.journal.journal_name);
+        setSynopsis(res.data.journal.synopsis);
+        setAuthor(res.data.author.name);
       });
   }, []);
   return (
@@ -26,7 +25,8 @@ function JournalPage(props) {
       <img className="journal-img" src={`/${img}`} alt={journalName} />
       <div className="journal-info-div">
         <h2 className="journal-heading">{journalName}</h2>
-
+        <h5>Editor in Chief</h5>
+        <p>{author}</p>
         <h5>Synopsis</h5>
         <p>{synopsis}</p>
       </div>
