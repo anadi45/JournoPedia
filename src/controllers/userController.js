@@ -120,7 +120,7 @@ const login = async (req, res) => {
 
 //@route    GET /logout
 //@descr    Logout user
-//access    Public
+//@access    Public
 
 const logout = (req, res) => {
   try {
@@ -133,4 +133,25 @@ const logout = (req, res) => {
   }
 };
 
-module.exports = { signup, login, logout };
+//@route	GET /userDetails/id
+//@descr	Get user details from id
+//@access	Public
+
+const userDetails = async (req,res) => {
+	try {
+		const {id} = req.params;
+		const user = User.findById(id);
+
+		if(user) {
+			res.send(user);
+		} else {
+			res.send({
+				message: "User not found"
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+module.exports = { signup, login, logout, userDetails };

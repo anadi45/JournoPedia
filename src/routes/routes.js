@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { isLoggedIn, isAdmin } = require("../middlewares/auth");
 const { articleUpload, imageUpload } = require("../middlewares/multer");
 
-const { signup, login, logout } = require("../controllers/userController");
+const { signup, login, logout, userDetails } = require("../controllers/userController");
 const {
   createJournal,
   editJournal,
@@ -23,6 +23,7 @@ const {
 router.post("/signup", signup);
 router.post("/login", login);
 router.get("/logout", logout);
+router.get("/userDetails", userDetails);
 
 //Journal Operations
 router.post("/createJournal", isAdmin, imageUpload.single("image"), createJournal);
