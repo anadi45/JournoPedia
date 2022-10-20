@@ -1,5 +1,6 @@
 const {Article} = require("../models/article");
 const {User} = require("../models/user");
+const {Journal} = require("../models/journal");
 const fs = require("fs");
 
 //@route    POST /addArticle
@@ -8,11 +9,11 @@ const fs = require("fs");
 
 const addArticle = async (req,res) => {
     try {
-        const {volume,journal_id} = req.body;
+        const {journal_id} = req.body;
         
-        if(!volume || !journal_id) {
+        if(!journal_id) {
             return res.send({
-                message: "Volume or journal_id cannot be empty"
+                message: "Journal_id cannot be empty"
             });
         } 
         if(!req.file) {
@@ -25,9 +26,9 @@ const addArticle = async (req,res) => {
             original_name: req.file.originalname,
             journal: journal_id,
             submitted_by: req.rootuser,
-            volume: volume,
             path: req.file.path,
-            size: req.file.size
+            size: req.file.size,
+            status:"Under Review"
         });
         const save = await newArticle.save();
 
@@ -102,4 +103,26 @@ const deleteArticle = async (req,res) => {
     }
 }
 
-module.exports = {addArticle, downloadArticle, deleteArticle};
+//@route    POST /referArticle
+//@descr    Forward artcile for peer review
+//@access   Private
+
+const referArticle = async (req,res) => {
+    try {
+        const {article_id} = req.params;
+        const {option} = req.body;
+        
+        const article = await Article.findById(article_id);
+        console.log(article)//find journal and then check for editors
+        //Mailing 
+        if(option) {
+            updateStatus = await Article.findByIdAndUpdate(article_id,{status: "Under Peer Review"});
+        } else {
+            updateStatus = await Article.findByIdAndUpdate(article_id,{status: "Rejected"});
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = {addArticle, downloadArticle, deleteArticle, referArticle};
