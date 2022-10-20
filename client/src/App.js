@@ -86,7 +86,10 @@ function App() {
               path="/home"
               element={
                 cookies.token ? (
-                  <Home setDisplayItems={setDisplayItems} />
+                  <Home
+                    setDisplayItems={setDisplayItems}
+                    setJournalId={setJournalId}
+                  />
                 ) : (
                   <Login />
                 )
@@ -107,20 +110,17 @@ function App() {
               path="/logout"
               element={<Logout setDisplayItems={setDisplayItems} />}
             />
-            {/* <Route
-                path="/journal:journalId"
-                element={
-                  cookies.token ? (
-                    <JournalPage
-                      setDisplayItems={setDisplayItems}
-                      setJournalId={setJournalId}
-                    />
-                  ) : (
-                    <Login />
-                  )
-                }
-              /> */}
-            {topics.map((item) => {
+            <Route
+              path="/journal:journalId"
+              element={
+                cookies.token ? (
+                  <JournalPage setDisplayItems={setDisplayItems} />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            {/* {topics.map((item) => {
               return (
                 <Route
                   key={item}
@@ -128,7 +128,7 @@ function App() {
                   element={<JournalPage setDisplayItems={setDisplayItems} />}
                 />
               );
-            })}
+            })} */}
           </Routes>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import JournalPage from "./JournalPage";
+import { Link } from "react-router-dom";
 // import { topics } from "../utils/topics";
 import "../css/Home.css";
 
@@ -23,7 +22,7 @@ function Home(props) {
     return (
       <span
         style={{ visibility: spinnerVisible }}
-        className="spinner-border spinner-border-sm"
+        className="spinner-border spinner-border-sm home-spinner"
         role="status"
         aria-hidden="true"
       />
@@ -37,7 +36,13 @@ function Home(props) {
           {journals.map((item) => {
             return (
               <div key={item._id} className="col col-md-3 card-div">
-                <Link to={`/${item._id}`} className="card-link">
+                <Link
+                  to={`/journal/${item._id}`}
+                  className="card-link"
+                  onClick={() => {
+                    props.setJournalId(item._id);
+                  }}
+                >
                   <div className="card">
                     <img
                       className="card-img-top"

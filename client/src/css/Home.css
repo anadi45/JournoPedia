@@ -1,6 +1,10 @@
 .home-div {
   padding: 0 10px 15px;
 }
+.home-spinner {
+  padding: 10px;
+  margin: 20% 50%;
+}
 .card-div {
   margin: auto;
   width: fit-content;

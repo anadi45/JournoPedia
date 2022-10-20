@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MultiSelect from "react-multiple-select-dropdown-lite";
+// import MultiSelect from "react-multiple-select-dropdown-lite";
 import "react-multiple-select-dropdown-lite/dist/index.css";
 import "../css/AddJournal.css";
 import axios from "axios";
