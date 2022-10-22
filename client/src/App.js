@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 // import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
@@ -22,13 +28,18 @@ function App() {
     "none",
     "none",
   ]);
-
+  // const navigate = useNavigate();
   useEffect(() => {
     axios.get(`http://localhost:5000/getAllJournalIds`).then((res) => {
       console.log(res.data);
       setJournalIds(res.data);
     });
   }, []);
+
+  const handleSelect = (e) => {
+    console.log(e.target.value);
+  };
+
   return (
     <Router>
       <div className="App">
@@ -39,7 +50,10 @@ function App() {
             </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item" style={{ display: displayItems[0] }}>
+                <li
+                  className="nav-item login-link"
+                  style={{ display: displayItems[0] }}
+                >
                   <Link className="nav-link" to={"/sign-in"}>
                     Login
                   </Link>
@@ -52,23 +66,33 @@ function App() {
                     Sign up
                   </Link>
                 </li>
-                <li className="nav-item" style={{ display: displayItems[2] }}>
+                <li
+                  className="nav-item home-link"
+                  style={{ display: displayItems[2] }}
+                >
                   <Link className="nav-link" to={"/home"}>
                     Home
                   </Link>
                 </li>
-                <li className="nav-item" style={{ display: displayItems[3] }}>
+                <li
+                  className="nav-item publish-link"
+                  style={{ display: displayItems[3] }}
+                >
                   <Link className="nav-link" to={"/publish-journal"}>
                     Publish Journal
                   </Link>
                 </li>
+
                 <li
                   className="nav-item logout-link"
                   style={{ display: displayItems[4] }}
                 >
-                  <Link className="nav-link" to={"/logout"}>
-                    Log out
-                  </Link>
+                  <select onChange={handleSelect}>
+                    {/* <Link className="nav-link" to={"/logout"}> */}
+                    <option value="profile">Profile</option>
+                    {/* </Link> */}
+                    <option value="logout">Log Out</option>
+                  </select>
                 </li>
               </ul>
             </div>

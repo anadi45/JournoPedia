@@ -41,9 +41,14 @@ html,
   top: 8px;
   left: 200px;
 }
-.sign-up-link {
+.login-link,
+.home-link {
+  margin-left: 50px;
+}
+.sign-up-link,
+.publish-link {
   position: fixed;
-  left: 270px;
+  left: 330px;
 }
 .logout-link {
   position: fixed;
