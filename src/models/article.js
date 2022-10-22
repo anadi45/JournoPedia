@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const articleSchema = new mongoose.Schema({
+    article_name: {
+        type: String
+    },
     original_name: {
         type: String
     },
