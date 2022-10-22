@@ -13,7 +13,7 @@ function Home(props) {
     props.setDisplayItems(["none", "none", "inline", "inline", "inline"]);
     axios.get(`http://localhost:5000/getAllJournals`).then((res) => {
       setSpinnerVisible("hidden");
-      console.log(res.data);
+      // console.log(res.data);
       setJournals(res.data);
     });
   }, []);
@@ -34,7 +34,7 @@ function Home(props) {
         {/* <div class="container"> */}
         <div className="row">
           {journals.map((item) => {
-            console.log(item.image.substr(14));
+            // console.log(item.image.substr(14));
             return (
               <div key={item._id} className="col col-md-3 card-div">
                 <Link to={`/journal/${item._id}`} className="card-link">

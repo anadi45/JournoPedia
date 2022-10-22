@@ -154,4 +154,16 @@ const userDetails = async (req,res) => {
 	}
 }
 
-module.exports = { signup, login, logout, userDetails };
+//@route	GET /userDetailsToken
+//@descr 	Get user details from jwt token
+//@access	Private
+
+const userDetailsToken = (req,res) => {
+	try {
+		res.send(req.rootuser)
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+module.exports = { signup, login, logout, userDetails, userDetailsToken };

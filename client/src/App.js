@@ -24,16 +24,30 @@ function App() {
     "none",
     "none",
   ]);
+  const [username,setUsername] = useState("");
+
   // const navigate = useNavigate();
+  
   useEffect(() => {
     axios.get(`http://localhost:5000/getAllJournalIds`).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setJournalIds(res.data);
     });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "access-control-allow-origin": "*",
+        Authorization: "Bearer " + cookies.token,
+      },
+    };
+    axios.get(`http://localhost:5000/userDetailsToken`,config).then((res)=>{
+      setUsername(res.data.name)
+    })
   }, []);
 
   const handleSelect = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   return (
@@ -105,7 +119,7 @@ function App() {
                       variant=""
                       id="dropdown-basic"
                     >
-                      <i class="far fa-user" /> username
+                      <i class="far fa-user" /> {username}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
