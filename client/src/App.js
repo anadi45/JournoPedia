@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 // import "./App.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
@@ -17,6 +11,8 @@ import AddJournal from "./components/AddJournal";
 import JournalPage from "./components/JournalPage";
 import { topics } from "../src/utils/topics";
 import axios from "axios";
+import Dropdown from "react-bootstrap/Dropdown";
+import Profile from "./components/Profile";
 
 function App() {
   const [cookies, setCookie] = useCookies(["token"]);
@@ -83,16 +79,48 @@ function App() {
                   </Link>
                 </li>
 
+                {/* <li
+                  className="nav-item logout-link"
+                  style={{ display: displayItems[4] }}
+                >
+                  <ul class="dropdown">
+                    <li className="dropdown-options">
+                      <a href="/">Sub-1</a>
+                    </li>
+                    <li className="dropdown-options">
+                      <a href="/">Sub-2</a>
+                    </li>
+                    <li className="dropdown-options">
+                      <a href="/">Sub-3</a>
+                    </li>
+                  </ul>
+                </li> */}
                 <li
                   className="nav-item logout-link"
                   style={{ display: displayItems[4] }}
                 >
-                  <select onChange={handleSelect}>
-                    {/* <Link className="nav-link" to={"/logout"}> */}
-                    <option value="profile">Profile</option>
-                    {/* </Link> */}
-                    <option value="logout">Log Out</option>
-                  </select>
+                  <Dropdown className="">
+                    <Dropdown.Toggle
+                      className="dropdown-btn"
+                      variant=""
+                      id="dropdown-basic"
+                    >
+                      <i class="far fa-user" /> username
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <Link className="nav-link" to="/profile">
+                          Profile
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link className="nav-link" to="/logout">
+                          Log out
+                        </Link>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </li>
               </ul>
             </div>
@@ -135,9 +163,14 @@ function App() {
             />
 
             <Route
+              path="/profile"
+              element={<Profile setDisplayItems={setDisplayItems} />}
+            />
+            <Route
               path="/logout"
               element={<Logout setDisplayItems={setDisplayItems} />}
             />
+
             {journalIds.map((item) => {
               return (
                 <Route

@@ -29,6 +29,22 @@ html,
   width: 100%;
   height: 100%;
 }
+.dropdown-btn {
+  background: none;
+  color: black;
+  border: none;
+}
+.dropdown-btn:focus,
+.dropdown-btn:hover {
+  background: none;
+  color: black;
+  border: none;
+}
+.show > .btn-success.dropdown-toggle {
+  background: none;
+  color: black;
+  border: none;
+}
 .navbar-light {
   background-color: #ffffff;
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
