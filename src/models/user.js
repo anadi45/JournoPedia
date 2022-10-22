@@ -40,6 +40,9 @@ const userSchema = new mongoose.Schema({
     expertise: [{
         type: String
     }],
+    designation: {
+        type: String
+    },
     institute: {
         type: String
     },

@@ -13,6 +13,7 @@ import { topics } from "../src/utils/topics";
 import axios from "axios";
 import Dropdown from "react-bootstrap/Dropdown";
 import Profile from "./components/Profile";
+import Status from "./components/Status";
 
 function App() {
   const [cookies, setCookie] = useCookies(["token"]);
@@ -129,6 +130,11 @@ function App() {
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
+                        <Link className="nav-link" to="/status">
+                          Submission Status
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
                         <Link className="nav-link" to="/logout">
                           Log out
                         </Link>
@@ -179,6 +185,11 @@ function App() {
             <Route
               path="/profile"
               element={<Profile setDisplayItems={setDisplayItems} />}
+            />
+
+            <Route
+              path="/status"
+              element={<Status/>}
             />
             <Route
               path="/logout"

@@ -9,7 +9,7 @@ const fs = require("fs");
 
 const addArticle = async (req,res) => {
     try {
-        const {journal_id, peer_choice, article_name} = req.body;
+        const {journal_id, peer_choice, article_name, authors} = req.body;
         
         if(!journal_id) {
             return res.send({
@@ -23,13 +23,20 @@ const addArticle = async (req,res) => {
         } 
 
         let peer_mails = [];
+        let author_mails = [];
 
         const findReviewers = await User.find({email: {
             $in: peer_choice
         }});
+        const findAuthors = await User.find({email: {
+            $in: authors
+        }});
         
         for(let i=0;i<findReviewers.length;i++) {
             peer_mails.push(findReviewers[i]._id);
+        }
+        for(let i=0;i<findAuthors.length;i++) {
+            author_mails.push(findAuthors[i]._id);
         }
         
         const newArticle = new Article({
@@ -40,7 +47,8 @@ const addArticle = async (req,res) => {
             path: req.file.path,
             size: req.file.size,
             status:"Under Review",
-            peer_choice: peer_mails
+            peer_choice: peer_mails,
+            authors: author_mails
         });
         const save = await newArticle.save();
 

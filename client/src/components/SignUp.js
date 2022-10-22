@@ -16,6 +16,7 @@ function SignUp() {
   const [phoneExists, setPhoneExists] = useState(false);
   const [institute, setInstitute] = useState("");
   const [country, setCountry] = useState("");
+  const [designation, setDesignation] = useState("");
   const [topics, setTopics] = useState([]);
   const [spinnerVisible, setSpinnerVisible] = useState("hidden");
   const [cookies, setCookie] = useCookies(["token"]);
@@ -53,6 +54,7 @@ function SignUp() {
         institute: institute,
         country: country,
         expertise: topics,
+        designation: designation
       })
       .then((res) => {
         setSpinnerVisible("hidden");
@@ -141,6 +143,20 @@ function SignUp() {
             width={"100%"}
             onChange={handleOnTopicChange}
             options={options}
+          />
+        </div>
+        <div className="mb-3">
+          <label>Designation</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Designation"
+            value={designation}
+            onChange={(e) => {
+              setEmailExists(false);
+              setPhoneExists(false);
+              setDesignation(e.target.value);
+            }}
           />
         </div>
         <div className="mb-3">

@@ -15,6 +15,13 @@ const articleSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     }, 
+    abstract: {
+        type: String
+    },
+    authors: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     submitted_by: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
