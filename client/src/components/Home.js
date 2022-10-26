@@ -9,11 +9,9 @@ function Home(props) {
   const [spinnerVisible, setSpinnerVisible] = useState("visible");
 
   useEffect(() => {
-    // setTimeout(() => {}, 20000);
     props.setDisplayItems(["none", "none", "inline", "inline", "inline"]);
     axios.get(`http://localhost:5000/getAllJournals`).then((res) => {
       setSpinnerVisible("hidden");
-      // console.log(res.data);
       setJournals(res.data);
     });
   }, []);
@@ -29,12 +27,11 @@ function Home(props) {
     );
   } else
     return (
-      //   <Router>
       <div className="home-div">
         {/* <div class="container"> */}
         <div className="row">
-          {journals.map((item) => {
-            // console.log(item.image.substr(14));
+          {journals.map((item, i) => {
+            console.log(i);
             return (
               <div key={item._id} className="col col-md-3 card-div">
                 <Link to={`/journal/${item._id}`} className="card-link">
@@ -46,20 +43,15 @@ function Home(props) {
                     />
                     <div className="card-body">
                       <p className="card-title">{item.journal_name}</p>
-                      {/* <p class="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p> */}
                     </div>
                   </div>
                 </Link>
               </div>
             );
           })}
-          {/* </div> */}
         </div>
+        {/* </div> */}
       </div>
-      //   </Router>
     );
 }
 
