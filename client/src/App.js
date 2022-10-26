@@ -28,7 +28,7 @@ function App() {
   const [username,setUsername] = useState("");
 
   // const navigate = useNavigate();
-  
+
   useEffect(() => {
     axios.get(`http://localhost:5000/getAllJournalIds`).then((res) => {
       // console.log(res.data);
@@ -57,7 +57,7 @@ function App() {
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
             <Link className="navbar-brand" to={"/"}>
-              JournoPedia
+              <span class="brand-color">JournoPedia</span>
             </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav ml-auto">
@@ -66,7 +66,7 @@ function App() {
                   style={{ display: displayItems[0] }}
                 >
                   <Link className="nav-link" to={"/sign-in"}>
-                    Login
+                  <span class="login-color">Login</span>
                   </Link>
                 </li>
                 <li
@@ -74,14 +74,14 @@ function App() {
                   style={{ display: displayItems[1] }}
                 >
                   <Link className="nav-link" to={"/sign-up"}>
-                    Sign up
+                    <span class="sign-up-color">Sign up</span>
                   </Link>
                 </li>
                 <li
                   className="nav-item home-link"
                   style={{ display: displayItems[2] }}
                 >
-                  <Link className="nav-link" to={"/home"}>
+                  <Link className="nav-link desktop" to={"/home"}>
                     Home
                   </Link>
                 </li>
@@ -89,7 +89,7 @@ function App() {
                   className="nav-item publish-link"
                   style={{ display: displayItems[3] }}
                 >
-                  <Link className="nav-link" to={"/publish-journal"}>
+                  <Link className="nav-link desktop" to={"/publish-journal"}>
                     Publish Journal
                   </Link>
                 </li>
@@ -124,6 +124,16 @@ function App() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
+                    <Dropdown.Item>
+                    <Link className="nav-link mobile" to={"/home"}>
+                      Home
+                    </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                    <Link className="nav-link mobile" to={"/publish-journal"}>
+                      Publish Journal
+                    </Link>
+                    </Dropdown.Item>
                       <Dropdown.Item>
                         <Link className="nav-link" to="/profile">
                           Profile
@@ -136,7 +146,7 @@ function App() {
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <Link className="nav-link" to="/logout">
-                          Log out
+                          <span class="logout-color">Log out</span>
                         </Link>
                       </Dropdown.Item>
                     </Dropdown.Menu>
