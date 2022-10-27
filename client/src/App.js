@@ -14,6 +14,7 @@ import axios from "axios";
 import Dropdown from "react-bootstrap/Dropdown";
 import Profile from "./components/Profile";
 import Status from "./components/Status";
+import ReviewPage from "./components/ReviewPage";
 
 function App() {
   const [cookies, setCookie] = useCookies(["token"]);
@@ -25,7 +26,7 @@ function App() {
     "none",
     "none",
   ]);
-  const [username,setUsername] = useState("");
+  const [username, setUsername] = useState("");
 
   // const navigate = useNavigate();
 
@@ -42,9 +43,9 @@ function App() {
         Authorization: "Bearer " + cookies.token,
       },
     };
-    axios.get(`http://localhost:5000/userDetailsToken`,config).then((res)=>{
-      setUsername(res.data.name)
-    })
+    axios.get(`http://localhost:5000/userDetailsToken`, config).then((res) => {
+      setUsername(res.data.name);
+    });
   }, []);
 
   const handleSelect = (e) => {
@@ -66,7 +67,7 @@ function App() {
                   style={{ display: displayItems[0] }}
                 >
                   <Link className="nav-link" to={"/sign-in"}>
-                  <span class="login-color">Login</span>
+                    <span class="login-color">Login</span>
                   </Link>
                 </li>
                 <li
@@ -77,43 +78,7 @@ function App() {
                     <span class="sign-up-color">Sign up</span>
                   </Link>
                 </li>
-                <li
-                  className="nav-item home-link"
-                  style={{ display: displayItems[2] }}
-                >
-                  <Link className="nav-link desktop" to={"/home"}>
-                    Home
-                  </Link>
-                </li>
-                <li
-                  className="nav-item publish-link"
-                  style={{ display: displayItems[3] }}
-                >
-                  <Link className="nav-link desktop" to={"/publish-journal"}>
-                    Publish Journal
-                  </Link>
-                </li>
-
-                {/* <li
-                  className="nav-item logout-link"
-                  style={{ display: displayItems[4] }}
-                >
-                  <ul class="dropdown">
-                    <li className="dropdown-options">
-                      <a href="/">Sub-1</a>
-                    </li>
-                    <li className="dropdown-options">
-                      <a href="/">Sub-2</a>
-                    </li>
-                    <li className="dropdown-options">
-                      <a href="/">Sub-3</a>
-                    </li>
-                  </ul>
-                </li> */}
-                <li
-                  className="nav-item logout-link"
-                  style={{ display: displayItems[4] }}
-                >
+                <li className="nav-item logout-link">
                   <Dropdown className="">
                     <Dropdown.Toggle
                       className="dropdown-btn"
@@ -124,19 +89,19 @@ function App() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                    <Dropdown.Item>
-                    <Link className="nav-link mobile" to={"/home"}>
-                      Home
-                    </Link>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                    <Link className="nav-link mobile" to={"/publish-journal"}>
-                      Publish Journal
-                    </Link>
-                    </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link className="nav-link" to={"/publish-journal"}>
+                          Publish Journal
+                        </Link>
+                      </Dropdown.Item>
                       <Dropdown.Item>
                         <Link className="nav-link" to="/profile">
                           Profile
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link className="nav-link" to="/review-article">
+                          Review Article
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
@@ -146,7 +111,7 @@ function App() {
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <Link className="nav-link" to="/logout">
-                          <span class="logout-color">Log out</span>
+                          <span>Log out</span>
                         </Link>
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -197,10 +162,9 @@ function App() {
               element={<Profile setDisplayItems={setDisplayItems} />}
             />
 
-            <Route
-              path="/status"
-              element={<Status/>}
-            />
+            <Route path="/review-article" element={<ReviewPage />} />
+
+            <Route path="/status" element={<Status />} />
             <Route
               path="/logout"
               element={<Logout setDisplayItems={setDisplayItems} />}
@@ -224,16 +188,6 @@ function App() {
                 />
               );
             })}
-
-            {/* {topics.map((item) => {
-              return (
-                <Route
-                  key={item}
-                  path={`/${item}`}
-                  element={<JournalPage setDisplayItems={setDisplayItems} />}
-                />
-              );
-            })} */}
           </Routes>
         </div>
       </div>

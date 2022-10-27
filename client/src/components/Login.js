@@ -97,7 +97,7 @@ function Login() {
           Invalid Login Credentials
         </div>
         <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
+          Forgot <a href="/">password?</a>
         </p>
       </form>
     </div>
