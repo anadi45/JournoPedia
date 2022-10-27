@@ -9,13 +9,15 @@ function JournalPage(props) {
   const [img, setImg] = useState("");
   const [journalName, setJournalName] = useState("");
   const [author, setAuthor] = useState("");
-  const [otherAuthor, setOtherAuthor] = useState("");
+  const [otherAuthor, setOtherAuthor] = useState([]);
   const [synopsis, setSynopsis] = useState("");
   const [article, setArticle] = useState("");
   const [articleName, setArticleName] = useState("");
   const [reviewer, setReviewer] = useState([]);
   const [abstract, setAbstract] = useState("");
   const [cookies, setCookie] = useCookies(["token"]);
+  const [show, setShow] = useState(false);
+  const [btnText,setBtnText] = useState("Add Article");
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +30,15 @@ function JournalPage(props) {
         setJournalName(res.data.journal.journal_name);
         setSynopsis(res.data.journal.synopsis);
         setAuthor(res.data.author.name);
+
+        let otherAuthors = [];
+
+        for(let i=0;i<res.data.otherAuthors.length;i++) {
+
+          otherAuthors.push(res.data.otherAuthors[i].name)
+        }
+        setOtherAuthor(otherAuthors);
+
       });
   }, []);
   const [inputValues, setInputValues] = useState([]);
@@ -59,7 +70,7 @@ function JournalPage(props) {
       )
       .then((res) => {
         console.log(res.data);
-        if (res.data.message == "Article added successfully!") {
+        if (res.data.message === "Article added successfully!") {
           navigate("/");
         }
       });
@@ -78,20 +89,44 @@ function JournalPage(props) {
     setInputValues({ ...inputValues, ...abc });
   };
 
+  const buttonToggle = (e)=> {
+    setShow(prev => !prev)
+    if(e.target.innerText === "Add Article") {
+      setBtnText("Remove Form")
+    } else {
+      setBtnText("Add Article")
+    }
+  }
+
   return (
     <div className="journal-page-div">
-      <div>
-        <img className="journal-img" src={`/${img}`} alt={journalName} />
+
+      <div className="journal-container">
         <div className="journal-info-div">
           <h2 className="journal-heading">{journalName}</h2>
-          <h5>Editor in Chief</h5>
-          <p>{author}</p>
-          <h5>Synopsis</h5>
-          <p>{synopsis}</p>
         </div>
       </div>
-      <div className="auth-inner">
-        <form>
+      <div className="journal-details">
+        <img className="journal-img" src={`/${img}`} alt={journalName} />
+        <h5>Editor in Chief
+          <p className="fetched-details">{author}</p>
+          Editorial Board
+          {otherAuthor.map((author) => (
+            <p className="fetched-details">{author}</p>
+          ))}
+        </h5>
+        <h5>Synopsis
+          <p className="fetched-details">{synopsis}</p>
+        </h5>
+      </div>
+
+      <div className="btn-container">
+        <button className="btn btn-primary btn-article" onClick={ buttonToggle}>{btnText}</button>
+      </div>
+
+      {show && <div className="auth-inner add-article-form">
+        
+       <form>
           <h3>Add Article</h3>
           <div className="mb-3">
             <label>Article Name</label>
@@ -132,14 +167,14 @@ function JournalPage(props) {
                   key={c}
                   type="text"
                   className={`form-control my-3 ${index}`}
-                  placeholder={`Author ${index + 1}`}
+                  placeholder={`Email Address of Author ${index + 1}`}
                 ></input>
               );
             })}
           </div>
 
           <div className="mb-3">
-            <label>Reviewer 1</label>
+            <label>Email Address of Reviewer 1</label>
             <input
               type="text"
               name="reviewer1"
@@ -149,7 +184,7 @@ function JournalPage(props) {
                 setReviewer([...new Set([...reviewer, e.target.value])]);
               }}
             />
-            <label>Reviewer 2</label>
+            <label>Email Address of Reviewer 2</label>
             <input
               type="text"
               name="reviewer2"
@@ -160,7 +195,7 @@ function JournalPage(props) {
                 setReviewer([...new Set([...reviewer, e.target.value])]);
               }}
             />
-            <label>Reviewer 3</label>
+            <label>Email Address of Reviewer 3</label>
             <input
               type="text"
               name="reviewer3"
@@ -171,7 +206,7 @@ function JournalPage(props) {
                 setReviewer([...new Set([...reviewer, e.target.value])]);
               }}
             />
-            <label>Reviewer 4</label>
+            <label>Email Address of Reviewer 4</label>
             <input
               type="text"
               name="reviewer4"
@@ -231,8 +266,8 @@ function JournalPage(props) {
           >
             {message}
           </div> */}
-        </form>
-      </div>
+        </form> 
+      </div> }
     </div>
   );
 }

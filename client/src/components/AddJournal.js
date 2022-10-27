@@ -74,6 +74,7 @@ function AddJournal(props) {
             className="form-control"
             value={journalName}
             name="journal_name"
+            autoComplete="off"
             onChange={(e) => {
               setMessageDisplay("none");
               setJournalName(e.target.value);
@@ -100,10 +101,12 @@ function AddJournal(props) {
           <input
             type="file"
             name="image"
+            className="form-control"
             onChange={(e) => {
               setImage(e.target.files[0]);
             }}
           />
+          <div>Max. Size Permitted - 2MB </div>
         </div>
         <div className="d-grid">
           <button
