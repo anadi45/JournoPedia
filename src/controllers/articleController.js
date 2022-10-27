@@ -159,4 +159,31 @@ const referArticle = async (req,res) => {
     }
 }
 
-module.exports = {addArticle, downloadArticle, deleteArticle, referArticle};
+//@route    GET /allArticlesForReferral
+//@descr    Fetch all articles to be referred for peer review
+//@access   Private
+
+const allArticlesForReferral = async (req,res)=> {
+    try {
+        const journals = await Journal.find({editors: req.rootuser._id});
+        let journalIds = [];
+
+        for(let i=0;i<journals.length;i++) {
+            journalIds.push(journals[i]._id);
+        }
+
+        const articles = await Article.find({journal: {$in: journalIds}});
+
+        if(articles && articles.length) {
+            res.send(articles);
+        } else {
+            res.send({
+                message: "No articles for review"
+            });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = {addArticle, downloadArticle, deleteArticle, referArticle, allArticlesForReferral};
