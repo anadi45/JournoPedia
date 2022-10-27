@@ -124,9 +124,12 @@ const viewJournal = async (req, res) => {
 		
 		const author_id = journal.author;
 		const author = await User.findById(author_id);
+
+		const otherAuthorsId = journal.editors;
+		const otherAuthors = await User.find({_id: {$in: otherAuthorsId}});
 		
 		if (journal && author) {
-			res.send({journal,author});
+			res.send({journal,author,otherAuthors});
 		} else {
 			res.send({
 				message: "Journal not found!",

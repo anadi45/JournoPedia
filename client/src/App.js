@@ -90,13 +90,13 @@ function App() {
 
                     <Dropdown.Menu>
                       <Dropdown.Item>
-                        <Link className="nav-link" to={"/publish-journal"}>
-                          Publish Journal
+                        <Link className="nav-link" to="/profile">
+                          Profile
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <Link className="nav-link" to="/profile">
-                          Profile
+                        <Link className="nav-link" to={"/publish-journal"}>
+                          Publish Journal
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
