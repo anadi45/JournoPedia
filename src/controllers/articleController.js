@@ -182,7 +182,7 @@ const allArticlesForReferral = async (req, res) => {
     }
 
     const articles = await Article.find({ journal: { $in: journalIds } });
-    console.log(articles);
+
     if (articles && articles.length) {
       res.send(articles);
     } else {
