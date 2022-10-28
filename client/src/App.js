@@ -48,9 +48,6 @@ function App() {
     });
   }, []);
 
-  const handleSelect = (e) => {
-    // console.log(e.target.value);
-  };
 
   return (
     <Router>

@@ -31,7 +31,7 @@ function Home(props) {
         {/* <div class="container"> */}
         <div className="row">
           {journals.map((item, i) => {
-            console.log(i);
+            // console.log(i);
             return (
               <div key={item._id} className="col col-md-3 card-div">
                 <Link to={`/journal/${item._id}`} className="card-link">
