@@ -39,7 +39,7 @@ function ReviewPage() {
     );
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(id) {
     // e.preventDefault();
     const config = {
       headers: {
@@ -51,7 +51,7 @@ function ReviewPage() {
     console.log(articleId);
     await axios
       .post(
-        `http://localhost:5000/referArticle/${articleId}`,
+        `http://localhost:5000/referArticle/${id}`,
         {
           option: passForReview,
         },
@@ -84,7 +84,6 @@ function ReviewPage() {
                 >
                   Download
                 </button>
-                {/* <form></form> */}
                 <Dropdown
                   className="review-dropdown"
                   options={["YES", "NO"]}
@@ -98,9 +97,7 @@ function ReviewPage() {
                   // type="submit"
                   className="submit-btn"
                   onClick={() => {
-                    console.log(item._id);
-                    setArticleId(item._id);
-                    handleSubmit();
+                    handleSubmit(item._id);
                   }}
                 >
                   Submit
