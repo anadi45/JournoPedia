@@ -9,7 +9,7 @@ function Home(props) {
   const [spinnerVisible, setSpinnerVisible] = useState("visible");
 
   useEffect(() => {
-    props.setDisplayItems(["none", "none", "inline", "inline", "inline"]);
+    props.setDisplayItems(["none", "none", "inline"]);
     axios.get(`http://localhost:5000/getAllJournals`).then((res) => {
       setSpinnerVisible("hidden");
       setJournals(res.data);

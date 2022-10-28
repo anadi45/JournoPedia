@@ -23,10 +23,9 @@ function App() {
     "inline",
     "inline",
     "none",
-    "none",
-    "none",
   ]);
   const [username, setUsername] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   // const navigate = useNavigate();
 
@@ -44,6 +43,7 @@ function App() {
       },
     };
     axios.get(`http://localhost:5000/userDetailsToken`, config).then((res) => {
+      setUserRole(res.data.userRole);
       setUsername(res.data.name);
     });
   }, []);
@@ -78,7 +78,10 @@ function App() {
                     <span class="sign-up-color">Sign up</span>
                   </Link>
                 </li>
-                <li className="nav-item logout-link">
+                <li
+                  className="nav-item logout-link"
+                  style={{ display: displayItems[2] }}
+                >
                   <Dropdown className="">
                     <Dropdown.Toggle
                       className="dropdown-btn"
@@ -94,11 +97,13 @@ function App() {
                           Profile
                         </Link>
                       </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Link className="nav-link" to={"/publish-journal"}>
-                          Publish Journal
-                        </Link>
-                      </Dropdown.Item>
+                      {userRole === "Admin" && (
+                        <Dropdown.Item>
+                          <Link className="nav-link" to={"/publish-journal"}>
+                            Publish Journal
+                          </Link>
+                        </Dropdown.Item>
+                      )}
                       <Dropdown.Item>
                         <Link className="nav-link" to="/review-article">
                           Review Article

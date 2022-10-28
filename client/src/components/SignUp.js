@@ -54,7 +54,7 @@ function SignUp() {
         institute: institute,
         country: country,
         expertise: topics,
-        designation: designation
+        designation: designation,
       })
       .then((res) => {
         setSpinnerVisible("hidden");
