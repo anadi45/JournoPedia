@@ -134,6 +134,7 @@ function JournalPage(props) {
               type="text"
               className="form-control"
               // value={journalName}
+              autoComplete="off"
               name="article_name"
               onChange={(e) => {
                 setArticleName(e.target.value);

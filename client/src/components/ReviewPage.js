@@ -9,7 +9,7 @@ function ReviewPage() {
   const [cookies, setCookie] = useCookies(["token"]);
   const [articles, setArticles] = useState([]);
   const [noArticlesMessage, setNoArticlesMessage] = useState(null);
-  const [passForReview, setPassForReview] = useState(null);
+  const [passForReview, setPassForReview] = useState("");
   const [articleId, setArticleId] = useState("");
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function ReviewPage() {
         if (res.data.message === "No articles for review")
           setNoArticlesMessage(res.data.message);
         setArticles(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       });
   }, []);
 
@@ -43,12 +43,12 @@ function ReviewPage() {
     // e.preventDefault();
     const config = {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json;charset=UTF-8",
         "access-control-allow-origin": "*",
         Authorization: "Bearer " + cookies.token,
       },
     };
-    console.log(articleId);
+    // console.log(passForReview);
     await axios
       .post(
         `http://localhost:5000/referArticle/${id}`,
@@ -86,7 +86,7 @@ function ReviewPage() {
                 </button>
                 <Dropdown
                   className="review-dropdown"
-                  options={["YES", "NO"]}
+                  options={["Yes", "No"]}
                   onChange={(e) => {
                     setPassForReview(e.label);
                   }}
