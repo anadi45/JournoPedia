@@ -13,16 +13,17 @@ const createJournal = async (req, res) => {
 				message: "File cannot be empty"
 			});
 		} 
-		const { journal_name, synopsis } = req.body;
+		const { journal_name, synopsis, volumes} = req.body;
 		
-		if(!journal_name || !synopsis) {
+		if(!journal_name || !synopsis ||!volumes) {
 			return res.send({
-				message: "journal_name or synopsis cannot be empty"
+				message: "journal_name or synopsis or volumes cannot be empty"
 			});
 		}
 		const newJournal = new Journal({
 			journal_name: journal_name,
 			synopsis: synopsis,
+			volumes: volumes,
 			// topics_covered: topics_covered,
 			author: req.rootuser,
 			image: req.file.path

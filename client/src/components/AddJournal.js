@@ -4,7 +4,8 @@ import "react-multiple-select-dropdown-lite/dist/index.css";
 import "../css/AddJournal.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
 import { useCookies } from "react-cookie";
 
 function AddJournal(props) {
@@ -20,11 +21,12 @@ function AddJournal(props) {
   const [messageColor, setMessageColor] = useState("");
   const [spinnerVisible, setSpinnerVisible] = useState("hidden");
   const [cookies, setCookie] = useCookies(["token"]);
+  const [volumes, setVolumes] = useState();
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(image);
+    // console.log(typeof volumes);
     setSpinnerVisible("visible");
     const config = {
       headers: {
@@ -45,7 +47,7 @@ function AddJournal(props) {
         config
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setSpinnerVisible("hidden");
         setMessage(res.data.message);
         setMessageDisplay("inline");
@@ -92,6 +94,18 @@ function AddJournal(props) {
             onChange={(e) => {
               setMessageDisplay("none");
               setSynopsis(e.target.value);
+            }}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Volumes per year</label>
+          <Dropdown
+            className="volumes-dropdown"
+            options={[2, 4]}
+            onChange={(e) => {
+              setVolumes(e.label);
+              console.log(volumes)
             }}
           />
         </div>
