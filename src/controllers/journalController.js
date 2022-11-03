@@ -195,28 +195,26 @@ const removeEditors = async (req,res) => {
 	try {
 		const {journal_id} = req.params;
 		const {editors} = req.body;
-		console.log(editors)
+		
 		let editorId = [];
 		let oldEditorList = [];
 		const journal = await Journal.findById(journal_id);
 		if (journal) {
 		  const editorObj = await User.find({ email: { $in: editors } });
 		  for (let i = 0; i < editorObj.length; i++) {
-			editorId.push(editorObj[i]._id);
+			editorId.push(editorObj[i]._id.toString());
 		  }
 		  oldEditorList = journal.editors;
 		}
-		console.log(editorId)
-		console.log(oldEditorList)
-		return;
-		let newEditorList = [...oldEditorList];
-	
-		editorId.forEach((id) => {
-		  if (oldEditorList.includes(id) == false) {
+
+		let newEditorList = [];
+
+		oldEditorList.forEach((id) => {
+		  if (editorId.includes(id.toString()) == false) {
 			newEditorList.push(id);
 		  }
 		});
-	
+
 		const add = await Journal.findByIdAndUpdate(journal_id, {
 		  editors: newEditorList,
 		});
