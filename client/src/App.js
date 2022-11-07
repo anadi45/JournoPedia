@@ -17,183 +17,172 @@ import Status from "./components/Status";
 import ReviewPage from "./components/ReviewPage";
 
 function App() {
-  const [cookies, setCookie] = useCookies(["token"]);
-  const [journalIds, setJournalIds] = useState([]);
-  const [displayItems, setDisplayItems] = useState([
-    "inline",
-    "inline",
-    "none",
-  ]);
-  const [username, setUsername] = useState("");
-  const [userRole, setUserRole] = useState("");
+	const [cookies, setCookie] = useCookies(["token"]);
+	const [journalIds, setJournalIds] = useState([]);
+	const [displayItems, setDisplayItems] = useState([
+		"inline",
+		"inline",
+		"none",
+	]);
+	const [username, setUsername] = useState("");
+	const [userRole, setUserRole] = useState("");
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // const navigate = useNavigate();
+	// const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get(`http://localhost:5000/getAllJournalIds`).then((res) => {
-      // console.log(res.data);
-      setJournalIds(res.data);
-    });
+	useEffect(() => {
+		if (cookies.token) setIsLoggedIn(true);
 
-    const config = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "access-control-allow-origin": "*",
-        Authorization: "Bearer " + cookies.token,
-      },
-    };
-    axios.get(`http://localhost:5000/userDetailsToken`, config).then((res) => {
-      setUserRole(res.data.userRole);
-      setUsername(res.data.name);
-    });
-  }, []);
+		axios.get(`http://localhost:5000/getAllJournalIds`).then((res) => {
+			// console.log(res.data);
+			setJournalIds(res.data);
+		});
 
+		const config = {
+			headers: {
+				"Content-Type": "multipart/form-data",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
+		axios.get(`http://localhost:5000/userDetailsToken`, config).then((res) => {
+			setUserRole(res.data.userRole);
+			setUsername(res.data.name);
+		});
+	}, []);
 
-  return (
-    <Router>
-      <div className="App">
-        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-          <div className="container">
-            <Link className="navbar-brand" to={"/"}>
-              <span class="brand-color">JournoPedia</span>
-            </Link>
-            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-              <ul className="navbar-nav ml-auto">
-                <li
-                  className="nav-item login-link"
-                  style={{ display: displayItems[0] }}
-                >
-                  <Link className="nav-link" to={"/sign-in"}>
-                    <span class="login-color">Login</span>
-                  </Link>
-                </li>
-                <li
-                  className="nav-item sign-up-link"
-                  style={{ display: displayItems[1] }}
-                >
-                  <Link className="nav-link" to={"/sign-up"}>
-                    <span class="sign-up-color">Sign up</span>
-                  </Link>
-                </li>
-                <li
-                  className="nav-item logout-link"
-                  style={{ display: displayItems[2] }}
-                >
-                  <Dropdown className="">
-                    <Dropdown.Toggle
-                      className="dropdown-btn"
-                      variant=""
-                      id="dropdown-basic"
-                    >
-                      <i class="far fa-user" /> {username}
-                    </Dropdown.Toggle>
+	return (
+		<Router>
+			<div className="App">
+				<nav className="navbar navbar-expand-lg navbar-light fixed-top">
+					<div className="container">
+						<Link className="navbar-brand" to={"/"}>
+							<span class="brand-color">JournoPedia</span>
+						</Link>
+						<div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+							<ul className="navbar-nav ml-auto">
+								<li
+									className="nav-item login-link"
+									style={{ display: displayItems[0] }}
+								>
+									<Link className="nav-link" to={"/sign-in"}>
+										<span class="login-color">Login</span>
+									</Link>
+								</li>
+								<li
+									className="nav-item sign-up-link"
+									style={{ display: displayItems[1] }}
+								>
+									<Link className="nav-link" to={"/sign-up"}>
+										<span class="sign-up-color">Sign up</span>
+									</Link>
+								</li>
+								<li
+									className="nav-item logout-link"
+									style={{
+										display: displayItems[2],
+										visibility: isLoggedIn ? "visible" : "hidden",
+									}}
+								>
+									<Dropdown className="">
+										<Dropdown.Toggle
+											className="dropdown-btn"
+											variant=""
+											id="dropdown-basic"
+										>
+											<i class="far fa-user" /> {username}
+										</Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Link className="nav-link" to="/profile">
-                          Profile
-                        </Link>
-                      </Dropdown.Item>
-                      {userRole === "Admin" && (
-                        <Dropdown.Item>
-                          <Link className="nav-link" to={"/publish-journal"}>
-                            Publish Journal
-                          </Link>
-                        </Dropdown.Item>
-                      )}
-                      <Dropdown.Item>
-                        <Link className="nav-link" to="/review-article">
-                          Review Article
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Link className="nav-link" to="/status">
-                          Submission Status
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Link className="nav-link" to="/logout">
-                          <span>Log out</span>
-                        </Link>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <div className="auth-wrapper">
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                cookies.token ? (
-                  <Home setDisplayItems={setDisplayItems} />
-                ) : (
-                  <Login />
-                )
-              }
-            />
-            <Route path="/sign-in" element={<Login />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route
-              path="/home"
-              element={
-                cookies.token ? (
-                  <Home setDisplayItems={setDisplayItems} />
-                ) : (
-                  <Login />
-                )
-              }
-            />
-            <Route
-              path="/publish-journal"
-              element={
-                cookies.token ? (
-                  <AddJournal setDisplayItems={setDisplayItems} />
-                ) : (
-                  <Login />
-                )
-              }
-            />
+										<Dropdown.Menu>
+											<Dropdown.Item>
+												<Link className="nav-link" to="/profile">
+													Profile
+												</Link>
+											</Dropdown.Item>
+											{userRole === "Admin" && (
+												<Dropdown.Item>
+													<Link className="nav-link" to={"/publish-journal"}>
+														Publish Journal
+													</Link>
+												</Dropdown.Item>
+											)}
+											<Dropdown.Item>
+												<Link className="nav-link" to="/review-article">
+													Review Article
+												</Link>
+											</Dropdown.Item>
+											<Dropdown.Item>
+												<Link className="nav-link" to="/status">
+													Submission Status
+												</Link>
+											</Dropdown.Item>
+											<Dropdown.Item>
+												<Link className="nav-link" to="/logout">
+													<span>Log out</span>
+												</Link>
+											</Dropdown.Item>
+										</Dropdown.Menu>
+									</Dropdown>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<div className="auth-wrapper">
+					<Routes>
+						<Route
+							exact
+							path="/"
+							element={<Home setDisplayItems={setDisplayItems} />}
+						/>
+						<Route path="/sign-in" element={<Login />} />
+						<Route path="/sign-up" element={<SignUp />} />
+						<Route
+							path="/home"
+							element={<Home setDisplayItems={setDisplayItems} />}
+						/>
+						<Route
+							path="/publish-journal"
+							element={
+								cookies.token ? (
+									<AddJournal setDisplayItems={setDisplayItems} />
+								) : (
+									<Login />
+								)
+							}
+						/>
 
-            <Route
-              path="/profile"
-              element={<Profile setDisplayItems={setDisplayItems} />}
-            />
+						<Route
+							path="/profile"
+							element={<Profile setDisplayItems={setDisplayItems} />}
+						/>
 
-            <Route path="/review-article" element={<ReviewPage />} />
+						<Route path="/review-article" element={<ReviewPage />} />
 
-            <Route path="/status" element={<Status />} />
-            <Route
-              path="/logout"
-              element={<Logout setDisplayItems={setDisplayItems} />}
-            />
+						<Route path="/status" element={<Status />} />
+						<Route
+							path="/logout"
+							element={<Logout setDisplayItems={setDisplayItems} />}
+						/>
 
-            {journalIds.map((item) => {
-              return (
-                <Route
-                  key={item}
-                  path={`/journal/${item}`}
-                  element={
-                    cookies.token ? (
-                      <JournalPage
-                        setDisplayItems={setDisplayItems}
-                        journalId={item}
-                      />
-                    ) : (
-                      <Login />
-                    )
-                  }
-                />
-              );
-            })}
-          </Routes>
-        </div>
-      </div>
-    </Router>
-  );
+						{journalIds.map((item) => {
+							return (
+								<Route
+									key={item}
+									path={`/journal/${item}`}
+									element={
+										<JournalPage
+											setDisplayItems={setDisplayItems}
+											journalId={item}
+										/>
+									}
+								/>
+							);
+						})}
+					</Routes>
+				</div>
+			</div>
+		</Router>
+	);
 }
 export default App;
