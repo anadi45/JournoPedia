@@ -195,10 +195,32 @@ const allArticlesForReferral = async (req, res) => {
   }
 };
 
+//@route	GET /articleStatus
+//@descr	Get all articles with their status
+//@access	Private
+
+const articleStatus = async (req,res) => {
+	try {
+		
+		const allArticles = await Article.find({submitted_by: req.rootuser._id});
+		if(allArticles) {
+			res.send(allArticles);
+		} else {
+			res.send({
+				message: "No articles submitted"
+			});
+		}
+		
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
   addArticle,
   downloadArticle,
   deleteArticle,
   referArticle,
   allArticlesForReferral,
+  articleStatus
 };
