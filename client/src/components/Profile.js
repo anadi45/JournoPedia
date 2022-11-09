@@ -3,6 +3,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import "../css/Profile.css";
 import { PuffLoader } from "react-spinners";
+import EditInfoPopup from "./EditInfoPopup";
 
 function Profile() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -100,9 +101,7 @@ function Profile() {
 						</div>
 					</div>
 
-					<div className="edit-info-div">
-						<i class="fas fa-pen"></i> Edit Info
-					</div>
+					<EditInfoPopup />
 				</div>
 			</div>
 		);
