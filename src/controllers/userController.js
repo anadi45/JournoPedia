@@ -168,4 +168,41 @@ const userDetailsToken = (req,res) => {
 	}
 }
 
-module.exports = { signup, login, logout, userDetails, userDetailsToken };
+//@route  PATCH /editUserDetails
+//@descr  Edit user details 
+//@access Private
+
+const editUserDetails = async (req,res)=>{
+  try {
+    const {name,phone,expertise,designation,institute,country} = req.body;
+
+    if(!name || !phone || !expertise || !designation || !institute || !country) {
+      return res.send({
+        message: "All fields required"
+      });
+    }
+
+    const editUser = await User.findByIdAndUpdate(req.rootuser.id,{
+      name: name,
+      phone: phone,
+      expertise: expertise,
+      designation: designation,
+      country: country,
+      institute: institute
+    });
+    
+    if(editUser) {
+      res.send({
+        message: "Successfully updated"
+      });
+    } else {
+      res.send({
+        message: "Not Updated"
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+module.exports = { signup, login, logout, userDetails, userDetailsToken, editUserDetails };
