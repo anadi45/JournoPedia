@@ -44,12 +44,11 @@
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    border: 4px solid;
     display: inline-block;
     margin: 40px 90px;
     font-size: 60px;
     text-align: center;
-    padding-top: 56px;
+    padding-top: 50px;
 }
 .circle span{
     font-size: 18px;
