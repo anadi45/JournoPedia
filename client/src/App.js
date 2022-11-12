@@ -15,6 +15,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Profile from "./components/Profile";
 import Status from "./components/Status";
 import ReviewPage from "./components/ReviewPage";
+import AddArticle from "./components/AddArticle";
 
 function App() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -107,6 +108,11 @@ function App() {
 												</Dropdown.Item>
 											)}
 											<Dropdown.Item>
+												<Link className="nav-link" to="/add-article">
+													Add Article
+												</Link>
+											</Dropdown.Item>
+											<Dropdown.Item>
 												<Link className="nav-link" to="/review-article">
 													Review Article
 												</Link>
@@ -158,6 +164,7 @@ function App() {
 						/>
 
 						<Route path="/review-article" element={<ReviewPage />} />
+						<Route path="/add-article" element={<AddArticle />} />
 
 						<Route path="/status" element={<Status />} />
 						<Route

@@ -1,0 +1,59 @@
+.add-article-div{
+    padding: 20px 30px;
+        width: 80%;
+        margin: -10px auto;
+        background-color: white;
+        min-height: 100%;
+}
+.add-article-form{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.go2441762052{
+    width: fit-content;
+        margin: auto;
+}
+.guidelines-div{
+    width: 80%;
+        margin: auto;
+}
+.reviewer-heading{
+    display: block;
+        border-bottom: 1px solid;
+}
+.add-reviewer-form{
+    width: fit-content;
+}
+.reviewer-div{
+    margin: 20px 10px;
+}
+.reviewer-input{
+    display: inline-block;
+        width: 20%;
+        margin: 10px 15px;
+}
+.Dropdown-root{
+    display: inline-block;
+    min-width: 25%;
+    position: relative;
+        margin-left: 10px;
+}
+.Dropdown-control{
+    position: absolute;
+        top: -25px;
+        border-radius: 8px;
+        height: 38px;
+}
+.add-author-btn{
+    background-color: #33c2ef;
+    border: none;
+    margin: auto;
+    display: inherit;
+}
+.final-submit-btn{
+    position: absolute;
+    right: 20%;
+    background-color: #33c2ef;
+    border: none;
+    padding: 8px 45px;
+}
