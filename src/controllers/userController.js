@@ -205,4 +205,43 @@ const editUserDetails = async (req,res)=>{
   }
 }
 
-module.exports = { signup, login, logout, userDetails, userDetailsToken, editUserDetails };
+//@route  PATCH /changePassword
+//@descr  Change account password	
+//@access Private
+
+const changePassword = async (req,res) => {
+	try {
+		const {oldPassword,newPassword} = req.body;
+
+		const findUser = await User.findById(req.rootuser.id);
+
+		if(findUser) {
+			const match = await bcrypt.compare(oldPassword, findUser.password);
+			
+			if(match) {
+				bcrypt.hash(newPassword, saltRounds, async function (err, hash) {
+					if (err) {
+					  console.error("Password unable to be hashed");
+					} else {
+						const change = await User.findByIdAndUpdate(req.rootuser.id,{
+							password: hash
+						});
+						if(change) {
+							res.send({
+								message: "Password changed succesfully"
+							})
+						}
+					}
+				})
+			} else {
+				res.send({
+					message: "Wrong Password"
+				});
+			}
+		}
+
+	} catch (error) {
+		console.log(error);
+	}
+}
+module.exports = { signup, login, logout, userDetails, userDetailsToken, editUserDetails, changePassword };
