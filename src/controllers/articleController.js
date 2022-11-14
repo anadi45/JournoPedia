@@ -225,11 +225,78 @@ const articleStatus = async (req,res) => {
 	}
 }
 
+//@route	GET /getNumberVolumes/:journal_id
+//@descr	Get no. of all volumes
+//@access	Public
+
+const getNumberVolumes = async(req,res)=> {
+	try {
+		const {journal_id} = req.params;
+
+		const allArticles = await Article.find({journal: journal_id});
+    
+    let yearList = new Set();
+    for (let i = 0; i < allArticles.length; i++) {
+        yearList.add((allArticles[i].date_of_submission).getFullYear());
+    }
+    let volumes = [...yearList,2011];
+    volumes = volumes.sort();
+    return res.send({
+      volumes
+    });
+
+    yearList.forEach((year)=>{
+      let obj = {};
+      for (let i = 0; i < allArticles.length; i++) {
+          
+      }
+    })
+    
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+//@route  GET /volume/:year
+//@descr  Get a particular volume
+//@access Public
+
+const volume = async (req,res) => {
+  try {
+    const {year} = req.params;
+    const {journal_id} = req.body;
+
+    const startDate = new Date(year);
+    const endDate = new Date( (new Date(year, 12,1))-1 );
+
+    const allArticles = await Article.find({
+      journal: journal_id,
+      date_of_submission: {
+        $gte: startDate,
+        $lte: endDate
+      }
+    });
+
+    if(allArticles) {
+      res.send(allArticles);
+    } else {
+      res.send({
+        message: "No articles found"
+      });
+    }
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   addArticle,
   downloadArticle,
   deleteArticle,
   referArticle,
   allArticlesForReferral,
-  articleStatus
+  articleStatus,
+  getNumberVolumes,
+  volume
 };

@@ -30,7 +30,9 @@ const {
   deleteArticle,
   referArticle,
   allArticlesForReferral,
-  articleStatus
+  articleStatus,
+  getNumberVolumes,
+  volume
 } = require("../controllers/articleController");
 
 // User Routes
@@ -60,6 +62,8 @@ router.delete("/deleteArticle/:article_id", isLoggedIn, deleteArticle);
 router.post("/referArticle/:article_id", isLoggedIn, referArticle);
 router.get("/allArticlesForReferral", isLoggedIn, allArticlesForReferral);
 router.get("/articleStatus", isLoggedIn, articleStatus);
+router.get("/getNumberVolumes/:journal_id", getNumberVolumes);
+router.get("/volume/:year", volume);
 
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);
