@@ -76,7 +76,7 @@ function SignUp() {
 	};
 
 	return (
-		<div className="auth-inner">
+		<div className="auth-inner signup-div">
 			<form>
 				<h3>Sign Up</h3>
 				<div className="mb-3">
@@ -198,7 +198,7 @@ function SignUp() {
 				</div>
 				<div className="d-grid">
 					<button
-						className="btn btn-primary"
+						className="btn btn-primary login-btn"
 						type="submit"
 						onClick={handleSubmit}
 					>

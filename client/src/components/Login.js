@@ -38,7 +38,7 @@ function Login() {
 	};
 
 	return (
-		<div className="auth-inner">
+		<div className="login-div auth-inner">
 			<form>
 				<h3>Log In</h3>
 				<div className="mb-3">
@@ -67,21 +67,9 @@ function Login() {
 						}}
 					/>
 				</div>
-				<div className="mb-3">
-					<div className="custom-control custom-checkbox">
-						<input
-							type="checkbox"
-							className="custom-control-input"
-							id="customCheck1"
-						/>
-						<label className="custom-control-label" htmlFor="customCheck1">
-							Remember me
-						</label>
-					</div>
-				</div>
 				<div className="d-grid">
 					<button
-						className="btn btn-primary"
+						className="btn btn-primary login-btn"
 						type="submit"
 						onClick={handleSubmit}
 					>
