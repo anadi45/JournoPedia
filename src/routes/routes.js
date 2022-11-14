@@ -7,7 +7,10 @@ const {
   login,
   logout, 
   userDetails,
-  userDetailsToken } = require("../controllers/userController");
+  userDetailsToken, 
+  editUserDetails,
+  changePassword
+} = require("../controllers/userController");
 
 const {
   createJournal,
@@ -36,6 +39,8 @@ router.post("/login", login);
 router.get("/logout", logout);
 router.get("/userDetails/:id", userDetails);
 router.get("/userDetailsToken", isLoggedIn, userDetailsToken);
+router.patch("/editUserDetails", isLoggedIn, editUserDetails);
+router.patch("/changePassword", isLoggedIn, changePassword);
 
 //Journal Operations
 router.post("/createJournal", isAdmin, imageUpload.single("image"), createJournal);

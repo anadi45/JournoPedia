@@ -168,4 +168,80 @@ const userDetailsToken = (req,res) => {
 	}
 }
 
-module.exports = { signup, login, logout, userDetails, userDetailsToken };
+//@route  PATCH /editUserDetails
+//@descr  Edit user details 
+//@access Private
+
+const editUserDetails = async (req,res)=>{
+  try {
+    const {name,phone,expertise,designation,institute,country} = req.body;
+
+    if(!name || !phone || !expertise || !designation || !institute || !country) {
+      return res.send({
+        message: "All fields required"
+      });
+    }
+
+    const editUser = await User.findByIdAndUpdate(req.rootuser.id,{
+      name: name,
+      phone: phone,
+      expertise: expertise,
+      designation: designation,
+      country: country,
+      institute: institute
+    });
+    
+    if(editUser) {
+      res.send({
+        message: "Successfully updated"
+      });
+    } else {
+      res.send({
+        message: "Not Updated"
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//@route  PATCH /changePassword
+//@descr  Change account password	
+//@access Private
+
+const changePassword = async (req,res) => {
+	try {
+		const {oldPassword,newPassword} = req.body;
+
+		const findUser = await User.findById(req.rootuser.id);
+
+		if(findUser) {
+			const match = await bcrypt.compare(oldPassword, findUser.password);
+			
+			if(match) {
+				bcrypt.hash(newPassword, saltRounds, async function (err, hash) {
+					if (err) {
+					  console.error("Password unable to be hashed");
+					} else {
+						const change = await User.findByIdAndUpdate(req.rootuser.id,{
+							password: hash
+						});
+						if(change) {
+							res.send({
+								message: "Password changed succesfully"
+							})
+						}
+					}
+				})
+			} else {
+				res.send({
+					message: "Wrong Password"
+				});
+			}
+		}
+
+	} catch (error) {
+		console.log(error);
+	}
+}
+module.exports = { signup, login, logout, userDetails, userDetailsToken, editUserDetails, changePassword };
