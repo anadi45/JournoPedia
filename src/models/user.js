@@ -48,6 +48,9 @@ const userSchema = new mongoose.Schema({
     },
     country: {
         type: String
+    },
+    image_path: {
+        type: String
     }
 });
 
