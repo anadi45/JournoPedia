@@ -27,6 +27,49 @@ function EditInfoPopup() {
 		setShow(false);
 		setChangePass(false);
 	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const config = {
+			headers: {
+				"Content-Type": "multipart/form-data",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
+		if (changePass) {
+			axios
+				.post(
+					`http://localhost:5000/changePassword`,
+					{
+						oldPassword: currentPassword,
+						newPassword: newPassword,
+					},
+					config
+				)
+				.then((res) => {
+					console.log(res.data.message);
+				});
+		} else {
+			axios
+				.post(
+					`http://localhost:5000/editUserDetails`,
+					{
+						name: name,
+						phone: phone,
+						expertise: expertise,
+						designation: designation,
+						institute: institute,
+						// country: country,
+					},
+					config
+				)
+				.then((res) => {
+					console.log(res.data.message);
+				});
+		}
+		setShow(false);
+		setChangePass(false);
+	};
 	const handleShow = () => {
 		setShow(true);
 		const config = {
@@ -203,7 +246,7 @@ function EditInfoPopup() {
 							<Button variant="secondary" onClick={handleClose}>
 								Close
 							</Button>
-							<Button variant="primary" onClick={handleClose}>
+							<Button variant="primary" onClick={handleSubmit}>
 								Save Changes
 							</Button>
 						</Modal.Footer>

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { countries } from "../../utils/countries";
 import Dropdown from "react-dropdown";
+import "../../css/StepThree.css";
 
-function StepThree() {
+function StepThree(props) {
 	const [inputValues, setInputValues] = useState([]);
 	const [reviewer, setReviewer] = useState([]);
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -33,7 +34,7 @@ function StepThree() {
 	// 				peer_choice: reviewer,
 	// 				article: article,
 	// 				abstract: abstract,
-	// 				// journal_id: props.journalId,
+	// 				journal_id: props.journalId,
 	// 				authors: authorList,
 	// 			},
 	// 			config
@@ -45,6 +46,20 @@ function StepThree() {
 	// 			}
 	// 		});
 	// };
+
+	useEffect(() => {
+		const peerChoice = [];
+		for (var i = 0; i < 4; i++) {
+			const obj = {
+				name: names[i],
+				email: emails[i],
+				phone: phones[i],
+				countryValues: countryValues[i],
+			};
+			peerChoice.push(obj);
+		}
+		props.setPeerChoice(peerChoice);
+	}, [names, emails, phones, countryValues]);
 
 	console.log(names, phones, emails, countryValues);
 	return (

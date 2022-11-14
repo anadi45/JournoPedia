@@ -32,18 +32,6 @@
         width: 20%;
         margin: 10px 15px;
 }
-.Dropdown-root{
-    display: inline-block;
-    min-width: 25%;
-    position: relative;
-        margin-left: 10px;
-}
-.Dropdown-control{
-    position: absolute;
-        top: -25px;
-        border-radius: 8px;
-        height: 38px;
-}
 .add-author-btn{
     background-color: #33c2ef;
     border: none;

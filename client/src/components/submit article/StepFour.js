@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { countries } from "../../utils/countries";
 import Dropdown from "react-dropdown";
 
-function StepFour() {
+function StepFour(props) {
 	const [inputValues, setInputValues] = [];
 	const [counter, setCounter] = useState(0);
 	const [names, setNames] = useState(["", "", "", ""]);
 	const [emails, setEmails] = useState(["", "", "", ""]);
 	const [phones, setPhones] = useState(["", "", "", ""]);
 	const [countryValues, setCountryValues] = useState(["", "", "", ""]);
+
+	useEffect(() => {
+		const authors = [];
+		for (var i = 0; i < 4; i++) {
+			const obj = {
+				name: names[i],
+				email: emails[i],
+				phone: phones[i],
+				countryValues: countryValues[i],
+			};
+			authors.push(obj);
+		}
+		props.setAuthors(authors);
+	}, [names, emails, phones, countryValues]);
 
 	const handleOnChange = (e) => {
 		const abc = {};
@@ -99,7 +113,11 @@ function StepFour() {
 					);
 				})}
 			</div>
-			<button type="submit" className="btn btn-primary final-submit-btn">
+			<button
+				type="submit"
+				className="btn btn-primary final-submit-btn"
+				onClick={props.handleSubmit}
+			>
 				Submit
 			</button>
 		</>

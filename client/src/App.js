@@ -163,10 +163,19 @@ function App() {
 							element={<Profile setDisplayItems={setDisplayItems} />}
 						/>
 
-						<Route path="/review-article" element={<ReviewPage />} />
-						<Route path="/add-article" element={<AddArticle />} />
+						<Route
+							path="/review-article"
+							element={cookies.token ? <ReviewPage /> : <Login />}
+						/>
+						<Route
+							path="/add-article"
+							element={cookies.token ? <AddArticle /> : <Login />}
+						/>
 
-						<Route path="/status" element={<Status />} />
+						<Route
+							path="/status"
+							element={cookies.token ? <Status /> : <Login />}
+						/>
 						<Route
 							path="/logout"
 							element={<Logout setDisplayItems={setDisplayItems} />}
