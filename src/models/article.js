@@ -19,10 +19,11 @@ const articleSchema = new mongoose.Schema({
         type: String
     },
     authors: [{
-        email: String,
         name: String,
-        country: String,
-        institute: String
+        email: String,
+        phone: String,
+        institute: String,
+        country: String
     }],
     submitted_by: {
         type: mongoose.Schema.Types.ObjectId,
@@ -33,10 +34,11 @@ const articleSchema = new mongoose.Schema({
         ref: 'User'
     },   
     peer_choice: [{
-        email: String,
         name: String,
-        country: String,
-        institute: String
+        email: String,
+        phone: String,
+        institute: String,
+        country: String
     }],
     status: {
         type: String //Accepted,Rejected,Withdrawn,Under Review

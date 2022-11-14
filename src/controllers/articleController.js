@@ -2,6 +2,8 @@ const { Article } = require("../models/article");
 const { User } = require("../models/user");
 const { Journal } = require("../models/journal");
 const fs = require("fs");
+const {mail} = require("../utils/mailing");
+const { userDetails } = require("./userController");
 
 //@route    POST /addArticle
 //@descr    Add a article
@@ -107,7 +109,7 @@ const deleteArticle = async (req, res) => {
   }
 };
 
-//@route    POST /referArticle
+//@route    POST /referArticle/:article_id
 //@descr    Forward artcile for peer review
 //@access   Private
 
@@ -120,10 +122,38 @@ const referArticle = async (req, res) => {
     const journal_id = article.journal;
     const journal = await Journal.findById(journal_id);
     const editorList = journal.editors;
+    const author = await User.findById(article.submitted_by);
 
+    let mailingList = [];
+    for (let i=0; i<article.peer_choice.length; i++) {
+      mailingList.push(article.peer_choice[i].email)
+    }
+
+    const mailBody = `<h4>Greetings from Journopedia Team,</h4>
+    <p>You have been choosen to peer review an article by ${author.name} . The article has been accepted by our editorial team. 
+    The article has been submitted to ${journal.journal_name} journal.<br> 
+    Please review the article and score it for further publishing process.
+    </p>
+    <div>Author Details <br> 
+    Name - ${author.name} <br> 
+    Email - ${author.email} <br> 
+    Phone - ${author.phone} <br> 
+    Designation - ${author.designation} <br> 
+    Institute - ${author.institute} <br> 
+    Country - ${author.country} <br> 
+    </div>
+    <p>Kindly revert back with your review of the article to the author.</p>
+    
+    <div>Regards,<br>Team JournPedia</div>`;
+
+    const attachments = [{
+      filename: article.original_name,
+      path: article.path
+    }];
+    
     if (editorList.includes(req.rootuser._id)) {
       if (option == "Yes") {
-        //Mailing
+        mail(mailingList,mailBody,attachments);
         updateStatus = await Article.findByIdAndUpdate(article_id, {
           status: "Under Peer Review",
         });

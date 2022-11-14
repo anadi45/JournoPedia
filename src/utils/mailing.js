@@ -3,7 +3,7 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const MAIL_USER = process.env.MAIL_USER;
 const MAIL_PASSWORD = process.env.MAIL_PASSWORD;
 
-const mail = (to,body) => {
+const mail = (to,body,attachments) => {
 
     const transport = nodemailer.createTransport(smtpTransport({
         service: 'gmail',
@@ -20,7 +20,8 @@ const mail = (to,body) => {
         from: 'JournoPedia Team',
         to: to,
         subject: 'JournoPedia Team',
-        html: body
+        html: body,
+        attachments: attachments
     }
     
     transport.sendMail(options, (error, info) => {
