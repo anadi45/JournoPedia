@@ -9,7 +9,8 @@ const {
   userDetails,
   userDetailsToken, 
   editUserDetails,
-  changePassword
+  changePassword,
+  forgetPassword
 } = require("../controllers/userController");
 
 const {
@@ -43,6 +44,7 @@ router.get("/userDetails/:id", userDetails);
 router.get("/userDetailsToken", isLoggedIn, userDetailsToken);
 router.patch("/editUserDetails", isLoggedIn, editUserDetails);
 router.patch("/changePassword", isLoggedIn, changePassword);
+router.post("/forgetPassword", forgetPassword);
 
 //Journal Operations
 router.post("/createJournal", isAdmin, imageUpload.single("image"), createJournal);

@@ -3,6 +3,8 @@ const saltRounds = 10;
 const { User } = require("../models/user");
 const jwtSecret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
+const {generatePassword} = require("../utils/passwordGenerator");
+const { mail } = require("../utils/mailing");
 
 //@route    POST /signup
 //@descr    Signup an user
@@ -216,6 +218,13 @@ const changePassword = async (req,res) => {
 		const findUser = await User.findById(req.rootuser.id);
 
 		if(findUser) {
+			const mailingList = [findUser.email];
+			const mailBody = `<h4>Greetings from Journopedia Team,</h4>
+			<p>Your password has been changed succesfully.You can now log in with your new credentials.
+			</p>
+			
+			<div>Regards,<br>Team JournPedia</div>`;
+
 			const match = await bcrypt.compare(oldPassword, findUser.password);
 			
 			if(match) {
@@ -227,6 +236,7 @@ const changePassword = async (req,res) => {
 							password: hash
 						});
 						if(change) {
+							mail(mailingList, mailBody);
 							res.send({
 								message: "Password changed succesfully"
 							})
@@ -244,4 +254,54 @@ const changePassword = async (req,res) => {
 		console.log(error);
 	}
 }
-module.exports = { signup, login, logout, userDetails, userDetailsToken, editUserDetails, changePassword };
+
+
+//@route	POST /forgetPassword
+//@descr	Forgot Password
+//@access	Public
+
+const forgetPassword = async (req,res) => {
+	try {
+		const {email} = req.body;
+
+		const tempPassword = generatePassword(10);
+
+		const mailingList = [email];
+		const mailBody = `<h4>Greetings from Journopedia Team,</h4>
+		<p>Your password has been changed to <h1>${tempPassword}</h1>You can now log in with these new credentials 
+		and change you password. 
+		</p>
+		
+		<div>Regards,<br>Team JournPedia</div>`;
+	
+		bcrypt.hash(tempPassword, saltRounds, async function (err, hash) {
+			if (err) {
+				console.error("Password unable to be hashed");
+			} else {
+				const change = await User.updateOne({email: email},{
+					password: hash
+				});
+				if(change) {
+					mail(mailingList,mailBody);
+					res.send({
+						message: "Password changed succesfully"
+					});
+				}
+			}
+		});
+
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+module.exports = { 
+  signup, 
+  login, 
+  logout, 
+  userDetails, 
+  userDetailsToken, 
+  editUserDetails, 
+  changePassword,
+  forgetPassword 
+};
