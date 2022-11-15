@@ -52,6 +52,7 @@ function Status() {
 						<div key={i} className="article-status-div">
 							<h4>{article.article_name}</h4>
 							{article.status}
+							{/* <div>hello</div> */}
 						</div>
 					);
 				})}

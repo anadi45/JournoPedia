@@ -177,24 +177,6 @@ function SignUp() {
 						// value={defaultOption}
 						placeholder="Select an option"
 					/>
-					{/* <select
-            id="country"
-            name="country"
-            className="form-control"
-            value={country}
-            onChange={(e) => {
-              setCountry(e.target.value);
-            }}
-            defaultValue="-- select an option --"
-          >
-            {countries.map((country) => {
-              return (
-                <option key={country.label} value={country.label}>
-                  {country.label}
-                </option>
-              );
-            })}
-          </select> */}
 				</div>
 				<div className="d-grid">
 					<button

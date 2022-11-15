@@ -8,6 +8,8 @@ import MultiSelect from "react-multiple-select-dropdown-lite";
 import { expertise } from "../utils/expertise.js";
 import { PuffLoader } from "react-spinners";
 import axios from "axios";
+import { countries } from "../utils/countries";
+import Dropdown from "react-dropdown";
 
 function EditInfoPopup() {
 	const [show, setShow] = useState(false);
@@ -18,6 +20,7 @@ function EditInfoPopup() {
 	const [newPassword, setNewPassword] = useState("");
 	const [institute, setInstitute] = useState("");
 	const [designation, setDesignation] = useState("");
+	const [country, setCountry] = useState("");
 	const [topics, setTopics] = useState([]);
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -38,7 +41,7 @@ function EditInfoPopup() {
 		};
 		if (changePass) {
 			axios
-				.post(
+				.patch(
 					`http://localhost:5000/changePassword`,
 					{
 						oldPassword: currentPassword,
@@ -51,7 +54,7 @@ function EditInfoPopup() {
 				});
 		} else {
 			axios
-				.post(
+				.patch(
 					`http://localhost:5000/editUserDetails`,
 					{
 						name: name,
@@ -59,7 +62,7 @@ function EditInfoPopup() {
 						expertise: expertise,
 						designation: designation,
 						institute: institute,
-						// country: country,
+						country: country,
 					},
 					config
 				)
@@ -86,6 +89,7 @@ function EditInfoPopup() {
 			setTopics(res.data.expertise);
 			setDesignation(res.data.designation);
 			setInstitute(res.data.institute);
+			setCountry(res.data.country);
 			setSpinnerVisible("hidden");
 		});
 	};
@@ -221,6 +225,17 @@ function EditInfoPopup() {
 												onChange={(e) => {
 													setInstitute(e.target.value);
 												}}
+											/>
+										</div>
+										<div className="mb-3">
+											<label>Country</label>
+											<Dropdown
+												options={countries}
+												onChange={(e) => {
+													setCountry(e.label);
+												}}
+												value={country}
+												placeholder="Select an option"
 											/>
 										</div>
 									</>

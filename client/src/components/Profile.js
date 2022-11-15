@@ -67,13 +67,13 @@ function Profile() {
 				</div>
 				<div>
 					<div className="circle" style={{ border: "8px solid #00D100" }}>
-						{userInfo.total_accepted} <span>Accepted Journals</span>
+						{userInfo.total_accepted} <span>Accepted Articles</span>
 					</div>
 					<div className="circle" style={{ border: "8px solid #FF0000" }}>
-						{userInfo.total_rejected} <span>Rejected Journals</span>
+						{userInfo.total_rejected} <span>Rejected Articles</span>
 					</div>
 					<div className="circle" style={{ border: "8px solid blue" }}>
-						{userInfo.total_submitted} <span>Submitted Journals</span>
+						{userInfo.total_submitted} <span>Submitted Articles</span>
 					</div>
 				</div>
 				<div className="more-info-div">

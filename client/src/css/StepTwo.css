@@ -4,11 +4,11 @@
     width: 100%;
     position: relative;
     margin-left: 10px;
-}
+} */
 
 .Dropdown-control {
-    position: static;
-    width: 100%;
+    /* position: static; */
+    width: 98%;
     border-radius: 8px;
-    height: 38px;
-} */
+    /* height: 38px; */
+}

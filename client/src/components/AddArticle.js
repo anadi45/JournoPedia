@@ -48,7 +48,7 @@ function AddArticle() {
 			.then((res) => {
 				console.log(res.data);
 				if (res.data.message === "Article added successfully!") {
-					navigate("/");
+					navigate("/success");
 				}
 			});
 	};

@@ -12,6 +12,7 @@ function ReviewPage() {
 	const [noArticlesMessage, setNoArticlesMessage] = useState(null);
 	const [passForReview, setPassForReview] = useState("");
 	const [articlesCount, setArticlesCount] = useState(0);
+	const [articlesForReviewCount, setArticlesForReviewCount] = useState(0);
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
 
 	useEffect(() => {
@@ -31,7 +32,11 @@ function ReviewPage() {
 					setNoArticlesMessage(res.data.message);
 				setArticles(res.data);
 				console.log(res.data);
+				var articlesForReviewCount = 0;
+				for (var i = 0; i < res.data.length; i++)
+					if (res.data[i].status === "Under Review") articlesForReviewCount++;
 				setArticlesCount(res.data.length);
+				setArticlesForReviewCount(articlesForReviewCount);
 				setSpinnerVisible("hidden");
 				// console.log(res.data);
 			});
@@ -64,6 +69,7 @@ function ReviewPage() {
 			)
 			.then((res) => {
 				console.log(res);
+				window.location.reload();
 			});
 	}
 
@@ -90,48 +96,108 @@ function ReviewPage() {
 	} else
 		return (
 			<div className="review-page-div">
-				<div className="review-article-heading">
-					{articlesCount} Articles to Review
-				</div>
-				<table className="articles-table">
-					{articles.map((item) => {
-						return (
-							<tr className="articles-tr">
-								<td className="td-1">
-									<div className="article-heading">{item.article_name}</div>
-								</td>
-								<td className="td-2">
-									<button
-										className="download-btn"
-										value={item._id}
-										onClick={handleDownload}
-									>
-										Download
-									</button>
-									<Dropdown
-										className="review-dropdown"
-										options={["Yes", "No"]}
-										onChange={(e) => {
-											setPassForReview(e.label);
-										}}
-										// value={defaultOption}
-										placeholder="Pass for peer review"
-									/>
-									<button
-										// type="submit"
-										className="submit-btn"
-										onClick={() => {
-											handleSubmit(item._id);
-										}}
-									>
-										Submit
-									</button>
-								</td>
-							</tr>
-						);
-					})}
-				</table>
-				<div className="review-article-heading"> Articles Already Reviewed</div>
+				{articlesForReviewCount > 0 && (
+					<>
+						<div className="review-article-heading">
+							{articlesForReviewCount}{" "}
+							{articlesForReviewCount == 1 ? "Article" : "Articles"} to Review
+						</div>
+						<table className="articles-table">
+							{articles.map((item) => {
+								if (item.status === "Under Review")
+									return (
+										<tr className="articles-tr">
+											<td className="td-1">
+												<div className="article-heading">
+													{item.article_name}
+												</div>
+											</td>
+											<td className="td-2">
+												<button
+													className="download-btn"
+													value={item._id}
+													onClick={handleDownload}
+												>
+													Download
+												</button>
+												<Dropdown
+													className="review-dropdown"
+													options={["Yes", "No"]}
+													onChange={(e) => {
+														setPassForReview(e.label);
+													}}
+													// value={defaultOption}
+													placeholder="Pass for peer review"
+												/>
+												<button
+													// type="submit"
+													className="submit-btn"
+													onClick={() => {
+														handleSubmit(item._id);
+													}}
+												>
+													Submit
+												</button>
+											</td>
+										</tr>
+									);
+							})}
+						</table>
+					</>
+				)}
+
+				{articlesCount - articlesForReviewCount > 0 && (
+					<>
+						<div className="review-article-heading">
+							{articlesCount - articlesForReviewCount}{" "}
+							{articlesCount - articlesForReviewCount == 1
+								? "Article"
+								: "Articles"}{" "}
+							Already Reviewed
+						</div>
+						<table className="articles-table">
+							{articles.map((item) => {
+								if (item.status === "Under Peer Review")
+									return (
+										<tr className="articles-tr">
+											<td className="td-1">
+												<div className="article-heading">
+													{item.article_name}
+												</div>
+											</td>
+											<td className="td-2">
+												<button
+													className="download-btn"
+													value={item._id}
+													onClick={handleDownload}
+												>
+													Download
+												</button>
+												<Dropdown
+													className="review-dropdown"
+													options={["Yes", "No"]}
+													onChange={(e) => {
+														setPassForReview(e.label);
+													}}
+													// value={defaultOption}
+													placeholder="Pass for peer review"
+												/>
+												<button
+													// type="submit"
+													className="submit-btn"
+													onClick={() => {
+														handleSubmit(item._id);
+													}}
+												>
+													Submit
+												</button>
+											</td>
+										</tr>
+									);
+							})}
+						</table>
+					</>
+				)}
 			</div>
 		);
 }

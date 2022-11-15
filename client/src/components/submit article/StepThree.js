@@ -13,39 +13,6 @@ function StepThree(props) {
 	const [emails, setEmails] = useState(["", "", "", ""]);
 	const [phones, setPhones] = useState(["", "", "", ""]);
 	const [countryValues, setCountryValues] = useState(["", "", "", ""]);
-	// const navigate = useNavigate();
-	// const handleSubmit = async (e) => {
-	// 	e.preventDefault();
-	// 	const config = {
-	// 		headers: {
-	// 			"Content-Type": "multipart/form-data",
-	// 			"access-control-allow-origin": "*",
-	// 			Authorization: "Bearer " + cookies.token,
-	// 		},
-	// 	};
-
-	// 	let authorList = Object.values(inputValues);
-
-	// 	await axios
-	// 		.post(
-	// 			`http://localhost:5000/addArticle`,
-	// 			{
-	// 				article_name: articleName,
-	// 				peer_choice: reviewer,
-	// 				article: article,
-	// 				abstract: abstract,
-	// 				journal_id: props.journalId,
-	// 				authors: authorList,
-	// 			},
-	// 			config
-	// 		)
-	// 		.then((res) => {
-	// 			console.log(res.data);
-	// 			if (res.data.message === "Article added successfully!") {
-	// 				navigate("/");
-	// 			}
-	// 		});
-	// };
 
 	useEffect(() => {
 		const peerChoice = [];
@@ -71,7 +38,7 @@ function StepThree(props) {
 					type="text"
 					// name="reviewer1"
 					placeholder="Name"
-					className="form-control reviewer-input"
+					className="form-control reviewer-input reviewer-name"
 					autoComplete="off"
 					value={names[0]}
 					onChange={(e) => {
@@ -137,7 +104,7 @@ function StepThree(props) {
 					type="text"
 					// name="reviewer1"
 					placeholder="Name"
-					className="form-control reviewer-input"
+					className="form-control reviewer-input reviewer-name"
 					autoComplete="off"
 					value={names[1]}
 					onChange={(e) => {
@@ -203,7 +170,7 @@ function StepThree(props) {
 					type="text"
 					// name="reviewer1"
 					placeholder="Name"
-					className="form-control reviewer-input"
+					className="form-control reviewer-input reviewer-name"
 					autoComplete="off"
 					value={names[2]}
 					onChange={(e) => {
@@ -269,7 +236,7 @@ function StepThree(props) {
 					type="text"
 					// name="reviewer1"
 					placeholder="Name"
-					className="form-control reviewer-input"
+					className="form-control reviewer-input reviewer-name"
 					autoComplete="off"
 					value={names[3]}
 					onChange={(e) => {
