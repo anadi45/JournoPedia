@@ -16,6 +16,7 @@ import Profile from "./components/Profile";
 import Status from "./components/Status";
 import ReviewPage from "./components/ReviewPage";
 import AddArticle from "./components/AddArticle";
+import SuccessPage from "./components/SuccessPage";
 
 function App() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -175,6 +176,10 @@ function App() {
 						<Route
 							path="/status"
 							element={cookies.token ? <Status /> : <Login />}
+						/>
+						<Route
+							path="/success"
+							element={cookies.token ? <SuccessPage /> : <Login />}
 						/>
 						<Route
 							path="/logout"

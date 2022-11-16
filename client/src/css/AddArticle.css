@@ -15,7 +15,10 @@
 }
 .guidelines-div{
     width: 80%;
-        margin: auto;
+        margin: 50px auto;
+}
+.step-div{
+    margin: 30px;
 }
 .reviewer-heading{
     display: block;
@@ -29,8 +32,11 @@
 }
 .reviewer-input{
     display: inline-block;
-        width: 20%;
+        width: 29.94%;
         margin: 10px 15px;
+}
+.reviewer-name{
+    margin-left: 0;
 }
 .add-author-btn{
     background-color: #33c2ef;
