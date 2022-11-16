@@ -50,9 +50,9 @@ function Status() {
 				{articles.map((article, i) => {
 					return (
 						<div key={i} className="article-status-div">
-							<h4>{article.article_name}</h4>
+							<h4 className="article-heading">{article.article_name}</h4>
+							<div className="progress-div">hello</div>
 							{article.status}
-							{/* <div>hello</div> */}
 						</div>
 					);
 				})}

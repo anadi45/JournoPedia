@@ -8,3 +8,10 @@
 .article-status-div{
     margin-left: 60px;
 }
+.article-heading{
+    display: inline-block;
+}
+.progress-div{
+    display: inline-block;
+    margin-left: 20px;
+}

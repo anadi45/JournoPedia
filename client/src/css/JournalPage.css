@@ -1,8 +1,13 @@
 .journal-page-div {
-  padding: 20px;
+  /* padding: 20px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; */
   /* margin:auto; */
+  padding: 20px 30px;
+    width: 80%;
+    margin: -10px auto;
+    background-color: white;
+    height: 100vh;
 }
 .journal-heading {
   /* text-align:center; */
@@ -18,12 +23,12 @@
   height: 200px;
   width: 240px;
   float: left;
-  border: 2px solid white;
+  border: 2px solid black;
 }
 
 .journal-container {
 	border-radius: 15px;
-  background-color: white;
+  /* background-color: black; */
 }
 
 .journal-details {
@@ -33,7 +38,7 @@
 }
 
 h5 {
-  color: white;
+  color: black;
   margin-left: 20px;
   display: block;
 }
