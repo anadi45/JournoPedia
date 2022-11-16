@@ -5,6 +5,7 @@ import "../css/ReviewPage.css";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import { PuffLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 function ReviewPage() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -14,6 +15,7 @@ function ReviewPage() {
 	const [articlesCount, setArticlesCount] = useState(0);
 	const [articlesForReviewCount, setArticlesForReviewCount] = useState(0);
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		// props.setDisplayItems(["none", "none", "inline", "inline", "inline"]);
@@ -70,6 +72,9 @@ function ReviewPage() {
 			.then((res) => {
 				console.log(res);
 				window.location.reload();
+				// setArticlesForReviewCount(articlesForReviewCount - 1);
+				// setArticles(articles);
+				// navigate("/review-article");
 			});
 	}
 

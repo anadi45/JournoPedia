@@ -12,6 +12,41 @@
     display: inline-block;
 }
 .progress-div{
+    margin: 15px;
+    width: 90%;
+}
+.milestone-circle{
+    background: green;
+    border-radius: 50%;
+    width: 28px;
+    text-align: center;
+    padding: 3px;
+    color: white;
+}
+
+.milestone-circle-incomplete{
+    border-radius: 50%;
+    width: 30px;
+    padding: 0px;
+    background-color: #f7f7f7;
+    border: 4px solid #C5C5C5;
+    color: white;
+    text-align: center;
+}
+.progress-bar-labels-div{
+    margin-top: 20px;
+}
+.progress-bar-label{
     display: inline-block;
-    margin-left: 20px;
+    width: 25%;
+}
+.center-text{
+    text-align: center;
+}
+.right-text{
+    text-align: right;
+}
+.shift-right{
+    position: relative;
+    left: 20px;
 }
