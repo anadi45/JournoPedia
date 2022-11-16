@@ -3,7 +3,6 @@ const { User } = require("../models/user");
 const { Journal } = require("../models/journal");
 const fs = require("fs");
 const {mail} = require("../utils/mailing");
-const { userDetails } = require("./userController");
 
 //@route    POST /addArticle
 //@descr    Add a article
@@ -12,7 +11,25 @@ const { userDetails } = require("./userController");
 const addArticle = async (req, res) => {
   try {
     const { journal_id, peer_choice, article_name, authors } = req.body;
+
+    let country = new Set();
+    for (let i = 0; i < peer_choice.length; i++) {
+      country.add(peer_choice[i].country);
+    }
     
+    if(country.size != 4) {
+      return res.send({
+        message: "All reviewers must be from different countries."
+      })
+    }
+
+    const user = await User.findById(req.rootuser._id);
+    if(country.has(user.country)) {
+      return res.send({
+        message: "Reviewer needs to be of different country from the author"
+      });
+    }
+
     if (!journal_id) {
       return res.send({
         message: "Journal_id cannot be empty",
