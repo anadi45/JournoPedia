@@ -14,7 +14,7 @@ const addArticle = async (req, res) => {
 
     let country = new Set();
     for (let i = 0; i < peer_choice.length; i++) {
-      country.add(peer_choice[i].country);
+      country.add(peer_choice[i].countryValues);
     }
     
     if(country.size != 4) {
@@ -52,6 +52,38 @@ const addArticle = async (req, res) => {
       peer_choice: peer_choice,
       authors: authors
     });
+    
+    const journal = await Journal.findById(journal_id);
+    let editorIds = journal.editors;
+    
+    const allEditors = await User.find({_id:{  $in:editorIds}});
+
+    let mailingList = [];
+    for (let i = 0; i < allEditors.length; i++) {
+      mailingList.push(allEditors[i].email);
+      
+    }
+    const mailBody = `<h4>Greetings from Journopedia Team,</h4>
+    <p>A new article has been submitted by ${user.name} . 
+    The article has been submitted under the journal - ${journal.journal_name} .<br> 
+    Please review the article and examine it for peer review process.
+    </p>
+    <div>Author Details <br> 
+    Name - ${user.name} <br> 
+    Email - ${user.email} <br> 
+    Phone - ${user.phone} <br> 
+    Designation - ${user.designation} <br> 
+    Institute - ${user.institute} <br> 
+    Country - ${user.country} <br> 
+    </div>
+    <br>
+    <div>Regards,<br>Team JournPedia</div>`;
+
+    const attachments = [{
+      filename: req.file.originalname,
+      path: req.file.path
+    }];
+
     const save = await newArticle.save();
 
     if (save) {
@@ -60,6 +92,7 @@ const addArticle = async (req, res) => {
       const update = await User.findByIdAndUpdate(id, {
         total_submitted: total_submitted + 1,
       });
+      mail(mailingList,mailBody,attachments);
       res.send({
         message: "Article added successfully!",
       });
@@ -148,7 +181,7 @@ const referArticle = async (req, res) => {
 
     const mailBody = `<h4>Greetings from Journopedia Team,</h4>
     <p>You have been choosen to peer review an article by ${author.name} . The article has been accepted by our editorial team. 
-    The article has been submitted to ${journal.journal_name} journal.<br> 
+    The article has been submitted under the journal - ${journal.journal_name}.<br> 
     Please review the article and score it for further publishing process.
     </p>
     <div>Author Details <br> 

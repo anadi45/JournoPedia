@@ -66,13 +66,13 @@ function Profile() {
 					</div>
 				</div>
 				<div>
-					<div className="circle" style={{ border: "8px solid #00D100" }}>
+					<div className="circle" style={{ border: "8px solid #00D100", background:"rgb(158 232 158)" }}>
 						{userInfo.total_accepted} <span>Accepted Articles</span>
 					</div>
-					<div className="circle" style={{ border: "8px solid #FF0000" }}>
+					<div className="circle" style={{ border: "8px solid #FF0000", background:"rgb(216 130 130)"  }}>
 						{userInfo.total_rejected} <span>Rejected Articles</span>
 					</div>
-					<div className="circle" style={{ border: "8px solid blue" }}>
+					<div className="circle" style={{ border: "8px solid blue", background:"#9a9ae4"  }}>
 						{userInfo.total_submitted} <span>Submitted Articles</span>
 					</div>
 				</div>
@@ -96,6 +96,7 @@ function Profile() {
 						<div>
 							{userInfo.expertise &&
 								userInfo.expertise.map((topic, i) => {
+									console.log(topic);
 									return (i > 0 ? ", " : "") + topic;
 								})}
 						</div>

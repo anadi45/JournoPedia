@@ -7,8 +7,8 @@ function StepOne() {
 				<h4>Step: 1</h4>
 				<p>
 					Choose a journal for which you want to submit the article. Add a
-					suitable name for your article and thne upload the desired file. Note:
-					The file should only be in .pdf or .dox format
+					suitable name for your article and then upload the desired file.
+					<b> Note: The file should only be in .pdf or .dox format</b>
 				</p>
 			</div>
 			<div className="step-div">
@@ -16,16 +16,16 @@ function StepOne() {
 				<p>
 					Provide the information of the expert reviewers from whom you want to
 					review your article. Enter their respective names, email IDs, phone
-					no.,and country. Note: The country of each reviewer has to be
-					different, otherwise your aticle will not be submitted.
+					number, and country. <b>Note: The country of each reviewer has to be
+					different, otherwise your aticle will not be submitted.</b>
 				</p>
 			</div>
 			<div className="step-div">
 				<h4>Step: 3</h4>
 				<p>
-					(optional) Provide the information of any co-authors for the article
+					<b>(Optional)</b> Provide the information of any co-authors for the article
 					that you wish to submit. Enter their respective names, email IDs,
-					phone no.,and country.
+					phone number, and country.
 				</p>
 			</div>
 		</div>

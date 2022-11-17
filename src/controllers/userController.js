@@ -177,7 +177,7 @@ const userDetailsToken = (req,res) => {
 const editUserDetails = async (req,res)=>{
   try {
     const {name,phone,expertise,designation,institute,country} = req.body;
-
+    
     if(!name || !phone || !expertise || !designation || !institute || !country) {
       return res.send({
         message: "All fields required"

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom";
 import Popup from "reactjs-popup";
 import "../css/EditInfoPopup.css";
 import Modal from "react-bootstrap/Modal";
@@ -25,6 +26,7 @@ function EditInfoPopup() {
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [changePass, setChangePass] = useState(false);
+	const navigate = useNavigate();
 
 	const handleClose = () => {
 		setShow(false);
@@ -34,7 +36,7 @@ function EditInfoPopup() {
 		e.preventDefault();
 		const config = {
 			headers: {
-				"Content-Type": "multipart/form-data",
+				"Content-Type": "application/json",
 				"access-control-allow-origin": "*",
 				Authorization: "Bearer " + cookies.token,
 			},
@@ -50,6 +52,7 @@ function EditInfoPopup() {
 					config
 				)
 				.then((res) => {
+					navigate("/logout");
 					console.log(res.data.message);
 				});
 		} else {
@@ -59,7 +62,7 @@ function EditInfoPopup() {
 					{
 						name: name,
 						phone: phone,
-						expertise: expertise,
+						expertise: topics,
 						designation: designation,
 						institute: institute,
 						country: country,

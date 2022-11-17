@@ -9,10 +9,11 @@ function StepFour(props) {
 	const [emails, setEmails] = useState(["", "", "", ""]);
 	const [phones, setPhones] = useState(["", "", "", ""]);
 	const [countryValues, setCountryValues] = useState(["", "", "", ""]);
+	const [numAuthors, setNumAuthors] = useState(0);
 
 	useEffect(() => {
 		const authors = [];
-		for (var i = 0; i < 4; i++) {
+		for (var i = 0; i < numAuthors; i++) {
 			const obj = {
 				name: names[i],
 				email: emails[i],
@@ -33,6 +34,7 @@ function StepFour(props) {
 	const handleClick = (e) => {
 		e.preventDefault();
 		setCounter(counter + 1);
+		setNumAuthors(numAuthors + 1);
 	};
 	return (
 		<>
