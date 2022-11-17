@@ -1,0 +1,79 @@
+.profile-div{
+    padding: 20px 30px;
+    width: 80%;
+    margin: -10px auto;
+    background-color: white;
+}
+.user-pic{
+    border-radius: 10px;
+    width: 90%;
+    margin-left: 50px;
+}
+.add-photo-div{
+    position: absolute;
+    left: 45%;
+    bottom: 20px;
+    opacity: 0.7;
+}
+.add-photo-div:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+.user-image-div{
+    display: inline-block;
+    position: relative;
+}
+.user-name-div{
+    display: inline-block;
+    width: 70%;
+    margin-left: 50px;
+    position: relative;
+    top: 50px;
+}
+.designation-div{
+    margin-top: 16px;
+}
+.country-flag{
+    width: 3.5%;
+}
+.country-div{
+    font-size: 19px;
+    margin-top: 18px;
+}
+.circle{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    margin: 40px 90px;
+    font-size: 60px;
+    text-align: center;
+    padding-top: 50px;
+}
+.circle span{
+    font-size: 18px;
+    display: block;
+    position: relative;
+    top: 70px;
+}
+.more-info-div{
+    margin: 90px 80px;
+    font-size: 18px;
+}
+.more-info-headings{
+    display: inline-block;
+}
+.more-info{
+    display: inline-block;
+    margin-left: 60px;
+}
+.edit-info-div{
+    font-size: 16px;
+    opacity: 0.8;
+    margin-top: 10px;
+    width: fit-content;
+}
+.edit-info-div:hover{
+    opacity: 1;
+    cursor: pointer;
+}

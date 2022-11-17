@@ -1,5 +1,6 @@
 const multer = require("multer");
-const UPLOAD_PATH = process.env.UPLOAD_PATH;
+const ARTICLE_UPLOAD_PATH = process.env.ARTICLE_UPLOAD_PATH;
+const IMAGE_UPLOAD_PATH = process.env.IMAGE_UPLOAD_PATH;
 
 function uniqueKey (length) {
     let result           = '';
@@ -11,9 +12,9 @@ function uniqueKey (length) {
    return result;
 }
 
-const storage = multer.diskStorage({
+const articleStorage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, UPLOAD_PATH);
+        cb(null, ARTICLE_UPLOAD_PATH);
     },
     filename: function(req, file, cb) {
         let fileNameArray = (file.originalname.split('.'));
@@ -23,7 +24,19 @@ const storage = multer.diskStorage({
     }
 });
 
-const fileFilter = (req, file, cb) => {
+const imageStorage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, IMAGE_UPLOAD_PATH);
+    },
+    filename: function(req, file, cb) {
+        let fileNameArray = (file.originalname.split('.'));
+        let ext = fileNameArray[fileNameArray.length-1];
+        let key = uniqueKey(8);
+        cb(null, file.fieldname + key + '.' + ext);
+    }
+});
+
+const articleFileFilter = (req, file, cb) => {
     if (file.mimetype === 'application/pdf' || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
         cb(null, true);
     } else {
@@ -31,13 +44,29 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const upload = multer({
-    storage: storage,
+const imageFileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+
+const articleUpload = multer({
+    storage: articleStorage,
     limits: {
-        filesize: 1024 * 1024 * 5
+        filesize: 1024 * 1024 * 2
     },
-    fileFilter: fileFilter
+    fileFilter: articleFileFilter
 });
 
-module.exports = {upload};
+const imageUpload = multer({
+    storage: imageStorage,
+    limits: {
+        filesize: 1024 * 1024 * 10
+    },
+    fileFilter: imageFileFilter
+});
+
+module.exports = {articleUpload, imageUpload};
   

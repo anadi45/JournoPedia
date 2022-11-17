@@ -5,9 +5,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    email : {
-        type: String,
-        required: true
+    email: {
+        type: String
+    },
+    phone: {
+        type: String
     },
     password: {
         type: String,
@@ -26,21 +28,30 @@ const userSchema = new mongoose.Schema({
         default: 0
     },
     userRole: {
-        type: String
+        type: String,
+        default: "Author"
     },
-    score: {
-        type: Number
-    },
-    journals: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Journal'
-    }],
-    preferences: [{
-        type: String
-    }],
+    // score: {
+    //     type: Number
+    // },
+    // preferences: [{
+    //     type: String
+    // }],
     expertise: [{
         type: String
-    }]
+    }],
+    designation: {
+        type: String
+    },
+    institute: {
+        type: String
+    },
+    country: {
+        type: String
+    },
+    image_path: {
+        type: String
+    }
 });
 
 const User = mongoose.model("User",userSchema);

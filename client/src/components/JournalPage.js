@@ -1,0 +1,117 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../css/JournalPage.css";
+// import img from '../../public/images/'
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { Tabs, Tab } from "react-bootstrap";
+import { PuffLoader } from "react-spinners";
+
+function JournalPage(props) {
+	const [img, setImg] = useState("");
+	const [journalName, setJournalName] = useState("");
+	const [author, setAuthor] = useState("");
+	const [otherAuthor, setOtherAuthor] = useState([]);
+	const [synopsis, setSynopsis] = useState("");
+	const [cookies, setCookie] = useCookies(["token"]);
+	const [spinnerVisible, setSpinnerVisible] = useState("visible");
+	let navigate = useNavigate();
+
+	useEffect(() => {
+		if (cookies.token) props.setDisplayItems(["none", "none", "inline"]);
+		else props.setDisplayItems(["inline", "inline", "none"]);
+
+		axios
+			.get(`http://localhost:5000/viewJournal/${props.journalId}`)
+			.then((res) => {
+				console.log(res.data);
+				setImg(res.data.journal.image.substr(14));
+				setJournalName(res.data.journal.journal_name);
+				setSynopsis(res.data.journal.synopsis);
+				setAuthor(res.data.author.name);
+
+				let otherAuthors = [];
+
+				for (let i = 0; i < res.data.otherAuthors.length; i++) {
+					otherAuthors.push(res.data.otherAuthors[i].name);
+				}
+				setOtherAuthor(otherAuthors);
+				setSpinnerVisible("hidden");
+			});
+	}, []);
+
+	if (spinnerVisible === "visible") {
+		return (
+			<div className="loading-div">
+				<PuffLoader
+					cssOverride={{ display: "inline-block" }}
+					loading={true}
+					size={40}
+					aria-label="Loading Spinner"
+					data-testid="loader"
+				/>{" "}
+				<span className="loading">Loading</span>
+			</div>
+		);
+	} else
+		return (
+			<div className="journal-page-div">
+				<div className="journal-info-div">
+					<h2 className="journal-heading">{journalName}</h2>
+				</div>
+				<div className="journal-details">
+					<div className="journal-img-div">
+						<img className="journal-img" src={`/${img}`} alt={journalName} />
+					</div>
+					<div className="editor-in-chief-div">
+						<h5>Editor in Chief</h5>
+						<p className="">{author}</p>
+						<h5>Journal Score</h5>
+						<p className="">1.5</p>
+					</div>
+					<div className="synopsis-div">
+						<h5>Synopsis</h5>
+						<p className="synopsis">{synopsis}</p>
+					</div>
+					<Tabs
+						defaultActiveKey="home"
+						id="uncontrolled-tab-example"
+						className="mb-3 tabs"
+					>
+						<Tab eventKey="home" title="Editorial Board">
+							<div className="editorial-board-div">
+								<h5>Editor in Chief</h5>
+								<p className="">{author}</p>
+								<h5>Editorial Board Members</h5>
+								<ul>
+									{otherAuthor.map((author) => (
+										<li className="">{author}</li>
+									))}
+								</ul>
+							</div>
+						</Tab>
+						<Tab eventKey="guidelines" title="Submitting Articles">
+							<div className="journal-submission-guidelines-div">
+								<ul>
+									<li>
+										Submitted articles should not have been previously published
+										or be currently under consideration for publication
+										elsewhere.
+									</li>
+									<li>
+										Briefs and research notes are not published in this journal.
+									</li>
+									<li>
+										All our articles go through a double-blind review process.
+									</li>
+									<li>There are no charges for publishing with JournoPedia.</li>
+								</ul>
+							</div>
+						</Tab>
+					</Tabs>
+				</div>
+			</div>
+		);
+}
+
+export default JournalPage;
