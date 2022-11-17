@@ -84,7 +84,7 @@ const downloadArticle = async (req, res) => {
     let downloads = findArticle.downloads;
 
     const update = await Article.findByIdAndUpdate(article_id, {
-      downloads: downloads + 1,
+      downloads: downloads + 1
     });
     if (update) {
       res.download(findArticle.path);
