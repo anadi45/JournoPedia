@@ -1,55 +1,47 @@
 .journal-page-div {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  /* margin:auto; */
+  padding: 25px 60px;
+    width: 80%;
+    margin: -10px auto;
+    background-color: white;
+    min-height: 100vh;
 }
-.journal-heading {
-  /* text-align:center; */
-  margin-bottom: 20px;
+.journal-details{
+  padding: 20px;
 }
 .journal-info-div {
-  margin:auto;
-  margin-top: 20px;
-  /* margin-left: 260px; */
-  text-align: center;
+  margin: 20px;
+  border-bottom: 1px solid;
+}
+.journal-img-div{
+  display: inline-block;
+      position: relative;
+    bottom: 24px;
 }
 .journal-img {
   height: 200px;
   width: 240px;
-  float: left;
-  border: 2px solid white;
 }
-
-.journal-container {
-	border-radius: 15px;
-  background-color: white;
+.editor-in-chief-div{
+  display: inline-block;
+    margin-left: 40px;
 }
-
-.journal-details {
-	padding-top: 100px;
-  display: flex;
-  margin:auto;
+.synopsis-div{
+  margin-top: 25px;
 }
-
-h5 {
-  color: white;
-  margin-left: 20px;
-  display: block;
+.synopsis{
+  font-size: 18px;
 }
-
-.fetched-details {
-  margin-top: 20px;
-  color: black;
+.tabs{
+  margin-top: 40px;
+    background: #f7f7f7;
+    border-radius: 8px;
 }
-
-.btn-article {
-  width: 200px;
-  text-align: center;
+.editorial-board-div{
+  margin: 30px 10px;
 }
-
-.btn-container {
-  margin-top: 15px;
-  text-align:center;
+.journal-submission-guidelines-div{
+  margin: 30px 10px;
 }
-
+.journal-submission-guidelines-div li{
+  margin-bottom: 10px;
+}

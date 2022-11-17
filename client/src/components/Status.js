@@ -2,12 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { PuffLoader } from "react-spinners";
+import { ProgressBar } from "react-milestone";
 import "../css/Status.css";
 
 function Status() {
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const progress = {
+		Submitted: 0,
+		"Under Review": 33,
+		"Under Peer Review": 66,
+		Accepted: 100,
+		Rejected: 100,
+	};
 	useEffect(() => {
 		const config = {
 			headers: {
@@ -50,9 +58,38 @@ function Status() {
 				{articles.map((article, i) => {
 					return (
 						<div key={i} className="article-status-div">
-							<h4>{article.article_name}</h4>
-							{article.status}
-							{/* <div>hello</div> */}
+							<h4 className="article-heading">{article.article_name}</h4>
+							<div className="progress-div">
+								<ProgressBar
+									percentage={progress[article.status]}
+									milestoneCount={4}
+									Milestone={() => (
+										<div className="milestone-circle-incomplete">.</div>
+									)}
+									CurrentMilestone={() => (
+										<div className="milestone-circle-current"></div>
+									)}
+									CompletedMilestone={() => (
+										<div className="milestone-circle">
+											<i class="fas fa-check"></i>
+										</div>
+									)}
+									onMilestoneClick={(milestoneIndex) => {}}
+								/>
+							</div>
+							<div className="progress-bar-labels-div">
+								<div className="progress-bar-label">Submitted</div>
+								<div className="progress-bar-label shift-right">
+									Under Review
+								</div>
+								<div className="progress-bar-label center-text">
+									Under Peer Review
+								</div>
+								<div className="progress-bar-label right-text">
+									Accepted/Rejected
+								</div>
+							</div>
+							{/* {article.status} */}
 						</div>
 					);
 				})}
