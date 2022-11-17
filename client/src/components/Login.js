@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/Login.css";
 import { useCookies } from "react-cookie";
 
@@ -86,7 +86,7 @@ function Login() {
 					Invalid Login Credentials
 				</div>
 				<p className="forgot-password text-right">
-					Forgot <a href="/">password?</a>
+					Forgot <Link to="/forget-password">password?</Link>
 				</p>
 			</form>
 		</div>

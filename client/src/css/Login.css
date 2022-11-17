@@ -3,6 +3,11 @@
   margin: 10px auto 0;
   color: red;
 }
-.login-btn{
+
+.login-btn {
   margin-top: 15px;
+}
+
+.forgot-password-field{
+  margin: 10px 0 20px;
 }

@@ -162,7 +162,11 @@ function ReviewPage() {
 						</div>
 						<table className="articles-table">
 							{articles.map((item) => {
-								if (item.status === "Under Peer Review")
+								if (
+									item.status === "Under Peer Review" ||
+									item.status === "Accepted" ||
+									item.status === "Rejected"
+								)
 									return (
 										<tr className="articles-tr">
 											<td className="td-1">
@@ -184,18 +188,15 @@ function ReviewPage() {
 													onChange={(e) => {
 														setPassForReview(e.label);
 													}}
-													// value={defaultOption}
+													disabled
+													value={
+														item.status === "Under Peer Review" ||
+														item.status === "Accepted"
+															? "Yes"
+															: "No"
+													}
 													placeholder="Pass for peer review"
 												/>
-												<button
-													// type="submit"
-													className="submit-btn"
-													onClick={() => {
-														handleSubmit(item._id);
-													}}
-												>
-													Submit
-												</button>
 											</td>
 										</tr>
 									);

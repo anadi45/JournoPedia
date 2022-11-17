@@ -17,6 +17,7 @@ import Status from "./components/Status";
 import ReviewPage from "./components/ReviewPage";
 import AddArticle from "./components/AddArticle";
 import SuccessPage from "./components/SuccessPage";
+import ForgetPassword from "./components/ForgetPassword";
 
 function App() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -144,6 +145,7 @@ function App() {
 						/>
 						<Route path="/sign-in" element={<Login />} />
 						<Route path="/sign-up" element={<SignUp />} />
+						<Route path="/forget-password" element={<ForgetPassword />} />
 						<Route
 							path="/home"
 							element={<Home setDisplayItems={setDisplayItems} />}
