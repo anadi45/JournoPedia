@@ -5,6 +5,7 @@ const jwtSecret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 const { generatePassword } = require("../utils/passwordGenerator");
 const { mail } = require("../utils/mailing");
+const fs = require("fs");
 
 //@route    POST /signup
 //@descr    Signup an user
@@ -322,6 +323,48 @@ const forgetPassword = async (req, res) => {
 	}
 };
 
+//@route	PATCH /addProfilePhoto
+//@descr	Add Profile Photo
+//@access	Private
+
+const addProfilePhoto = async (req,res) => {
+	try {
+		if(!req.file) {
+			return res.send({
+				message: "File cannot be empty"
+			});
+		} 
+		
+		const user = await User.findById(req.rootuser.id);
+		
+		if(user.image_path) {
+			const image = user.image_path;
+			fs.unlink(image,(err) => {
+                if(err) {
+                    console.log(err);
+                }
+            });
+		}
+
+		const updatePhoto = await User.findByIdAndUpdate(req.rootuser.id,{
+			image_path: req.file.path
+		});
+
+		if(updatePhoto) {
+			res.send({
+				message: "Profile Photo Added"
+			});
+		} else {
+			res.send({
+				message: "Unable to add profile photo"
+			});
+		}
+		
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
 	signup,
 	login,
@@ -331,4 +374,5 @@ module.exports = {
 	editUserDetails,
 	changePassword,
 	forgetPassword,
+	addProfilePhoto
 };

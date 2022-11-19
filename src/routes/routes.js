@@ -10,7 +10,8 @@ const {
   userDetailsToken, 
   editUserDetails,
   changePassword,
-  forgetPassword
+  forgetPassword,
+  addProfilePhoto
 } = require("../controllers/userController");
 
 const {
@@ -45,6 +46,7 @@ router.get("/userDetailsToken", isLoggedIn, userDetailsToken);
 router.patch("/editUserDetails", isLoggedIn, editUserDetails);
 router.patch("/changePassword", isLoggedIn, changePassword);
 router.post("/forgetPassword", forgetPassword);
+router.patch("/addProfilePhoto", isLoggedIn, imageUpload.single("image"), addProfilePhoto);
 
 //Journal Operations
 router.post("/createJournal", isAdmin, imageUpload.single("image"), createJournal);
