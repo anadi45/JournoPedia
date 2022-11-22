@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import "../css/Profile.css";
-import { PuffLoader } from "react-spinners";
+import { PuffLoader, FadeLoader } from "react-spinners";
 import EditInfoPopup from "./EditInfoPopup";
 
 function Profile(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [userInfo, setUserInfo] = useState({});
+	const [image, setImage] = useState();
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
+	const [imageUpload, setImageUpload] = useState(false);
 
 	useEffect(() => {
 		props.setDisplayItems(["none", "none", "inline"]);
@@ -23,8 +25,33 @@ function Profile(props) {
 			console.log(res.data);
 			setUserInfo(res.data);
 			setSpinnerVisible("hidden");
+			// console.log(res.data.image_path.slice(14));
 		});
 	}, []);
+
+	const addPhoto = async (e) => {
+		setImageUpload(true);
+		const config = {
+			headers: {
+				"Content-Type": "multipart/form-data",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
+		axios
+			.patch(
+				"http://localhost:5000/addProfilePhoto",
+				{
+					image: e.target.files[0],
+				},
+				config
+			)
+			.then((res) => {
+				console.log(res.data);
+				setImage(e.target.files[0]);
+				setImageUpload(false);
+			});
+	};
 
 	if (spinnerVisible === "visible") {
 		return (
@@ -43,9 +70,39 @@ function Profile(props) {
 		return (
 			<div className="profile-div">
 				<div className="user-image-div">
-					<img src="images/user-pic.png" className="user-pic"></img>
+					{imageUpload && (
+						<div className="user-img-spinner">
+							<FadeLoader
+								cssOverride={{ display: "inline-block" }}
+								loading={true}
+								radius={2}
+								aria-label="Loading Spinner"
+								data-testid="loader"
+							/>{" "}
+						</div>
+					)}
+					<img
+						src={
+							imageUpload
+								? "images/white-background.png"
+								: userInfo.image_path === ""
+								? "images/user-pic.png"
+								: userInfo.image_path.slice(14)
+						}
+						className="user-pic"
+					></img>
 					<div className="add-photo-div">
-						<i class="fas fa-camera"></i> Add Photo
+						<label htmlFor="filePicker">
+							<i class="fas fa-camera"></i>
+						</label>
+						<input
+							id="filePicker"
+							style={{ display: "none" }}
+							type={"file"}
+							name="image"
+							accept="image/*"
+							onChange={addPhoto}
+						/>
 					</div>
 				</div>
 				<div className="user-name-div">

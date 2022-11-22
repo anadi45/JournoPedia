@@ -68,6 +68,7 @@ const signup = async (req, res) => {
 					country: country,
 					expertise: expertise,
 					designation: designation,
+					image_path: "",
 					userRole: "User",
 				});
 				const signedUp = await newUser.save();
@@ -327,43 +328,42 @@ const forgetPassword = async (req, res) => {
 //@descr	Add Profile Photo
 //@access	Private
 
-const addProfilePhoto = async (req,res) => {
+const addProfilePhoto = async (req, res) => {
 	try {
-		if(!req.file) {
+		if (!req.file) {
 			return res.send({
-				message: "File cannot be empty"
+				message: "File cannot be empty",
 			});
-		} 
-		
-		const user = await User.findById(req.rootuser.id);
-		
-		if(user.image_path) {
-			const image = user.image_path;
-			fs.unlink(image,(err) => {
-                if(err) {
-                    console.log(err);
-                }
-            });
 		}
 
-		const updatePhoto = await User.findByIdAndUpdate(req.rootuser.id,{
-			image_path: req.file.path
+		const user = await User.findById(req.rootuser.id);
+
+		if (user.image_path) {
+			const image = user.image_path;
+			fs.unlink(image, (err) => {
+				if (err) {
+					console.log(err);
+				}
+			});
+		}
+
+		const updatePhoto = await User.findByIdAndUpdate(req.rootuser.id, {
+			image_path: req.file.path,
 		});
 
-		if(updatePhoto) {
+		if (updatePhoto) {
 			res.send({
-				message: "Profile Photo Added"
+				message: "Profile Photo Added",
 			});
 		} else {
 			res.send({
-				message: "Unable to add profile photo"
+				message: "Unable to add profile photo",
 			});
 		}
-		
 	} catch (error) {
 		console.log(error);
 	}
-}
+};
 
 module.exports = {
 	signup,
@@ -374,5 +374,5 @@ module.exports = {
 	editUserDetails,
 	changePassword,
 	forgetPassword,
-	addProfilePhoto
+	addProfilePhoto,
 };

@@ -62,13 +62,6 @@ function AddJournal(props) {
 			});
 	};
 
-	//   const options = [
-	//     { label: "Machine Learning", value: "ML" },
-	//     { label: "Data Mining", value: "DMCT" },
-	//     { label: "Computer Networks", value: "CN" },
-	//     { label: "Image Processing", value: "IP" },
-	//   ];
-
 	return (
 		<div className="auth-inner add-journal-div">
 			<form>
@@ -101,18 +94,6 @@ function AddJournal(props) {
 						}}
 					/>
 				</div>
-
-				{/* <div className="mb-3">
-          <label>Volumes per year</label>
-          <Dropdown
-            className="volumes-dropdown"
-            options={[2, 4]}
-            onChange={(e) => {
-              setVolumes(e.label);
-              console.log(volumes)
-            }}
-          />
-        </div> */}
 
 				<div className="mb-3">
 					<label>Upload Image</label>
