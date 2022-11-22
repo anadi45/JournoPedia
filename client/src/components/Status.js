@@ -5,7 +5,7 @@ import { PuffLoader } from "react-spinners";
 import { ProgressBar } from "react-milestone";
 import "../css/Status.css";
 
-function Status() {
+function Status(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -17,6 +17,7 @@ function Status() {
 		Rejected: 100,
 	};
 	useEffect(() => {
+		props.setDisplayItems(["none", "none", "inline"]);
 		const config = {
 			headers: {
 				"Content-Type": "multipart/form-data",

@@ -7,7 +7,7 @@ import "react-dropdown/style.css";
 import { PuffLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 
-function ReviewPage() {
+function ReviewPage(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [articles, setArticles] = useState([]);
 	const [noArticlesMessage, setNoArticlesMessage] = useState(null);
@@ -18,7 +18,7 @@ function ReviewPage() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		// props.setDisplayItems(["none", "none", "inline", "inline", "inline"]);
+		props.setDisplayItems(["none", "none", "inline"]);
 		const config = {
 			headers: {
 				"Content-Type": "multipart/form-data",

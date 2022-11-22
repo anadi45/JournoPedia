@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Multistep from "react-multistep";
 import StepOne from "./submit article/StepOne";
 import StepThree from "./submit article/StepThree";
@@ -9,7 +9,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function AddArticle() {
+function AddArticle(props) {
 	const [journal, setJournal] = useState({});
 	const [articleName, setArticleName] = useState("Chat App");
 	const [abstract, setAbstract] = useState(
@@ -20,6 +20,10 @@ function AddArticle() {
 	const [authors, setAuthors] = useState([]);
 	const [cookies, setCookie] = useCookies(["token"]);
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		props.setDisplayItems(["none", "none", "inline"]);
+	}, []);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();

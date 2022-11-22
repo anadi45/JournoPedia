@@ -23,7 +23,7 @@ function ForgetPassword() {
 	return (
 		<div className="login-div auth-inner">
 			<form>
-				<h3>Forgot Password?</h3>
+				<h3>Send Password on Email</h3>
 				<div className="mb-3 forgot-password-field">
 					<label>Email address</label>
 					<input

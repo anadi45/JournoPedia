@@ -24,6 +24,10 @@ function AddJournal(props) {
 	// const [volumes, setVolumes] = useState();
 	let navigate = useNavigate();
 
+	useEffect(() => {
+		props.setDisplayItems(["none", "none", "inline"]);
+	}, []);
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		// console.log(typeof volumes);

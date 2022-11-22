@@ -54,6 +54,12 @@ function App() {
 		});
 	}, []);
 
+	if (performance.getEntriesByType("navigation")[0].type === "reload") {
+		console.info("This page is reloaded");
+		window.scrollTo(0, 0);
+		// if (cookies.token) setDisplayItems(["none", "none", "inline"]);
+	}
+
 	return (
 		<Router>
 			<div className="App">
@@ -168,20 +174,44 @@ function App() {
 
 						<Route
 							path="/review-article"
-							element={cookies.token ? <ReviewPage /> : <Login />}
+							element={
+								cookies.token ? (
+									<ReviewPage setDisplayItems={setDisplayItems} />
+								) : (
+									<Login />
+								)
+							}
 						/>
 						<Route
 							path="/add-article"
-							element={cookies.token ? <AddArticle /> : <Login />}
+							element={
+								cookies.token ? (
+									<AddArticle setDisplayItems={setDisplayItems} />
+								) : (
+									<Login />
+								)
+							}
 						/>
 
 						<Route
 							path="/status"
-							element={cookies.token ? <Status /> : <Login />}
+							element={
+								cookies.token ? (
+									<Status setDisplayItems={setDisplayItems} />
+								) : (
+									<Login />
+								)
+							}
 						/>
 						<Route
 							path="/success"
-							element={cookies.token ? <SuccessPage /> : <Login />}
+							element={
+								cookies.token ? (
+									<SuccessPage setDisplayItems={setDisplayItems} />
+								) : (
+									<Login />
+								)
+							}
 						/>
 						<Route
 							path="/logout"
