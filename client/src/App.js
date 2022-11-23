@@ -30,6 +30,7 @@ function App() {
 	const [username, setUsername] = useState("");
 	const [userRole, setUserRole] = useState("");
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [imagePath, setImagePath] = useState("");
 
 	// const navigate = useNavigate();
 
@@ -51,6 +52,7 @@ function App() {
 		axios.get(`http://localhost:5000/userDetailsToken`, config).then((res) => {
 			setUserRole(res.data.userRole);
 			setUsername(res.data.name);
+			setImagePath(res.data.image_path);
 		});
 	}, []);
 
@@ -63,6 +65,16 @@ function App() {
 	return (
 		<Router>
 			<div className="App">
+				<form>
+					<input
+						className="search-bar"
+						type="text"
+						placeholder="Type here to search..."
+					/>
+					<button className="search-submit-btn" type="submit">
+						<i class="fas fa-search"></i>
+					</button>
+				</form>
 				<nav className="navbar navbar-expand-lg navbar-light fixed-top">
 					<div className="container">
 						<Link className="navbar-brand" to={"/"}>
@@ -86,6 +98,9 @@ function App() {
 										<span class="sign-up-color">Sign up</span>
 									</Link>
 								</li>
+								{/* <li className="nav-item">
+									<input className="search-bar" type="text"></input>
+								</li> */}
 								<li
 									className="nav-item logout-link"
 									style={{
@@ -99,7 +114,16 @@ function App() {
 											variant=""
 											id="dropdown-basic"
 										>
-											<i class="far fa-user" /> {username}
+											{/* <i class="far fa-user" />  */}
+											<img
+												className="navbar-img"
+												src={
+													imagePath === ""
+														? "images/user-pic.png"
+														: imagePath.slice(14)
+												}
+											></img>
+											{username}
 										</Dropdown.Toggle>
 
 										<Dropdown.Menu>
