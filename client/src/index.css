@@ -182,7 +182,7 @@ html,
   border-radius: 50%;
 }
 .search-bar{
-  position: absolute;
+  position: fixed;
     z-index: 2000;
     left: 30%;
     width: 40%;
@@ -194,7 +194,7 @@ html,
 }
 .search-submit-btn{
   z-index: 2000;
-  position: absolute;
+  position: fixed;
   top: 14px;
   left: 67.5%;
   border: none;

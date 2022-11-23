@@ -54,7 +54,7 @@ function StepFour(props) {
 								type="text"
 								// name="reviewer1"
 								placeholder="Name"
-								className="form-control reviewer-input"
+								className="form-control reviewer-input reviewer-name"
 								autoComplete="off"
 								value={names[0]}
 								onChange={(e) => {
