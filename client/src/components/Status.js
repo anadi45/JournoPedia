@@ -11,8 +11,9 @@ function Status(props) {
 	const [isLoading, setIsLoading] = useState(true);
 	const progress = {
 		Submitted: 0,
-		"Under Review": 33,
-		"Under Peer Review": 66,
+		"Under Review": 24.5,
+		"Rejected": 49.5,
+		"Under Peer Review": 74.5,
 		Accepted: 100,
 		Rejected: 100,
 	};
@@ -63,7 +64,7 @@ function Status(props) {
 							<div className="progress-div">
 								<ProgressBar
 									percentage={progress[article.status]}
-									milestoneCount={4}
+									milestoneCount={5}
 									Milestone={() => (
 										<div className="milestone-circle-incomplete">.</div>
 									)}
@@ -83,11 +84,14 @@ function Status(props) {
 								<div className="progress-bar-label shift-right">
 									Under Review
 								</div>
+								<div className="progress-bar-label right-text">
+									Accepted/Rejected
+								</div>
 								<div className="progress-bar-label center-text">
 									Under Peer Review
 								</div>
 								<div className="progress-bar-label right-text">
-									Accepted/Rejected
+									Peer Accepted/Rejected
 								</div>
 							</div>
 							{/* {article.status} */}
