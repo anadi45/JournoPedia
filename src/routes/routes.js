@@ -67,7 +67,7 @@ router.post("/referArticle/:article_id", isLoggedIn, referArticle);
 router.get("/allArticlesForReferral", isLoggedIn, allArticlesForReferral);
 router.get("/articleStatus", isLoggedIn, articleStatus);
 router.get("/getNumberVolumes/:journal_id", getNumberVolumes);
-router.get("/volume/:year", volume);
+router.get("/:journal_id/volume/:year", volume);
 
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);

@@ -289,7 +289,7 @@ const getNumberVolumes = async(req,res)=> {
     for (let i = 0; i < allArticles.length; i++) {
         yearList.add((allArticles[i].date_of_submission).getFullYear());
     }
-    let volumes = [...yearList,2011];
+    let volumes = [...yearList];
     volumes = volumes.sort();
     return res.send({
       volumes
@@ -307,14 +307,14 @@ const getNumberVolumes = async(req,res)=> {
 	}
 }
 
-//@route  GET /volume/:year
+//@route  GET /:journal_id/volume/:year
 //@descr  Get a particular volume
 //@access Public
 
 const volume = async (req,res) => {
   try {
-    const {year} = req.params;
-    const {journal_id} = req.body;
+    const {year,journal_id} = req.params;
+    // const {} = req.body;
 
     const startDate = new Date(year);
     const endDate = new Date( (new Date(year, 12,1))-1 );

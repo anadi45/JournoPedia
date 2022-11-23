@@ -43,6 +43,9 @@ const articleSchema = new mongoose.Schema({
     status: {
         type: String //Accepted,Rejected,Withdrawn,Under Review
     },
+    article_type: {
+        type: String //Innovation,Research
+    },
     date_of_acceptence: {
         type: Date
     },
