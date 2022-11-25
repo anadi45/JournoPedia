@@ -1,0 +1,13 @@
+.search-article-div{
+    padding: 20px 30px;
+    width: 80%;
+    margin: -10px auto;
+    background-color: white;
+    min-height: 100%;
+}
+.search-article-heading{
+    margin: 30px 55px;
+    font-size: 30px;
+    font-weight: 500;
+    border-bottom: 1px solid;
+}

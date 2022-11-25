@@ -19,6 +19,7 @@ import AddArticle from "./components/AddArticle";
 import SuccessPage from "./components/SuccessPage";
 import ForgetPassword from "./components/ForgetPassword";
 import Volume from "./components/Volume";
+import SearchArticle from "./components/SearchArticle";
 
 function App() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -66,7 +67,7 @@ function App() {
 	return (
 		<Router>
 			<div className="App">
-				<form>
+				{/* <form>
 					<input
 						className="search-bar"
 						type="text"
@@ -75,7 +76,7 @@ function App() {
 					<button className="search-submit-btn" type="submit">
 						<i class="fas fa-search"></i>
 					</button>
-				</form>
+				</form> */}
 				<nav className="navbar navbar-expand-lg navbar-light fixed-top">
 					<div className="container">
 						<Link className="navbar-brand" to={"/"}>
@@ -146,6 +147,11 @@ function App() {
 												</Link>
 											</Dropdown.Item>
 											<Dropdown.Item>
+												<Link className="nav-link" to="/search-article">
+													Search Article
+												</Link>
+											</Dropdown.Item>
+											<Dropdown.Item>
 												<Link className="nav-link" to="/review-article">
 													Review Article
 												</Link>
@@ -212,6 +218,16 @@ function App() {
 							element={
 								cookies.token ? (
 									<AddArticle setDisplayItems={setDisplayItems} />
+								) : (
+									<Login />
+								)
+							}
+						/>
+						<Route
+							path="/search-article"
+							element={
+								cookies.token ? (
+									<SearchArticle setDisplayItems={setDisplayItems} />
 								) : (
 									<Login />
 								)
