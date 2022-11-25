@@ -292,6 +292,10 @@ const deleteJournal = async (req,res) => {
 	}
 }
 
+//@route	POST /journalNameByIds
+//@descr	Get all journal names by ids
+//@access	Private
+
 const journalNameByIds = async (req,res) => {
 	try {
 		const {allIds} = req.body;

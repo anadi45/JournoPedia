@@ -10,7 +10,7 @@ const {mail} = require("../utils/mailing");
 
 const addArticle = async (req, res) => {
   try {
-    const { journal_id, peer_choice, article_name, authors } = req.body;
+    const { journal_id, peer_choice, article_name, authors, article_type } = req.body;
 
     let country = new Set();
     for (let i = 0; i < peer_choice.length; i++) {
@@ -50,7 +50,8 @@ const addArticle = async (req, res) => {
       size: req.file.size,
       status: "Under Review",
       peer_choice: peer_choice,
-      authors: authors
+      authors: authors,
+      article_type: article_type
     });
     
     const journal = await Journal.findById(journal_id);
@@ -295,13 +296,6 @@ const getNumberVolumes = async(req,res)=> {
       volumes,
       journal_id
     });
-
-    yearList.forEach((year)=>{
-      let obj = {};
-      for (let i = 0; i < allArticles.length; i++) {
-          
-      }
-    })
     
 	} catch (error) {
 		console.log(error);
@@ -315,7 +309,6 @@ const getNumberVolumes = async(req,res)=> {
 const volume = async (req,res) => {
   try {
     const {year,journal_id} = req.params;
-    // const {} = req.body;
 
     const startDate = new Date(year);
     const endDate = new Date( (new Date(year, 12,1))-1 );
