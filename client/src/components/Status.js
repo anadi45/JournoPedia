@@ -12,7 +12,7 @@ function Status(props) {
 	const progress = {
 		Submitted: 0,
 		"Under Review": 24.5,
-		"Rejected": 49.5,
+		Rejected: 49.5,
 		"Under Peer Review": 74.5,
 		Accepted: 100,
 		Rejected: 100,
@@ -61,6 +61,7 @@ function Status(props) {
 					return (
 						<div key={i} className="article-status-div">
 							<h4 className="article-heading">{article.article_name}</h4>
+							<div className="review-artcile-journal-div">Journal Name</div>
 							<div className="progress-div">
 								<ProgressBar
 									percentage={progress[article.status]}
@@ -81,12 +82,8 @@ function Status(props) {
 							</div>
 							<div className="progress-bar-labels-div">
 								<div className="progress-bar-label">Submitted</div>
-								<div className="progress-bar-label shift-right">
-									Under Review
-								</div>
-								<div className="progress-bar-label right-text">
-									Accepted/Rejected
-								</div>
+								<div className="progress-bar-label ">Under Review</div>
+								<div className="progress-bar-label">Accepted/Rejected</div>
 								<div className="progress-bar-label center-text">
 									Under Peer Review
 								</div>

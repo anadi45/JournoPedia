@@ -28,6 +28,10 @@ function SearchArticle(props) {
 		});
 	}, []);
 
+	const handleSubmit = () => {
+		//axios request here
+	};
+
 	console.log(journalNames);
 	const handleOnTopicChange = (journals) => {
 		let str = "";
@@ -49,116 +53,140 @@ function SearchArticle(props) {
 		<div className="search-article-div">
 			<div className="search-article-heading">Looking for an article?</div>
 
-			{/**************************************  Select Journal(s)********************************************/}
-			<div className="mb-3">
-				<label>Expertise</label>
-				<MultiSelect
-					width={"50%"}
-					onChange={handleOnTopicChange}
-					options={journalNames}
-				/>
-			</div>
-			{/* <Dropdown
-				options={journals.map((journal) => {
-					return journal.journal_name;
-				})}
-				onChange={(e) => {
-					for (var i = 0; i < journals.length; i++)
-						if (journals[i].journal_name === e.label) setJournal(journals[i]);
-				}}
-				// value={defaultOption}
-				placeholder="Select an option"
-			/> */}
+			<div className="filter-article-div">
+				{/**************************************  Select Journal(s)********************************************/}
+				<div className="filter-div">
+					<label>Select Journal(s)</label>
+					<MultiSelect
+						width={"50%"}
+						onChange={handleOnTopicChange}
+						options={journalNames}
+					/>
+				</div>
 
-			{/**************************************  Date of Submission********************************************/}
-			<div>
-				<input
-					type="date"
-					onChange={(e) => {
-						setDateOfSubmission({ ...dateOfSubmission, start: e.target.value });
-					}}
-				/>
-				<input
-					type="date"
-					onChange={(e) => {
-						setDateOfSubmission({ ...dateOfSubmission, end: e.target.value });
-					}}
-				/>
-			</div>
+				{/**************************************  Date of Submission********************************************/}
+				<div className="filter-div date-div">
+					<label>Time Range</label>
+					<br />
+					<label>From</label>
+					<input
+						className="from-date-input filter-input"
+						type="date"
+						onChange={(e) => {
+							setDateOfSubmission({
+								...dateOfSubmission,
+								start: e.target.value,
+							});
+						}}
+					/>
+					<br />
+					<label>To</label>
+					<input
+						className="to-date-input filter-input"
+						type="date"
+						onChange={(e) => {
+							setDateOfSubmission({ ...dateOfSubmission, end: e.target.value });
+						}}
+					/>
+				</div>
 
-			{/************************************** Article Type Checkbox********************************************/}
-			<div>
-				<input
-					type="checkbox"
-					id="articleType"
-					name="Innovation"
-					value="Innovation"
-					onChange={(e) => {
-						if (e.target.checked) {
-							if (articleType.length === 0) setArticleType(["Innovation"]);
-							else setArticleType(["Innovation", "Research"]);
-						} else {
-							if (articleType.length === 2) setArticleType(["Research"]);
-							else setArticleType([]);
-						}
-					}}
-				/>
-				<label for="Innovation"> Innovation</label>
-				<br />
-				<input
-					type="checkbox"
-					id="articleType"
-					name="Research"
-					value="Research"
-					onChange={(e) => {
-						if (e.target.checked) {
-							if (articleType.length === 0) setArticleType(["Research"]);
-							else setArticleType(["Innovation", "Research"]);
-						} else {
-							if (articleType.length === 2) setArticleType(["Innovation"]);
-							else setArticleType([]);
-						}
-					}}
-				/>
-				<label for="Research"> Research</label>
-				<br></br>
-			</div>
-			{/************************************** Status Checkbox********************************************/}
-			<div>
-				<input
-					type="checkbox"
-					id="status"
-					name="Editor Approved"
-					value="Editor Approved"
-					onChange={(e) => {
-						if (e.target.checked) {
-							if (articleType.length === 0) setArticleType(["Editor Approved"]);
-							else setStatus(["Editor Approved", "Peer Approved"]);
-						} else {
-							if (articleType.length === 2) setArticleType(["Peer Approved"]);
-							else setStatus([]);
-						}
-					}}
-				/>
-				<label for="Editor Approved"> Editor Approved</label>
-				<br />
-				<input
-					type="checkbox"
-					id="status"
-					name="Peer Approved"
-					value="Peer Approved"
-					onChange={(e) => {
-						if (e.target.checked) {
-							if (articleType.length === 0) setArticleType(["Peer Approved"]);
-							else setStatus(["Editor Approved", "Peer Approved"]);
-						} else {
-							if (articleType.length === 2) setArticleType(["Editor Approved"]);
-							else setStatus([]);
-						}
-					}}
-				/>
-				<label for="Peer Approved"> Peer Approved</label>
-				<br></br>
+				{/************************************** Article Type Checkbox********************************************/}
+				<div className="filter-div article-type-div">
+					<label>Article type</label>
+					<br />
+					<input
+						type="checkbox"
+						id="articleType"
+						name="Innovation"
+						value="Innovation"
+						onChange={(e) => {
+							if (e.target.checked) {
+								if (articleType.length === 0) setArticleType(["Innovation"]);
+								else setArticleType(["Innovation", "Research"]);
+							} else {
+								if (articleType.length === 2) setArticleType(["Research"]);
+								else setArticleType([]);
+							}
+						}}
+					/>
+					<label className="filter-label" for="Innovation">
+						{" "}
+						Innovation
+					</label>
+					<br />
+					<input
+						type="checkbox"
+						id="articleType"
+						name="Research"
+						value="Research"
+						onChange={(e) => {
+							if (e.target.checked) {
+								if (articleType.length === 0) setArticleType(["Research"]);
+								else setArticleType(["Innovation", "Research"]);
+							} else {
+								if (articleType.length === 2) setArticleType(["Innovation"]);
+								else setArticleType([]);
+							}
+						}}
+					/>
+					<label className="filter-label" for="Research">
+						{" "}
+						Research
+					</label>
+					<br></br>
+				</div>
+				{/************************************** Status Checkbox********************************************/}
+				<div className="filter-div">
+					<label>Status</label>
+					<br />
+					<input
+						type="checkbox"
+						id="status"
+						name="Editor Approved"
+						value="Editor Approved"
+						onChange={(e) => {
+							if (e.target.checked) {
+								if (articleType.length === 0)
+									setArticleType(["Editor Approved"]);
+								else setStatus(["Editor Approved", "Peer Approved"]);
+							} else {
+								if (articleType.length === 2) setArticleType(["Peer Approved"]);
+								else setStatus([]);
+							}
+						}}
+					/>
+					<label className="filter-label" for="Editor Approved">
+						{" "}
+						Editor Approved
+					</label>
+					<br />
+					<input
+						type="checkbox"
+						id="status"
+						name="Peer Approved"
+						value="Peer Approved"
+						onChange={(e) => {
+							if (e.target.checked) {
+								if (articleType.length === 0) setArticleType(["Peer Approved"]);
+								else setStatus(["Editor Approved", "Peer Approved"]);
+							} else {
+								if (articleType.length === 2)
+									setArticleType(["Editor Approved"]);
+								else setStatus([]);
+							}
+						}}
+					/>
+					<label className="filter-label" for="Peer Approved">
+						{" "}
+						Peer Approved
+					</label>
+					<br></br>
+				</div>
+				<div className="filter-search-btn-div">
+					<button className="filter-search-btn" onClick={handleSubmit}>
+						Search
+					</button>
+				</div>
 			</div>
 		</div>
 	);

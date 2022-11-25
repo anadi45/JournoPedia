@@ -50,8 +50,13 @@
   display: inline-block;
   font-size: 20px;
   font-weight: 500;
+  position: relative;
+  bottom: 12px;
 }
-
+.article-heading-journal-name{
+  color: darkgrey;
+  font-size: 15px;
+}
 .no-articles-pic{
   width: 50%;
   margin: 50px 300px;

@@ -9,7 +9,7 @@
     width: fit-content;
     margin-left: 80px;
     position: relative;
-    border: 1.5px solid gray;
+    /* border: 1.5px solid gray; */
     border-radius: 12px;
 }
 .user-pic{
@@ -26,15 +26,17 @@
 }
 .add-photo-div{
     position: absolute;
-    right: 8px;
-    bottom: 4px;
+    right: 0px;
+    bottom: 0px;
     opacity: 0.7;
     cursor: pointer;
     font-size: 19px;
+    background: white;
+    padding: 0 5px;
+    border-radius: 4px;
 }
 .add-photo-div:hover{
-    opacity: 1;
-    cursor: pointer;
+    opacity: 0.9;
 }
 .user-name-div{
     display: inline-block;

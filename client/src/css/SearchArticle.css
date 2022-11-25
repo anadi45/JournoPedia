@@ -11,3 +11,50 @@
     font-weight: 500;
     border-bottom: 1px solid;
 }
+.filter-div{
+    width: 23%;
+    padding: 10px;
+    margin-left: 15px;
+    display: inline-block;
+}
+.to-date-input{
+    margin-left: 19px;
+    padding: 5px;
+}
+.from-date-input{   
+    padding: 5px;
+}
+.filter-input{
+    padding: 4px;
+}
+.filter-label{
+    padding: 4px;
+}
+.date-div{
+    position: relative;
+    top: 2.5px;
+}
+.article-type-div{
+    position: relative;
+    bottom: 3.5px;
+}
+.filter-article-div{
+    margin-left: 40px;
+}
+.filter-search-btn-div{
+    position: relative;
+}
+.filter-search-btn{
+    position: absolute;
+    right: 45%;
+    margin-top: 30px;
+    border: none;
+    padding: 10px;
+    width: 15%;
+    border-radius: 10px;
+    background: #33c2ef;
+    color: white;
+}
+.filter-search-btn:hover{
+    background: #23a6d5;
+}

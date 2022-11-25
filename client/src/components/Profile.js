@@ -51,6 +51,7 @@ function Profile(props) {
 				setImage(e.target.files[0]);
 				setImageUpload(false);
 			});
+		window.location.reload();
 	};
 
 	if (spinnerVisible === "visible") {
@@ -92,7 +93,7 @@ function Profile(props) {
 						className="user-pic"
 					></img>
 					<div className="add-photo-div">
-						<label htmlFor="filePicker">
+						<label htmlFor="filePicker" style={{ cursor: "pointer" }}>
 							<i class="fas fa-camera"></i>
 						</label>
 						<input

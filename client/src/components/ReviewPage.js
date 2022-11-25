@@ -172,6 +172,9 @@ function ReviewPage(props) {
 											<td className="td-1">
 												<div className="article-heading">
 													{item.article_name}
+													<div className="article-heading-journal-name">
+														Journal Name
+													</div>
 												</div>
 											</td>
 											<td className="td-2">
@@ -182,21 +185,12 @@ function ReviewPage(props) {
 												>
 													Download
 												</button>
-												<Dropdown
-													className="review-dropdown"
-													options={["Yes", "No"]}
-													onChange={(e) => {
-														setPassForReview(e.label);
-													}}
-													disabled
-													value={
-														item.status === "Under Peer Review" ||
-														item.status === "Accepted"
-															? "Yes"
-															: "No"
-													}
-													placeholder="Pass for peer review"
-												/>
+												<button className="download-btn">
+													{item.status === "Under Peer Review" ||
+													item.status === "Accepted"
+														? "Approved"
+														: "Rejected"}
+												</button>
 											</td>
 										</tr>
 									);
