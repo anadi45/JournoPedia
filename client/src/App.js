@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 // import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useParams } from "react-router-dom";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
@@ -18,6 +18,7 @@ import ReviewPage from "./components/ReviewPage";
 import AddArticle from "./components/AddArticle";
 import SuccessPage from "./components/SuccessPage";
 import ForgetPassword from "./components/ForgetPassword";
+import Volume from "./components/Volume";
 
 function App() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -256,6 +257,14 @@ function App() {
 								/>
 							);
 						})}
+
+						<Route
+							path="/:journal_id/volume/:year"
+							element={<Volume
+								setDisplayItems={setDisplayItems}
+							/>}
+						/>
+
 					</Routes>
 				</div>
 			</div>

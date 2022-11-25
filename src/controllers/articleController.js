@@ -290,9 +290,10 @@ const getNumberVolumes = async(req,res)=> {
         yearList.add((allArticles[i].date_of_submission).getFullYear());
     }
     let volumes = [...yearList];
-    volumes = volumes.sort();
+    volumes = volumes.sort().reverse();
     return res.send({
-      volumes
+      volumes,
+      journal_id
     });
 
     yearList.forEach((year)=>{

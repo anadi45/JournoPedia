@@ -11,7 +11,8 @@ const {
   editUserDetails,
   changePassword,
   forgetPassword,
-  addProfilePhoto
+  addProfilePhoto,
+  getAllAuthors
 } = require("../controllers/userController");
 
 const {
@@ -47,6 +48,7 @@ router.patch("/editUserDetails", isLoggedIn, editUserDetails);
 router.patch("/changePassword", isLoggedIn, changePassword);
 router.post("/forgetPassword", forgetPassword);
 router.patch("/addProfilePhoto", isLoggedIn, imageUpload.single("image"), addProfilePhoto);
+router.post("/getAllAuthors", getAllAuthors);
 
 //Journal Operations
 router.post("/createJournal", isAdmin, imageUpload.single("image"), createJournal);

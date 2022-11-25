@@ -365,6 +365,27 @@ const addProfilePhoto = async (req, res) => {
 	}
 };
 
+//@route	POST	/getAllAuthors
+//@descr	Get all authors from ids
+//@access	Public
+
+const getAllAuthors = async (req,res) => {
+	try {
+		const {allIds} = req.body;
+		const authors = await User.find({_id:{  $in:allIds}});
+
+		if(authors) {
+			return res.send(authors);
+		} else {
+			res.send({
+				message: "No Author Found"
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
 	signup,
 	login,
@@ -375,4 +396,5 @@ module.exports = {
 	changePassword,
 	forgetPassword,
 	addProfilePhoto,
+	getAllAuthors
 };

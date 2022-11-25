@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/JournalPage.css";
 // import img from '../../public/images/'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Tabs, Tab } from "react-bootstrap";
 import { PuffLoader } from "react-spinners";
@@ -14,6 +14,7 @@ function JournalPage(props) {
 	const [otherAuthor, setOtherAuthor] = useState([]);
 	const [synopsis, setSynopsis] = useState("");
 	const [cookies, setCookie] = useCookies(["token"]);
+	const [volumes, setVolumes] = useState([]);
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
 	let navigate = useNavigate();
 
@@ -24,7 +25,7 @@ function JournalPage(props) {
 		axios
 			.get(`http://localhost:5000/viewJournal/${props.journalId}`)
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				setImg(res.data.journal.image.substr(14));
 				setJournalName(res.data.journal.journal_name);
 				setSynopsis(res.data.journal.synopsis);
@@ -38,6 +39,12 @@ function JournalPage(props) {
 				setOtherAuthor(otherAuthors);
 				setSpinnerVisible("hidden");
 			});
+
+		axios.get(`http://localhost:5000/getNumberVolumes/${props.journalId}`)
+		.then((res)=>{
+			console.log(res.data);
+			setVolumes(res.data.volumes);
+		})
 	}, []);
 
 	if (spinnerVisible === "visible") {
@@ -109,6 +116,18 @@ function JournalPage(props) {
 							</div>
 						</Tab>
 					</Tabs>
+					<div>
+						<h5>Volumes</h5>
+						<div>
+							{
+								volumes.map((volume,index)=>{
+									return (
+										<Link to={`/${props.journalId}/volume/${volume}`}>Volume {volumes.length - index}<br></br></Link>
+									)
+								})
+							}
+						</div>
+					</div>
 				</div>
 			</div>
 		);
