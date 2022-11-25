@@ -50,8 +50,7 @@ function ReviewPage(props) {
 				// console.log(res.data);
 			});
 	}, []);
-		// console.log(journalIds);
-		// console.log(articles)
+
 	useEffect(()=>{
 		const config = {
 			headers: {

@@ -296,14 +296,10 @@ const journalNameByIds = async (req,res) => {
 	try {
 		const {allIds} = req.body;
 		const allJournals = await Journal.find({_id: {$in: allIds}});
-		let journalNames = [];
-		
 		
 		let obj = {};
 		for (let i = 0; i < allJournals.length; i++) {
 			obj[allJournals[i]._id] = allJournals[i].journal_name;
-			// journalNames.push(obj);
-			// obj = {};
 		}
 		
 		if(allJournals) {

@@ -9,6 +9,8 @@ function Status(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [journalNames, setJournalNames] = useState([]);
+	const [journalIds, setJournalIds] = useState([]);
 	const progress = {
 		Submitted: 0,
 		"Under Review": 24.5,
@@ -27,11 +29,38 @@ function Status(props) {
 			},
 		};
 		axios.get(`http://localhost:5000/articleStatus`, config).then((res) => {
-			console.log(res.data);
 			setArticles(res.data);
 			setIsLoading(false);
+			setJournalIds(res.data.map((journal)=>{
+				return journal.journal
+			}));
 		});
 	}, []);
+
+	useEffect(()=>{
+		const config = {
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
+
+		axios
+			.post(
+				`http://localhost:5000/journalNameByIds`,
+				{
+					allIds: journalIds,
+				},
+				config
+			)
+			.then((res) => {
+				setJournalNames(journalIds.map((journalId,index)=>{
+					return res.data[journalId]
+				}))
+
+			});
+	},[journalIds])
 
 	if (isLoading) {
 		return (
@@ -61,7 +90,7 @@ function Status(props) {
 					return (
 						<div key={i} className="article-status-div">
 							<h4 className="article-heading">{article.article_name}</h4>
-							<div className="review-artcile-journal-div">Journal Name</div>
+							<div className="review-artcile-journal-div">{journalNames[i]}</div>
 							<div className="progress-div">
 								<ProgressBar
 									percentage={progress[article.status]}
