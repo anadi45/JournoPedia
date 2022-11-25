@@ -334,6 +334,42 @@ const volume = async (req,res) => {
   }
 }
 
+//@route	POST /searchArticles
+//@descr	Get all articles using a filter
+//@access	Public
+
+const searchArticles = async (req,res) => {
+	try {
+		const {article_type, status, journal} = req.body;
+		
+		const startDate = new Date(req.body.startDate).toISOString();
+		const endDate = new Date(req.body.endDate).toISOString();
+
+		const allArticles = await Article.find(		
+				{
+					journal: {$in: journal},
+					status: {$in: status},
+					article_type: {$in: article_type},
+					date_of_submission: {
+						$gte: startDate,
+						$lte: endDate
+					}
+				}
+		);
+		
+		if(allArticles) {
+			res.send(allArticles);
+		} else {
+			res.send({
+				message: "No Articles Found"
+			});
+		}
+
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
   addArticle,
   downloadArticle,
@@ -342,5 +378,6 @@ module.exports = {
   allArticlesForReferral,
   articleStatus,
   getNumberVolumes,
-  volume
+  volume,
+  searchArticles
 };

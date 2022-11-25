@@ -36,7 +36,8 @@ const {
   allArticlesForReferral,
   articleStatus,
   getNumberVolumes,
-  volume
+  volume,
+  searchArticles
 } = require("../controllers/articleController");
 
 // User Routes
@@ -72,6 +73,7 @@ router.get("/allArticlesForReferral", isLoggedIn, allArticlesForReferral);
 router.get("/articleStatus", isLoggedIn, articleStatus);
 router.get("/getNumberVolumes/:journal_id", getNumberVolumes);
 router.get("/:journal_id/volume/:year", volume);
+router.post("/searchArticles", searchArticles);
 
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);
