@@ -78,9 +78,9 @@ function Volume(props) {
 							<div>Co-Authors - </div>
 							{article.authors.map((author) => {
 								return (
-									<span>
+									<p>
 										{author.name}, {author.email}, {author.country} <br></br>
-									</span>
+									</p>
 								);
 							})}
 							<div>

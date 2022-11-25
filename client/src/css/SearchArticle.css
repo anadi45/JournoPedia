@@ -12,13 +12,13 @@
     border-bottom: 1px solid;
 }
 .filter-div{
-    width: 23%;
+    width: 30%;
     padding: 10px;
     margin-left: 15px;
     display: inline-block;
 }
 .to-date-input{
-    margin-left: 19px;
+    /* margin-left: 19px; */
     padding: 5px;
 }
 .from-date-input{   
@@ -39,7 +39,9 @@
     bottom: 3.5px;
 }
 .filter-article-div{
-    margin-left: 40px;
+    /* margin-left: 40px; */
+    left:10%;
+    position: relative;
 }
 .filter-search-btn-div{
     position: relative;
@@ -58,3 +60,11 @@
 .filter-search-btn:hover{
     background: #23a6d5;
 }
+
+.filter-journal-div {
+    /* justify-content: center; */
+    position: relative;
+    left: 10%;
+    width: 80%;
+}
+

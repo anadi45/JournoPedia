@@ -55,14 +55,7 @@ function SearchArticle(props) {
 
 			<div className="filter-article-div">
 				{/**************************************  Select Journal(s)********************************************/}
-				<div className="filter-div">
-					<label>Select Journal(s)</label>
-					<MultiSelect
-						width={"50%"}
-						onChange={handleOnTopicChange}
-						options={journalNames}
-					/>
-				</div>
+				
 
 				{/**************************************  Date of Submission********************************************/}
 				<div className="filter-div date-div">
@@ -70,7 +63,7 @@ function SearchArticle(props) {
 					<br />
 					<label>From</label>
 					<input
-						className="from-date-input filter-input"
+						className="from-date-input filter-input form-control"
 						type="date"
 						onChange={(e) => {
 							setDateOfSubmission({
@@ -82,7 +75,7 @@ function SearchArticle(props) {
 					<br />
 					<label>To</label>
 					<input
-						className="to-date-input filter-input"
+						className="to-date-input filter-input form-control"
 						type="date"
 						onChange={(e) => {
 							setDateOfSubmission({ ...dateOfSubmission, end: e.target.value });
@@ -182,12 +175,21 @@ function SearchArticle(props) {
 					</label>
 					<br></br>
 				</div>
+
+			</div>
+			<div className="filter-div filter-journal-div">
+					<label>Select Journal(s)</label>
+					<MultiSelect
+						width={"50%"}
+						onChange={handleOnTopicChange}
+						options={journalNames}
+					/>
+				</div>
 				<div className="filter-search-btn-div">
 					<button className="filter-search-btn" onClick={handleSubmit}>
 						Search
 					</button>
 				</div>
-			</div>
 		</div>
 	);
 }

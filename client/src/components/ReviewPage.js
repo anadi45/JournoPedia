@@ -15,6 +15,8 @@ function ReviewPage(props) {
 	const [articlesCount, setArticlesCount] = useState(0);
 	const [articlesForReviewCount, setArticlesForReviewCount] = useState(0);
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
+	const [journalNames, setJournalNames] = useState([]);
+	const [journalIds, setJournalIds] = useState([]);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -33,7 +35,12 @@ function ReviewPage(props) {
 				if (res.data.message === "No articles for review")
 					setNoArticlesMessage(res.data.message);
 				setArticles(res.data);
-				console.log(res.data);
+				// console.log(res.data);
+				
+				setJournalIds(res.data.map((journal)=>{
+					return journal.journal
+				}))
+				
 				var articlesForReviewCount = 0;
 				for (var i = 0; i < res.data.length; i++)
 					if (res.data[i].status === "Under Review") articlesForReviewCount++;
@@ -43,6 +50,32 @@ function ReviewPage(props) {
 				// console.log(res.data);
 			});
 	}, []);
+		// console.log(journalIds);
+		// console.log(articles)
+	useEffect(()=>{
+		const config = {
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
+
+		axios
+			.post(
+				`http://localhost:5000/journalNameByIds`,
+				{
+					allIds: journalIds,
+				},
+				config
+			)
+			.then((res) => {
+				setJournalNames(journalIds.map((journalId,index)=>{
+					return res.data[journalId]
+				}))
+
+			});
+	},[journalIds])
 
 	function handleDownload(e) {
 		const articleId = e.target.value;
@@ -70,7 +103,6 @@ function ReviewPage(props) {
 				config
 			)
 			.then((res) => {
-				console.log(res);
 				window.location.reload();
 				// setArticlesForReviewCount(articlesForReviewCount - 1);
 				// setArticles(articles);
@@ -161,7 +193,7 @@ function ReviewPage(props) {
 							Already Reviewed
 						</div>
 						<table className="articles-table">
-							{articles.map((item) => {
+							{articles.map((item,index) => {
 								if (
 									item.status === "Under Peer Review" ||
 									item.status === "Accepted" ||
@@ -173,7 +205,7 @@ function ReviewPage(props) {
 												<div className="article-heading">
 													{item.article_name}
 													<div className="article-heading-journal-name">
-														Journal Name
+														{journalNames[index]}
 													</div>
 												</div>
 											</td>
