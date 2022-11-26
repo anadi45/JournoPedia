@@ -61,7 +61,7 @@ function Status(props) {
 
 			});
 	},[journalIds])
-
+	console.log(articles);
 	if (isLoading) {
 		return (
 			<div className="loading-div">
@@ -91,6 +91,7 @@ function Status(props) {
 						<div key={i} className="article-status-div">
 							<h4 className="article-heading">{article.article_name}</h4>
 							<div className="review-artcile-journal-div">{journalNames[i]}</div>
+							<div className="review-artcile-journal-div">DOS - {new Date(article.date_of_submission).toLocaleDateString('en-GB')}</div>
 							<div className="progress-div">
 								<ProgressBar
 									percentage={progress[article.status]}
