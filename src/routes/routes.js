@@ -39,7 +39,8 @@ const {
   volume,
   searchArticles,
   addPeerReviewDetails,
-  scoreArticle
+  scoreArticle,
+  allArticlesPeerResponseVerification
 } = require("../controllers/articleController");
 
 // User Routes
@@ -78,6 +79,7 @@ router.get("/:journal_id/volume/:year", volume);
 router.post("/searchArticles", searchArticles);
 router.post("/addPeerReviewDetails/:article_id", isLoggedIn,imageUpload.single("image"), addPeerReviewDetails);
 router.patch("/scoreArticle/:article_id", isLoggedIn, scoreArticle);
+router.get("/allArticlesPeerResponseVerification", isLoggedIn, allArticlesPeerResponseVerification);
  
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);
