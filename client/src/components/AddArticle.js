@@ -18,6 +18,7 @@ function AddArticle(props) {
 	const [peerChoice, setPeerChoice] = useState([]);
 	const [article, setArticle] = useState(null);
 	const [authors, setAuthors] = useState([]);
+	const [articleType, setArticleType] = useState("");
 	const [cookies, setCookie] = useCookies(["token"]);
 	const navigate = useNavigate();
 
@@ -46,6 +47,7 @@ function AddArticle(props) {
 					abstract: abstract,
 					journal_id: journal._id,
 					authors: authors,
+					article_type: articleType,
 				},
 				config
 			)
@@ -67,6 +69,7 @@ function AddArticle(props) {
 					setArticleName={setArticleName}
 					setAbstract={setAbstract}
 					setArticle={setArticle}
+					setArticleType={setArticleType}
 				/>
 			),
 		},

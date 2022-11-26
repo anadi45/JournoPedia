@@ -40,11 +40,12 @@ function JournalPage(props) {
 				setSpinnerVisible("hidden");
 			});
 
-		axios.get(`http://localhost:5000/getNumberVolumes/${props.journalId}`)
-		.then((res)=>{
-			console.log(res.data);
-			setVolumes(res.data.volumes);
-		})
+		axios
+			.get(`http://localhost:5000/getNumberVolumes/${props.journalId}`)
+			.then((res) => {
+				console.log(res.data);
+				setVolumes(res.data.volumes);
+			});
 	}, []);
 
 	if (spinnerVisible === "visible") {
@@ -116,16 +117,17 @@ function JournalPage(props) {
 							</div>
 						</Tab>
 					</Tabs>
-					<div>
+					<div className="volume-links-div">
 						<h5>Volumes</h5>
 						<div>
-							{
-								volumes.map((volume,index)=>{
-									return (
-										<Link to={`/${props.journalId}/volume/${volume}`}>Volume {volumes.length - index}<br></br></Link>
-									)
-								})
-							}
+							{volumes.map((volume, index) => {
+								return (
+									<Link to={`/${props.journalId}/volume/${volume}`}>
+										Volume {volumes.length - index}
+										<br></br>
+									</Link>
+								);
+							})}
 						</div>
 					</div>
 				</div>

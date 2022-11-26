@@ -10,6 +10,7 @@ function StepTwo(props) {
 	const [article, setArticle] = useState("");
 	const [articleName, setArticleName] = useState("");
 	const [reviewer, setReviewer] = useState([]);
+	const [articleType, setArticleType] = useState("");
 	const [abstract, setAbstract] = useState("");
 	const [journals, setJournals] = useState([]);
 	const navigate = useNavigate();
@@ -35,6 +36,17 @@ function StepTwo(props) {
 							for (var i = 0; i < journals.length; i++)
 								if (journals[i].journal_name === e.label)
 									props.setJournal(journals[i]);
+						}}
+						// value={defaultOption}
+						placeholder="Select an option"
+					/>
+				</div>
+				<label>Select Article Type</label>
+				<div className="mb-3">
+					<Dropdown
+						options={["Innovation", "Research"]}
+						onChange={(e) => {
+							props.setArticleType(e.value);
 						}}
 						// value={defaultOption}
 						placeholder="Select an option"
