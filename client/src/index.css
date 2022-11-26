@@ -23,8 +23,14 @@ body {
     background-position: 0% 50%;
   }
 }
+.border_article {
+padding: 2rem;
+border-style: double;
+margin-right:2.0rem;
+}
 .brand-color,
 .navbar-brand {
+  font-size: 2rem;
   transition: 1s;
   color: #23a6d5;
 }
@@ -69,6 +75,7 @@ html,
 .App,
 #root,
 .auth-wrapper {
+  margin-top : 10px;
   width: 100%;
   height: 100%;
 }
@@ -217,11 +224,11 @@ html,
 }
 
 /* .dropdown-item:first-child{
-  display: none; 
+  display: none;
 }*/
 
 /* .dropdown-item:nth-child(2){
-  display: none; 
+  display: none;
 }*/
 
 @media only screen and (max-width: 580px) {

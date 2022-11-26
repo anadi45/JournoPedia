@@ -36,11 +36,11 @@ function ReviewPage(props) {
 					setNoArticlesMessage(res.data.message);
 				setArticles(res.data);
 				// console.log(res.data);
-				
+
 				setJournalIds(res.data.map((journal)=>{
 					return journal.journal
 				}))
-				
+
 				var articlesForReviewCount = 0;
 				for (var i = 0; i < res.data.length; i++)
 					if (res.data[i].status === "Under Review") articlesForReviewCount++;

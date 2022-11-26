@@ -15,9 +15,10 @@
   transition: transform 0.2s;
 }
 .card:hover {
-  transform: scale(1.15);
+  transform: scale(1.06);
   z-index: 2;
-  color: black;
+  color: white;
+  background-color: #23a6d5;
 }
 .card-link {
   text-decoration: none;
@@ -45,7 +46,7 @@
 }
 
 .zoom:hover {
-  -ms-transform: scale(1.5); 
-  -webkit-transform: scale(1.5); 
-  transform: scale(1.5); 
+  -ms-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
 } */
