@@ -8,7 +8,7 @@ function StepOne() {
 				<p>
 					Choose a journal for which you want to submit the article. Add a
 					suitable name for your article and then upload the desired file.
-					<b> Note: The file should only be in .pdf or .dox format</b>
+					<b> Note: The file should only be in .pdf or .docx format</b>
 				</p>
 			</div>
 			<div className="step-div">

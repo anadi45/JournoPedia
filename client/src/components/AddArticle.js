@@ -71,7 +71,7 @@ function AddArticle(props) {
 			),
 		},
 		{
-			title: "Reviewer Details",
+			title: "Peer Reviewer Details",
 			component: <StepThree setPeerChoice={setPeerChoice} />,
 		},
 		{
