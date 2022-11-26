@@ -6,7 +6,13 @@
         height: 100vh;
 }
 .article-status-div{
-    margin-left: 60px;
+    margin-left: 50px;
+    margin-bottom: 20px;
+        padding: 20px;
+    /* background: #ADD8E6; */
+    border: 1px solid;
+
+    border-radius: 10px;
 }
 .article-heading{
     display: inline-block;
@@ -29,6 +35,20 @@
     text-align: center;
     padding: 3px;
     color: white;
+}
+
+.milestone-circle-cross{
+    color: red;
+    border-radius: 50%;
+    font-size: 28px;
+    display: inline-block;
+}
+.withdrawn-span{
+    position: relative;
+    bottom: 4px;
+    margin-left: 10px;
+    font-weight: 400;
+    font-size: 1.05rem;
 }
 
 .milestone-circle-incomplete{
@@ -62,4 +82,16 @@
     position: relative;
     right:20;
     text-align: end;
+    font-size: 15px;
+    text-decoration: underline;
+    opacity: 0.8;
+    bottom: 2px;
+}
+.article-status-buttons:hover{
+    color: black;
+    opacity: 1;
+}
+.status-btn-div{
+    display: inline-block;
+    margin-left: 40px;
 }
