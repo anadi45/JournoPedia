@@ -50,7 +50,7 @@ function ReviewPage(props) {
 				// console.log(res.data);
 			});
 	}, []);
-
+	console.log(articles);
 	useEffect(()=>{
 		const config = {
 			headers: {
@@ -204,7 +204,10 @@ function ReviewPage(props) {
 												<div className="article-heading">
 													{item.article_name}
 													<div className="article-heading-journal-name">
-														{journalNames[index]}
+														{journalNames[index]}<br></br>
+														DOR - {
+															new Date(item.date_of_review).toLocaleDateString('en-GB')
+														}
 													</div>
 												</div>
 											</td>

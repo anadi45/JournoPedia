@@ -89,6 +89,12 @@ function Volume(props) {
 									"en-GB"
 								)}
 							</div>
+							<div>
+								Date of Issue -{" "}
+								{new Date(article.date_of_review).toLocaleDateString(
+									"en-GB"
+								)}
+							</div>
 							<div>Status - {article.status}</div>
 							<button
 								className="download-btn"

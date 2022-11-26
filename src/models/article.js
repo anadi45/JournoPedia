@@ -41,15 +41,12 @@ const articleSchema = new mongoose.Schema({
         country: String
     }],
     status: {
-        type: String //Accepted,Rejected,Withdrawn,Under Review
+        type: String //Rejected,Under Peer review,Withdrawn,Peer Accepted
     },
     article_type: {
         type: String //Innovation,Research
     },
-    date_of_acceptence: {
-        type: Date
-    },
-    date_of_rejection: {
+    date_of_review: {
         type: Date
     },
     date_of_withdrawal: {
@@ -62,6 +59,42 @@ const articleSchema = new mongoose.Schema({
         type: Number
     },
     downloads: {
+        type: Number,
+        default: 0
+    },
+    peer_review_1: {
+        path:{
+            type: String
+        },
+        status: {
+            type: String
+        }
+    },
+    peer_review_2: {
+        path:{
+            type: String
+        },
+        status: {
+            type: String
+        }
+    },
+    peer_review_3: {
+        path:{
+            type: String
+        },
+        status: {
+            type: String
+        }
+    },
+    peer_review_4: {
+        path:{
+            type: String
+        },
+        status: {
+            type: String
+        }
+    },
+    peer_review_score: {
         type: Number,
         default: 0
     }

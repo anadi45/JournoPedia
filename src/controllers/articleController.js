@@ -128,25 +128,28 @@ const downloadArticle = async (req, res) => {
   }
 };
 
-//@route    DELETE /deleteArticle/:article_id
-//@descr    Delete a article by Id
+//@route    POST /withdrawArticle/:article_id
+//@descr    Withdraw a article by Id
 //@access   Private
 
-const deleteArticle = async (req, res) => {
+const withdrawArticle = async (req, res) => {
   try {
     const { article_id } = req.params;
-    const article = await Article.findById(article_id);
-    const path = article.path;
+	const article = await Article.findById(article_id);
+	const path = article.path;
+    const withdraw = await Article.findByIdAndUpdate(article_id,{
+		status: "Withdrawn",
+		path: "",
+		date_of_withdrawal: new Date()
+	});
 
-    const deleted = await Article.deleteOne({ id: article_id });
-
-    if (deleted) {
+    if (withdraw) {
       fs.unlink(path, (err) => {
         if (err) {
           console.log(err);
         } else {
           res.send({
-            message: "Article deleted succesfully!",
+            message: "Article withdrawn succesfully!",
           });
         }
       });
@@ -207,10 +210,14 @@ const referArticle = async (req, res) => {
         mail(mailingList,mailBody,attachments);
         updateStatus = await Article.findByIdAndUpdate(article_id, {
           status: "Under Peer Review",
+          reviewed_by: req.rootuser,
+          date_of_review: new Date()
         });
       } else {
         updateStatus = await Article.findByIdAndUpdate(article_id, {
           status: "Rejected",
+          reviewed_by: req.rootuser,
+          date_of_review: new Date()
         });
       }
     } else {
@@ -286,16 +293,16 @@ const getNumberVolumes = async(req,res)=> {
 
 		const allArticles = await Article.find({journal: journal_id});
     
-    let yearList = new Set();
-    for (let i = 0; i < allArticles.length; i++) {
-        yearList.add((allArticles[i].date_of_submission).getFullYear());
-    }
-    let volumes = [...yearList];
-    volumes = volumes.sort().reverse();
-    return res.send({
-      volumes,
-      journal_id
-    });
+		let yearList = new Set();
+		for (let i = 0; i < allArticles.length; i++) {
+			yearList.add((allArticles[i].date_of_submission).getFullYear());
+		}
+		let volumes = [...yearList];
+		volumes = volumes.sort().reverse();
+		return res.send({
+		volumes,
+		journal_id
+		});
     
 	} catch (error) {
 		console.log(error);
@@ -343,7 +350,7 @@ const searchArticles = async (req,res) => {
 		const {article_type, status, journal} = req.body;
 		
 		const startDate = new Date(req.body.startDate).toISOString();
-		const endDate = new Date(req.body.endDate).toISOString();
+		const endDate = new Date(req.body.endDate).toISOString(); //mm-dd-yyyy with one day greater
 
 		const allArticles = await Article.find(		
 				{
@@ -370,14 +377,160 @@ const searchArticles = async (req,res) => {
 	}
 }
 
+//@route	POST /addPeerReviewDetails/:article_id
+//@descr	Add Peer Review Proof
+//@access	Private
+
+const addPeerReviewDetails = async (req,res) => {
+	try {
+
+		if(!req.file) {
+			return res.send({
+				message: "File can not be empty"
+			});
+		}
+		
+		const {article_id} = req.params;
+
+		const findArticle = await Article.findById(article_id);
+		let peer_review_count = 0;
+
+		if(findArticle.peer_review_1.path) {
+			peer_review_count++;
+		}
+		if(findArticle.peer_review_2.path) {
+			peer_review_count++;
+		}
+		if(findArticle.peer_review_3.path) {
+			peer_review_count++;
+		}
+		if(findArticle.peer_review_4.path) {
+			peer_review_count++;
+		}
+		
+		if(peer_review_count == 0) {
+			updatePeerReview = await Article.findByIdAndUpdate(article_id, {
+				peer_review_1: {
+					path: req.file.path
+				}
+			});
+		} else if (peer_review_count == 1) {
+			updatePeerReview = await Article.findByIdAndUpdate(article_id, {
+				peer_review_2: {
+					path: req.file.path
+				}
+			});
+		} else if (peer_review_count == 2) {
+			updatePeerReview = await Article.findByIdAndUpdate(article_id, {
+				peer_review_3: {
+					path: req.file.path
+				}
+			});
+		} else if (peer_review_count == 3) {
+			updatePeerReview = await Article.findByIdAndUpdate(article_id, {
+				peer_review_4: {
+					path: req.file.path
+				}
+			});
+		} else {
+			return res.send({
+				message: "Already review statuses present"
+			});
+		}
+
+		if(updatePeerReview) {
+			res.send({
+				message: "Peer Review Added"
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+//@route	PATCH /scoreArticle/:article_id
+//@descr	Accept/Reject peer review by editorial board
+//@access	Private
+
+const scoreArticle = async (req,res) => {
+	try {
+		const {article_id} = req.params;
+		const {review_number , review} = req.body;
+
+		const article = await Article.findById(article_id);
+		const peer_review_score = article.peer_review_score;
+		const path1 = article.peer_review_1.path;
+		const path2 = article.peer_review_2.path;
+		const path3 = article.peer_review_3.path;
+		const path4 = article.peer_review_4.path;
+		let scoringArticle;
+		
+		if(review_number == 1) {
+			scoringArticle = await Article.findByIdAndUpdate(article_id,{
+				peer_review_1: {
+					path: path1,
+					status: review
+				}
+			});
+		} else if(review_number == 2) {
+			scoringArticle = await Article.findByIdAndUpdate(article_id,{
+				peer_review_2: {
+					path: path2,
+					status: review
+				}
+			});
+		} else if(review_number == 3) {
+			scoringArticle = await Article.findByIdAndUpdate(article_id,{
+				peer_review_3: {
+					path: path3,
+					status: review
+				}
+			});
+		} else {
+			scoringArticle = await Article.findByIdAndUpdate(article_id,{
+				peer_review_4: {
+					path: path4,
+					status: review
+				}
+			});
+		}
+		if(review == "Yes") {
+			if(peer_review_score+25 >= 50) {
+				scoreUpdate = await Article.findByIdAndUpdate(article_id,{
+					peer_review_score: peer_review_score+25,
+					status: "Peer Accepted"
+				});
+			} else {
+				scoreUpdate = await Article.findByIdAndUpdate(article_id,{
+					peer_review_score: peer_review_score+25
+				});
+			}
+		}
+		
+		if(scoringArticle) {
+			res.send({
+				message: "Updated peer review score"
+			});
+		} else {
+			res.send({
+				message: "Unable to score"
+			})
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
   addArticle,
   downloadArticle,
-  deleteArticle,
+  withdrawArticle,
   referArticle,
   allArticlesForReferral,
   articleStatus,
   getNumberVolumes,
   volume,
-  searchArticles
+  searchArticles,
+  addPeerReviewDetails,
+  scoreArticle
 };
