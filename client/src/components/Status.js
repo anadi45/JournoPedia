@@ -12,6 +12,7 @@ function Status(props) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [journalNames, setJournalNames] = useState([]);
 	const [journalIds, setJournalIds] = useState([]);
+
 	const progress = {
 		Submitted: 0,
 		"Under Review": 24.5,
@@ -20,6 +21,29 @@ function Status(props) {
 		Accepted: 100,
 		Rejected: 100,
 	};
+
+	const withdraw = (e) => {
+		const article_id=e.target.value;
+		const config = {
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
+
+		axios
+		.post(
+			`http://localhost:5000/withdrawArticle/${article_id}`,
+			{},
+			config
+		)
+		.then((res) => {
+			//Reload
+		});
+	}
+
+
 	useEffect(() => {
 		props.setDisplayItems(["none", "none", "inline"]);
 		const config = {
@@ -62,7 +86,7 @@ function Status(props) {
 
 			});
 	},[journalIds])
-	console.log(articles);
+	
 	if (isLoading) {
 		return (
 			<div className="loading-div">
@@ -92,7 +116,7 @@ function Status(props) {
 						<div key={i} className="article-status-div">
 							<h4 className="article-heading">{article.article_name}
 								<span>
-									<button className="btn article-status-buttons">Withdraw Article</button>
+									<button className="btn article-status-buttons" onClick={withdraw} value={article._id}>Withdraw Article</button>
 									<Link to="/add-peer-response"><button className="btn article-status-buttons">Submit Peer Review</button></Link>
 								</span>
 							</h4>
