@@ -4,6 +4,7 @@ import axios from "axios";
 import { PuffLoader } from "react-spinners";
 import { ProgressBar } from "react-milestone";
 import "../css/Status.css";
+import {Link} from "react-router-dom";
 
 function Status(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -89,7 +90,12 @@ function Status(props) {
 				{articles.map((article, i) => {
 					return (
 						<div key={i} className="article-status-div">
-							<h4 className="article-heading">{article.article_name}</h4>
+							<h4 className="article-heading">{article.article_name}
+								<span>
+									<button className="btn article-status-buttons">Withdraw Article</button>
+									<Link to="/add-peer-response"><button className="btn article-status-buttons">Submit Peer Review</button></Link>
+								</span>
+							</h4>
 							<div className="review-artcile-journal-div">{journalNames[i]}</div>
 							<div className="review-artcile-journal-div">DOS - {new Date(article.date_of_submission).toLocaleDateString('en-GB')}</div>
 							<div className="progress-div">

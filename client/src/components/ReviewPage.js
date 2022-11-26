@@ -52,7 +52,7 @@ function ReviewPage(props) {
 				// console.log(res.data);
 			});
 	}, []);
-	console.log(articles);
+	// console.log(articles);
 	useEffect(()=>{
 		const config = {
 			headers: {
@@ -110,7 +110,7 @@ function ReviewPage(props) {
 				// navigate("/review-article");
 			});
 	}
-
+	console.log(journalNames)
 	if (spinnerVisible === "visible") {
 		return (
 			<div className="loading-div">
@@ -198,7 +198,8 @@ function ReviewPage(props) {
 								if (
 									item.status === "Under Peer Review" ||
 									item.status === "Accepted" ||
-									item.status === "Rejected"
+									item.status === "Rejected" || 
+									item.status === "Withdrawn"
 								)
 									return (
 										<tr className="articles-tr">

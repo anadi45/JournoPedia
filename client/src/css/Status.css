@@ -57,3 +57,9 @@
     position: relative;
     left: 20px;
 }
+
+.article-status-buttons {
+    position: relative;
+    right:20;
+    text-align: end;
+}
