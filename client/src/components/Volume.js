@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { PuffLoader } from "react-spinners";
 import "../css/Volumes.css";
 
 function Volume(props) {
@@ -10,8 +11,12 @@ function Volume(props) {
 	const [articles, setArticles] = useState([]);
 	const [authorIDs, setAuthorIDs] = useState([]);
 	const [authorNames, setAuthorNames] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		if (cookies.token) props.setDisplayItems(["none", "none", "inline"]);
+		else props.setDisplayItems(["inline", "inline", "none"]);
+
 		window.scrollTo(0, 0);
 		axios
 			.get(`http://localhost:5000/${journal_id}/volume/${year}`)
@@ -55,6 +60,7 @@ function Volume(props) {
 						return author.name;
 					})
 				);
+				setIsLoading(false);
 			});
 	}, [authorIDs]);
 
@@ -65,44 +71,58 @@ function Volume(props) {
 		);
 	}
 
-	return (
-		<div className="volumes-div">
-			<div className="review-article-heading">Articles</div>
-			<div className="volume-articles-div">
-				{articles.map((article, index) => {
-					return (
-						<div>
-							<span>{index + 1}. </span>
-							<span>{article.article_name}</span>
-							<div>Author - {authorNames[index]}</div>
-							<div>Co-Authors - </div>
-							{article.authors.map((author) => {
-								return (
-									<p>
-										{author.name}, {author.email}, {author.country} <br></br>
-									</p>
-								);
-							})}
-							<div>
-								Date of Submission -{" "}
-								{new Date(article.date_of_submission).toLocaleDateString(
-									"en-GB"
-								)}
-							</div>
-							<div>Status - {article.status}</div>
-							<button
-								className="download-btn"
-								value={article._id}
-								onClick={handleDownload}
-							>
-								Download
-							</button>
-						</div>
-					);
-				})}
+	if (isLoading) {
+		return (
+			<div className="loading-div">
+				<PuffLoader
+					cssOverride={{ display: "inline-block" }}
+					loading={true}
+					size={40}
+					aria-label="Loading Spinner"
+					data-testid="loader"
+				/>{" "}
+				<span className="loading">Loading</span>
 			</div>
-		</div>
-	);
+		);
+	} else
+		return (
+			<div className="volumes-div">
+				<div className="review-article-heading">Articles</div>
+				<div className="volume-articles-div">
+					{articles.map((article, index) => {
+						return (
+							<div>
+								<span>{index + 1}. </span>
+								<span>{article.article_name}</span>
+								<div>Author - {authorNames[index]}</div>
+								<div>Co-Authors - </div>
+								{article.authors.map((author) => {
+									return (
+										<p>
+											{author.name}, {author.email}, {author.country} <br></br>
+										</p>
+									);
+								})}
+								<div>
+									Date of Submission -{" "}
+									{new Date(article.date_of_submission).toLocaleDateString(
+										"en-GB"
+									)}
+								</div>
+								<div>Status - {article.status}</div>
+								<button
+									className="download-btn"
+									value={article._id}
+									onClick={handleDownload}
+								>
+									Download
+								</button>
+							</div>
+						);
+					})}
+				</div>
+			</div>
+		);
 }
 
 export default Volume;

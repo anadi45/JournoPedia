@@ -20,9 +20,18 @@
 .to-date-input{
     /* margin-left: 19px; */
     padding: 5px;
+    display: inline-block;
+    width: 60%;
+    margin-left: 50px;
 }
 .from-date-input{   
     padding: 5px;
+    display: inline-block;
+    width: 60%;
+    margin-left: 30px;
+}
+.time-heading{
+    margin-bottom: 6px;
 }
 .filter-input{
     padding: 4px;
@@ -32,15 +41,15 @@
 }
 .date-div{
     position: relative;
-    top: 2.5px;
+    top: 1px;
 }
 .article-type-div{
     position: relative;
-    bottom: 3.5px;
+    top: -1px;
 }
 .filter-article-div{
     /* margin-left: 40px; */
-    left:10%;
+    left:8%;
     position: relative;
 }
 .filter-search-btn-div{
@@ -64,7 +73,28 @@
 .filter-journal-div {
     /* justify-content: center; */
     position: relative;
-    left: 10%;
+    left: 8%;
     width: 80%;
+    top: 15px;
 }
 
+.checkbox-input{
+    height: 15px;
+    width: 15px;
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+}
+.no-journal-error{
+    width: fit-content;
+    margin: 20px auto 0;
+    color: red;
+}
+
+.found-articles-div{
+    margin: 120px;
+}
+.found-article-name{
+    cursor: pointer;
+    width: fit-content;
+}
