@@ -32,16 +32,18 @@ function ReviewPage(props) {
 			.get(`http://localhost:5000/allArticlesForReferral`, config)
 			.then((res) => {
 				// setSpinnerVisible("hidden");
-				if (res.data.message === "No articles for review")
+				if (res.data.message === "No articles for review") {
 					setNoArticlesMessage(res.data.message);
+				}
 				setArticles(res.data);
-				console.log("res.data", res.data);
 
-				setJournalIds(
-					res.data.map((journal) => {
-						return journal.journal;
-					})
-				);
+				if (articles.length) {
+					setJournalIds(
+						res.data.map((journal) => {
+							return journal.journal;
+						})
+					);
+				}
 
 				var articlesForReviewCount = 0;
 				for (var i = 0; i < res.data.length; i++)
