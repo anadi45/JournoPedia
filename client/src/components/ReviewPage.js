@@ -36,11 +36,13 @@ function ReviewPage(props) {
 					setNoArticlesMessage(res.data.message);
 				}
 				setArticles(res.data);
-				
-				if(articles.length) {
-					setJournalIds(res.data.map((journal)=>{
-						return journal.journal
-					}))
+
+				if (articles.length) {
+					setJournalIds(
+						res.data.map((journal) => {
+							return journal.journal;
+						})
+					);
 				}
 
 				var articlesForReviewCount = 0;
@@ -52,7 +54,7 @@ function ReviewPage(props) {
 				// console.log(res.data);
 			});
 	}, []);
-	// console.log(articles);
+	
 	useEffect(()=>{
 		const config = {
 			headers: {
@@ -71,12 +73,13 @@ function ReviewPage(props) {
 				config
 			)
 			.then((res) => {
-				setJournalNames(journalIds.map((journalId,index)=>{
-					return res.data[journalId]
-				}))
-
+				setJournalNames(
+					journalIds.map((journalId, index) => {
+						return res.data[journalId];
+					})
+				);
 			});
-	},[journalIds])
+	}, [journalIds]);
 
 	function handleDownload(e) {
 		const articleId = e.target.value;
@@ -194,7 +197,7 @@ function ReviewPage(props) {
 							Already Reviewed
 						</div>
 						<table className="articles-table">
-							{articles.map((item,index) => {
+							{articles.map((item, index) => {
 								if (
 									item.status === "Under Peer Review" ||
 									item.status === "Accepted" ||
@@ -207,10 +210,12 @@ function ReviewPage(props) {
 												<div className="article-heading">
 													{item.article_name}
 													<div className="article-heading-journal-name">
-														{journalNames[index]}<br></br>
-														DOR - {
-															new Date(item.date_of_review).toLocaleDateString('en-GB')
-														}
+														{journalNames[index]}
+														<br></br>
+														DOR -{" "}
+														{new Date(item.date_of_review).toLocaleDateString(
+															"en-GB"
+														)}
 													</div>
 												</div>
 											</td>
