@@ -4,6 +4,7 @@
     margin: -10px auto;
     background-color: white;
 }
+
 .user-image-div{
     display: inline-block;
     width: fit-content;
@@ -11,6 +12,7 @@
     position: relative;
     /* border: 1.5px solid gray; */
     border-radius: 12px;
+    border: groove;
 }
 .user-pic{
     border-radius: 10px;
@@ -60,7 +62,7 @@
     width: 200px;
     height: 200px;
     display: inline-block;
-    margin: 40px 90px;
+    margin: 80px 60px 40px 90px;
     font-size: 60px;
     text-align: center;
     padding-top: 50px;

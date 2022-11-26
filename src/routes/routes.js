@@ -31,13 +31,15 @@ const {
 const {
   addArticle,
   downloadArticle,
-  deleteArticle,
+  withdrawArticle,
   referArticle,
   allArticlesForReferral,
   articleStatus,
   getNumberVolumes,
   volume,
-  searchArticles
+  searchArticles,
+  addPeerReviewDetails,
+  scoreArticle
 } = require("../controllers/articleController");
 
 // User Routes
@@ -67,14 +69,16 @@ router.post("/journalNameByIds", isLoggedIn, journalNameByIds);
 //Article Operations
 router.post("/addArticle", isLoggedIn, articleUpload.single("article"), addArticle);
 router.get("/downloadArticle/:article_id", downloadArticle);
-router.delete("/deleteArticle/:article_id", isLoggedIn, deleteArticle);
+router.post("/withdrawArticle/:article_id", isLoggedIn, withdrawArticle);
 router.post("/referArticle/:article_id", isLoggedIn, referArticle);
 router.get("/allArticlesForReferral", isLoggedIn, allArticlesForReferral);
 router.get("/articleStatus", isLoggedIn, articleStatus);
 router.get("/getNumberVolumes/:journal_id", getNumberVolumes);
 router.get("/:journal_id/volume/:year", volume);
 router.post("/searchArticles", searchArticles);
-
+router.post("/addPeerReviewDetails/:article_id", isLoggedIn,imageUpload.single("image"), addPeerReviewDetails);
+router.patch("/scoreArticle/:article_id", isLoggedIn, scoreArticle);
+ 
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);
 // router.delete("/deleteJournal/:journal_id", deleteJournal);

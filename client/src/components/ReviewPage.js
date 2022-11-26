@@ -36,11 +36,11 @@ function ReviewPage(props) {
 					setNoArticlesMessage(res.data.message);
 				setArticles(res.data);
 				// console.log(res.data);
-				
+
 				setJournalIds(res.data.map((journal)=>{
 					return journal.journal
 				}))
-				
+
 				var articlesForReviewCount = 0;
 				for (var i = 0; i < res.data.length; i++)
 					if (res.data[i].status === "Under Review") articlesForReviewCount++;
@@ -50,7 +50,7 @@ function ReviewPage(props) {
 				// console.log(res.data);
 			});
 	}, []);
-
+	console.log(articles);
 	useEffect(()=>{
 		const config = {
 			headers: {
@@ -204,7 +204,10 @@ function ReviewPage(props) {
 												<div className="article-heading">
 													{item.article_name}
 													<div className="article-heading-journal-name">
-														{journalNames[index]}
+														{journalNames[index]}<br></br>
+														DOR - {
+															new Date(item.date_of_review).toLocaleDateString('en-GB')
+														}
 													</div>
 												</div>
 											</td>

@@ -23,6 +23,14 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    total_peer_accepted: {
+        type: Number,
+        default: 0
+    },
+    total_withdrawn: {
+        type: Number,
+        default: 0
+    },
     total_rejected: {
         type: Number,
         default: 0
@@ -31,12 +39,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "Author"
     },
-    // score: {
-    //     type: Number
-    // },
-    // preferences: [{
-    //     type: String
-    // }],
     expertise: [{
         type: String
     }],
