@@ -54,8 +54,8 @@ function ReviewPage(props) {
 				// console.log(res.data);
 			});
 	}, []);
-	console.log(articles);
-	useEffect(() => {
+	
+	useEffect(()=>{
 		const config = {
 			headers: {
 				"Content-Type": "application/json;charset=UTF-8",
@@ -113,7 +113,7 @@ function ReviewPage(props) {
 				// navigate("/review-article");
 			});
 	}
-
+	console.log(journalNames)
 	if (spinnerVisible === "visible") {
 		return (
 			<div className="loading-div">
@@ -201,7 +201,8 @@ function ReviewPage(props) {
 								if (
 									item.status === "Under Peer Review" ||
 									item.status === "Accepted" ||
-									item.status === "Rejected"
+									item.status === "Rejected" || 
+									item.status === "Withdrawn"
 								)
 									return (
 										<tr className="articles-tr">

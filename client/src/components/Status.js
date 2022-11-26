@@ -4,6 +4,7 @@ import axios from "axios";
 import { PuffLoader } from "react-spinners";
 import { ProgressBar } from "react-milestone";
 import "../css/Status.css";
+import {Link} from "react-router-dom";
 
 function Status(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -11,6 +12,7 @@ function Status(props) {
 	const [isLoading, setIsLoading] = useState(true);
 	const [journalNames, setJournalNames] = useState([]);
 	const [journalIds, setJournalIds] = useState([]);
+
 	const progress = {
 		Submitted: 0,
 		"Under Review": 24.5,
@@ -19,6 +21,29 @@ function Status(props) {
 		Accepted: 100,
 		Rejected: 100,
 	};
+
+	const withdraw = (e) => {
+		const article_id=e.target.value;
+		const config = {
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
+
+		axios
+		.post(
+			`http://localhost:5000/withdrawArticle/${article_id}`,
+			{},
+			config
+		)
+		.then((res) => {
+			//Reload
+		});
+	}
+
+
 	useEffect(() => {
 		props.setDisplayItems(["none", "none", "inline"]);
 		const config = {
@@ -61,7 +86,7 @@ function Status(props) {
 
 			});
 	},[journalIds])
-	console.log(articles);
+	
 	if (isLoading) {
 		return (
 			<div className="loading-div">
@@ -89,7 +114,12 @@ function Status(props) {
 				{articles.map((article, i) => {
 					return (
 						<div key={i} className="article-status-div">
-							<h4 className="article-heading">{article.article_name}</h4>
+							<h4 className="article-heading">{article.article_name}
+								<span>
+									<button className="btn article-status-buttons" onClick={withdraw} value={article._id}>Withdraw Article</button>
+									<Link to="/add-peer-response"><button className="btn article-status-buttons">Submit Peer Review</button></Link>
+								</span>
+							</h4>
 							<div className="review-artcile-journal-div">{journalNames[i]}</div>
 							<div className="review-artcile-journal-div">DOS - {new Date(article.date_of_submission).toLocaleDateString('en-GB')}</div>
 							<div className="progress-div">
