@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 // import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	Link,
+	useParams,
+} from "react-router-dom";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
@@ -20,6 +26,7 @@ import SuccessPage from "./components/SuccessPage";
 import ForgetPassword from "./components/ForgetPassword";
 import Volume from "./components/Volume";
 import SearchArticle from "./components/SearchArticle";
+import PeerResponse from "./components/PeerResponse";
 
 function App() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -254,6 +261,18 @@ function App() {
 								)
 							}
 						/>
+
+						<Route
+							path="/add-peer-response"
+							element={
+								cookies.token ? (
+									<PeerResponse setDisplayItems={setDisplayItems} />
+								) : (
+									<Login />
+								)
+							}
+						/>
+
 						<Route
 							path="/logout"
 							element={<Logout setDisplayItems={setDisplayItems} />}
@@ -276,11 +295,8 @@ function App() {
 
 						<Route
 							path="/:journal_id/volume/:year"
-							element={<Volume
-								setDisplayItems={setDisplayItems}
-							/>}
+							element={<Volume setDisplayItems={setDisplayItems} />}
 						/>
-
 					</Routes>
 				</div>
 			</div>
