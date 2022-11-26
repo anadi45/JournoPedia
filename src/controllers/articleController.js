@@ -115,12 +115,9 @@ const downloadArticle = async (req, res) => {
   try {
     const { article_id } = req.params;
     const findArticle = await Article.findById(article_id);
-    let downloads = findArticle.downloads;
 
-    const update = await Article.findByIdAndUpdate(article_id, {
-      downloads: downloads + 1
-    });
-    if (update) {
+    const updateArticle = await Article.findByIdAndUpdate(article_id, { $inc: {'downloads': 1}});
+    if (updateArticle) {
       res.download(findArticle.path);
     }
   } catch (error) {
@@ -136,6 +133,9 @@ const withdrawArticle = async (req, res) => {
   try {
     const { article_id } = req.params;
 	const article = await Article.findById(article_id);
+
+	const updateUser = await User.findByIdAndUpdate(article.submitted_by,{ $inc : { 'total_withdrawn' : 1 } });
+	
 	const path = article.path;
     const withdraw = await Article.findByIdAndUpdate(article_id,{
 		status: "Withdrawn",
@@ -213,12 +213,15 @@ const referArticle = async (req, res) => {
           reviewed_by: req.rootuser,
           date_of_review: new Date()
         });
+		
+		updateUser = await User.findByIdAndUpdate(article.submitted_by, {$inc: {'total_accepted': 1}});
       } else {
         updateStatus = await Article.findByIdAndUpdate(article_id, {
           status: "Rejected",
           reviewed_by: req.rootuser,
           date_of_review: new Date()
         });
+		updateUser = await User.findByIdAndUpdate(article.submitted_by, {$inc: {'total_rejected': 1}});
       }
     } else {
       return res.send({
@@ -500,6 +503,7 @@ const scoreArticle = async (req,res) => {
 					peer_review_score: peer_review_score+25,
 					status: "Peer Accepted"
 				});
+			const updateUser = await User.findByIdAndUpdate(article.submitted_by, {$inc: {'total_peer_accepted': 1}});
 			} else {
 				scoreUpdate = await Article.findByIdAndUpdate(article_id,{
 					peer_review_score: peer_review_score+25
