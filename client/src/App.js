@@ -26,7 +26,8 @@ import SuccessPage from "./components/SuccessPage";
 import ForgetPassword from "./components/ForgetPassword";
 import Volume from "./components/Volume";
 import SearchArticle from "./components/SearchArticle";
-import PeerResponse from "./components/PeerResponse";
+import AddPeerResponse from "./components/AddPeerResponse";
+import VerifyPeerResponse from "./components/VerifyPeerResponse";
 
 function App() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -164,6 +165,11 @@ function App() {
 												</Link>
 											</Dropdown.Item>
 											<Dropdown.Item>
+												<Link className="nav-link" to="/verify-peer-response">
+													Verify Peer Response
+												</Link>
+											</Dropdown.Item>
+											<Dropdown.Item>
 												<Link className="nav-link" to="/status">
 													Submission Status
 												</Link>
@@ -266,7 +272,18 @@ function App() {
 							path="/add-peer-response"
 							element={
 								cookies.token ? (
-									<PeerResponse setDisplayItems={setDisplayItems} />
+									<AddPeerResponse setDisplayItems={setDisplayItems} />
+								) : (
+									<Login />
+								)
+							}
+						/>
+
+						<Route
+							path="/verify-peer-response"
+							element={
+								cookies.token ? (
+									<VerifyPeerResponse setDisplayItems={setDisplayItems} />
 								) : (
 									<Login />
 								)

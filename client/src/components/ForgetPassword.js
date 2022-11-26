@@ -6,6 +6,7 @@ function ForgetPassword() {
 	const [email, setEmail] = useState("");
 	const [spinnerVisible, setSpinnerVisible] = useState("hidden");
 	const [message, setMessage] = useState("");
+	const [messageDisplay, setMessageDisplay] = useState("none");
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -17,6 +18,7 @@ function ForgetPassword() {
 			.then((res) => {
 				console.log(res.data);
 				setSpinnerVisible("hidden");
+				setMessageDisplay("block");
 				setMessage(res.data);
 			});
 	};
@@ -51,6 +53,12 @@ function ForgetPassword() {
 							aria-hidden="true"
 						/>
 					</button>
+				</div>
+				<div
+					className="password-sent-message"
+					style={{ display: messageDisplay }}
+				>
+					{message}
 				</div>
 			</form>
 		</div>

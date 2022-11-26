@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
 
-function PeerResponse(props) {
+function AddPeerResponse(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
 	useEffect(() => {
 		if (!cookies.token) props.setDisplayItems(["inline", "inline", "none"]);
@@ -10,4 +10,4 @@ function PeerResponse(props) {
 	return <div>PeerResponse</div>;
 }
 
-export default PeerResponse;
+export default AddPeerResponse;
