@@ -181,7 +181,8 @@ const referArticle = async (req, res) => {
 		const article = await Article.findById(article_id);
 		const journal_id = article.journal;
 		const journal = await Journal.findById(journal_id);
-		const editorList = journal.editors;
+		let editorList = journal.editors;
+		editorList.push(journal.author);
 		const author = await User.findById(article.submitted_by);
 
 		let mailingList = [];
@@ -306,8 +307,8 @@ const articleStatus = async (req, res) => {
 const getNumberVolumes = async (req, res) => {
 	try {
 		const { journal_id } = req.params;
-
-		const allArticles = await Article.find({ journal: journal_id });
+		const statuses = ["Under Peer Review", "Peer Acccepted"];
+		const allArticles = await Article.find({ journal: journal_id , status: {$in :statuses}});
 
 		let yearList = new Set();
 		for (let i = 0; i < allArticles.length; i++) {
@@ -586,6 +587,44 @@ const viewArticle = async (req, res) => {
 	}
 };
 
+//@route	GET /:article_id/peerReviewProof/:review_num
+//@descr	Download peer review proof
+//@access	Public
+
+const peerReviewProof = async (req,res) => {
+	try {
+		const {article_id,review_num} = req.params;
+
+		const findArticle = await Article.findById(article_id);
+		let path;
+
+		if(findArticle) {
+			if(review_num == 1) {
+				path = findArticle.peer_review_1.path;
+			} else if(review_num == 2) {
+				path = findArticle.peer_review_2.path;
+			} else if(review_num == 3) {
+				path = findArticle.peer_review_3.path;
+			} else {
+				path = findArticle.peer_review_4.path;
+			}
+			if(path) {
+				res.download(path);
+			} else {
+				res.send({
+					message: "Proof not found"
+				});
+			}
+		} else {
+			res.send({
+				message: "Proof not found"
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
 	addArticle,
 	downloadArticle,
@@ -600,4 +639,5 @@ module.exports = {
 	scoreArticle,
 	allArticlesPeerResponseVerification,
 	viewArticle,
+	peerReviewProof
 };

@@ -48,7 +48,14 @@ function ReviewPage(props) {
 				var articlesForReviewCount = 0;
 				for (var i = 0; i < res.data.length; i++)
 					if (res.data[i].status === "Under Review") articlesForReviewCount++;
-				setArticlesCount(res.data.length);
+				
+				let count = 0;
+				res.data.map((article)=>{
+					if(article.status !== "Withdrawn") {
+						count++;
+					}
+				})
+				setArticlesCount(count);
 				setArticlesForReviewCount(articlesForReviewCount);
 				setSpinnerVisible("hidden");
 				// console.log(res.data);
@@ -107,6 +114,7 @@ function ReviewPage(props) {
 				config
 			)
 			.then((res) => {
+				console.log(res.data);
 				window.location.reload();
 				// setArticlesForReviewCount(articlesForReviewCount - 1);
 				// setArticles(articles);
@@ -200,9 +208,8 @@ function ReviewPage(props) {
 							{articles.map((item, index) => {
 								if (
 									item.status === "Under Peer Review" ||
-									item.status === "Accepted" ||
-									item.status === "Rejected" || 
-									item.status === "Withdrawn"
+									item.status === "Peer Accepted" ||
+									item.status === "Rejected" 
 								)
 									return (
 										<tr className="articles-tr">
@@ -229,7 +236,7 @@ function ReviewPage(props) {
 												</button>
 												<button className="download-btn">
 													{item.status === "Under Peer Review" ||
-													item.status === "Accepted"
+													item.status === "Peer Accepted"
 														? "Approved"
 														: "Rejected"}
 												</button>
