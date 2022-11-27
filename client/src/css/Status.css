@@ -3,7 +3,7 @@
         width: 80%;
         margin: -10px auto;
         background-color: white;
-        height: 100vh;
+        min-height: 100vh;
 }
 .article-status-div{
     margin-left: 50px;

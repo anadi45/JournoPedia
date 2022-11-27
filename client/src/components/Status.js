@@ -131,7 +131,7 @@ function Status(props) {
 														props.setOpenedArticleId(article._id);
 													}}
 												>
-													Submit Peer Review
+													Submit Peer Review Proof
 												</button>
 											</Link>
 										)}
