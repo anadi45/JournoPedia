@@ -256,7 +256,8 @@ const referArticle = async (req, res) => {
 
 const allArticlesForReferral = async (req, res) => {
 	try {
-		const journals = await Journal.find({ editors: req.rootuser._id });
+		const journals = await Journal.find({$or: [{author: req.rootuser._id},{ editors: req.rootuser._id }]});
+
 		let journalIds = [];
 
 		for (let i = 0; i < journals.length; i++) {
@@ -529,6 +530,55 @@ const scoreArticle = async (req, res) => {
 	}
 };
 
+//@route	GET /allArticlesPeerResponseVerification
+//@descr	Get all articles eligible for peer response verification
+//@access	Private
+
+const allArticlesPeerResponseVerification = async (req,res) => {
+	try {
+		const journals = await Journal.find({$or: [{author: req.rootuser._id},{ editors: req.rootuser._id }]});
+
+		let journalIds = [];
+
+		for (let i = 0; i < journals.length; i++) {
+			journalIds.push(journals[i]._id);
+		}
+
+		const articles = await Article.find({ journal: { $in: journalIds },status: "Under Peer Review" });
+		if(articles) {
+			res.send(articles);
+		} else {
+			res.send({
+				message: "No articles found"
+			});
+		}
+		
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+//@route	GET	/viewArticle/:article_id
+//@descr	Get an article by id
+//@access	Public
+
+const viewArticle = async (req,res) => {
+	try {
+		const {article_id} = req.params;
+		const findArticle = await Article.findById(article_id);
+		
+		if(findArticle) {
+			res.send(findArticle);
+		} else {
+			res.send({
+				message: "No articles found"
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
 	addArticle,
 	downloadArticle,
@@ -541,4 +591,6 @@ module.exports = {
 	searchArticles,
 	addPeerReviewDetails,
 	scoreArticle,
+	allArticlesPeerResponseVerification,
+	viewArticle
 };
