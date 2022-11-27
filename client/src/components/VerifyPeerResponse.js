@@ -229,7 +229,7 @@ function VerifyPeerResponse(props) {
 										>
 											Submit
 										</button>
-										</div>):(<div>No Proof Added for Reviewer 4</div>)}
+										</div>):(<div>No Proof Added for Peer Reviewer 4</div>)}
 								</div>)}
 								<div>DOS -
 								{new Date(article.date_of_submission).toLocaleDateString(
