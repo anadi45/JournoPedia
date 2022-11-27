@@ -421,24 +421,28 @@ const addPeerReviewDetails = async (req, res) => {
 			updatePeerReview = await Article.findByIdAndUpdate(article_id, {
 				peer_review_1: {
 					path: req.file.path,
+					status: ""
 				},
 			});
 		} else if (peer_review_count == 1) {
 			updatePeerReview = await Article.findByIdAndUpdate(article_id, {
 				peer_review_2: {
 					path: req.file.path,
+					status: ""
 				},
 			});
 		} else if (peer_review_count == 2) {
 			updatePeerReview = await Article.findByIdAndUpdate(article_id, {
 				peer_review_3: {
 					path: req.file.path,
+					status: ""
 				},
 			});
 		} else if (peer_review_count == 3) {
 			updatePeerReview = await Article.findByIdAndUpdate(article_id, {
 				peer_review_4: {
 					path: req.file.path,
+					status: ""
 				},
 			});
 		} else {

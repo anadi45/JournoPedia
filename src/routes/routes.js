@@ -26,6 +26,7 @@ const {
 	changeAuthor,
 	deleteJournal,
 	journalNameByIds,
+	journalScore,
 } = require("../controllers/journalController");
 
 const {
@@ -68,6 +69,7 @@ router.patch("/removeEditors/:journal_id", isAdmin, removeEditors);
 router.patch("/changeAuthor/:journal_id", isAdmin, changeAuthor);
 router.delete("/deleteJournal/:journal_id", isAdmin, deleteJournal);
 router.post("/journalNameByIds", isLoggedIn, journalNameByIds);
+router.get("/journalScore/:journal_id",journalScore);
 
 //Article Operations
 router.post("/addArticle",isLoggedIn,articleUpload.single("article"),addArticle);
