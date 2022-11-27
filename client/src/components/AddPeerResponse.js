@@ -8,11 +8,14 @@ function AddPeerResponse(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [counter, setCounter] = useState(0);
+	const [numAuthors, setNumAuthors] = useState(0);
 
 	useEffect(() => {
 		if (!cookies.token) props.setDisplayItems(["inline", "inline", "none"]);
 		else props.setDisplayItems(["none", "none", "inline"]);
 
+		// console.log("article id : ", props.openedArticleId);
 		const config = {
 			headers: {
 				"Content-Type": "multipart/form-data",
@@ -32,6 +35,12 @@ function AddPeerResponse(props) {
 		});
 	}, []);
 
+	const handleClick = (e) => {
+		e.preventDefault();
+		setCounter(counter + 1);
+		setNumAuthors(numAuthors + 1);
+	};
+
 	if (isLoading) {
 		return (
 			<div className="loading-div">
@@ -49,10 +58,43 @@ function AddPeerResponse(props) {
 		return (
 			<div className="add-peer-response-div">
 				<div className="review-article-heading">Submit Peer Response</div>
-				{articles.map((article) => {
+				{/* {articles.map((article) => {
 					if (article.status === "Under Peer Review")
 						return article.article_name;
-				})}
+				})} */}
+				<>
+					<div className="auth-inner mb-3">
+						<button
+							className="btn btn-primary add-author-btn"
+							onClick={handleClick}
+						>
+							Add New Author
+						</button>
+
+						{Array.from(Array(counter)).map((c, index) => {
+							return (
+								<div className="reviewer-div">
+									<label className="reviewer-heading">Author {index + 1}</label>
+									<input
+										type="text"
+										// name="reviewer1"
+										placeholder="Name"
+										className="form-control reviewer-input reviewer-name"
+										autoComplete="off"
+										value={"reviewer-1"}
+									/>
+								</div>
+							);
+						})}
+					</div>
+					<button
+						type="submit"
+						className="btn btn-primary final-submit-btn"
+						// onClick={props.handleSubmit}
+					>
+						Submit
+					</button>
+				</>
 			</div>
 		);
 }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-// import "./App.css";
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -41,14 +40,12 @@ function App() {
 	const [userRole, setUserRole] = useState("");
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [imagePath, setImagePath] = useState("");
-
-	// const navigate = useNavigate();
+	const [openedArticleId, setOpenedArticleId] = useState("");
 
 	useEffect(() => {
 		if (cookies.token) setIsLoggedIn(true);
 
 		axios.get(`http://localhost:5000/getAllJournalIds`).then((res) => {
-			// console.log(res.data);
 			setJournalIds(res.data);
 		});
 
@@ -69,22 +66,11 @@ function App() {
 	if (performance.getEntriesByType("navigation")[0].type === "reload") {
 		console.info("This page is reloaded");
 		window.scrollTo(0, 0);
-		// if (cookies.token) setDisplayItems(["none", "none", "inline"]);
 	}
 
 	return (
 		<Router>
 			<div className="App">
-				{/* <form>
-					<input
-						className="search-bar"
-						type="text"
-						placeholder="Type here to search..."
-					/>
-					<button className="search-submit-btn" type="submit">
-						<i class="fas fa-search"></i>
-					</button>
-				</form> */}
 				<nav className="navbar navbar-expand-lg navbar-light fixed-top">
 					<div className="container">
 						<Link className="navbar-brand" to={"/"}>
@@ -251,7 +237,10 @@ function App() {
 							path="/status"
 							element={
 								cookies.token ? (
-									<Status setDisplayItems={setDisplayItems} />
+									<Status
+										setDisplayItems={setDisplayItems}
+										setOpenedArticleId={setOpenedArticleId}
+									/>
 								) : (
 									<Login />
 								)
@@ -272,7 +261,10 @@ function App() {
 							path="/add-peer-response"
 							element={
 								cookies.token ? (
-									<AddPeerResponse setDisplayItems={setDisplayItems} />
+									<AddPeerResponse
+										setDisplayItems={setDisplayItems}
+										openedArticleId={openedArticleId}
+									/>
 								) : (
 									<Login />
 								)

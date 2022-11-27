@@ -125,7 +125,12 @@ function Status(props) {
 										</button>
 										{article.status === "Under Peer Review" && (
 											<Link to="/add-peer-response">
-												<button className="btn article-status-buttons">
+												<button
+													className="btn article-status-buttons"
+													onClick={() => {
+														props.setOpenedArticleId(article._id);
+													}}
+												>
 													Submit Peer Review
 												</button>
 											</Link>
@@ -173,12 +178,32 @@ function Status(props) {
 									<div className="progress-bar-labels-div">
 										<div className="progress-bar-label">Submitted</div>
 										<div className="progress-bar-label ">Under Review</div>
-										<div className="progress-bar-label">Accepted/Rejected</div>
+										<div
+											className={
+												"progress-bar-label" +
+												(article.status !== "Under Review"
+													? " slight-right"
+													: "")
+											}
+										>
+											{article.status === "Under Review"
+												? "Accepted/Rejected"
+												: "Accepted"}
+										</div>
 										<div className="progress-bar-label center-text">
 											Under Peer Review
 										</div>
-										<div className="progress-bar-label right-text">
-											Peer Accepted/Rejected
+										<div
+											className={
+												"progress-bar-label" +
+												(article.status === "Peer Accepted"
+													? ""
+													: " right-text")
+											}
+										>
+											{article.status === "Peer Accepted"
+												? "Peer Accepted"
+												: "Peer Accepted/Rejected"}
 										</div>
 									</div>
 								</>
