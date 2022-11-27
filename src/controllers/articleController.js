@@ -307,9 +307,9 @@ const articleStatus = async (req, res) => {
 const getNumberVolumes = async (req, res) => {
 	try {
 		const { journal_id } = req.params;
-		const statuses = ["Under Peer Review", "Peer Acccepted"];
-		const allArticles = await Article.find({ journal: journal_id , status: {$in :statuses}});
-
+		
+		const allArticles = await Article.find({ journal: journal_id , status: {$in:["Peer Accepted","Under Peer Review"]}});
+		
 		let yearList = new Set();
 		for (let i = 0; i < allArticles.length; i++) {
 			yearList.add(allArticles[i].date_of_submission.getFullYear());
@@ -335,15 +335,15 @@ const volume = async (req, res) => {
 
 		const startDate = new Date(year);
 		const endDate = new Date(new Date(year, 12, 1) - 1);
-
 		const allArticles = await Article.find({
 			journal: journal_id,
 			date_of_submission: {
 				$gte: startDate,
 				$lte: endDate,
 			},
+			status: {$in:["Under Peer Review","Peer Accepted"]}
 		});
-
+		
 		if (allArticles) {
 			res.send(allArticles);
 		} else {

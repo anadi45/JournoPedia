@@ -21,7 +21,7 @@ function Volume(props) {
 		axios
 			.get(`http://localhost:5000/${journal_id}/volume/${year}`)
 			.then((res) => {
-				// console.log(res.data);
+				console.log(res.data);
 				setArticles(res.data);
 				setAuthorIDs(
 					res.data.map((author) => {
@@ -29,7 +29,7 @@ function Volume(props) {
 					})
 				);
 			});
-		// console.log(authorIDs);
+		// console.log(articles);
 		// const authorFetch = async () => {
 
 		// };
