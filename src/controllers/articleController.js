@@ -558,13 +558,13 @@ const allArticlesPeerResponseVerification = async (req,res) => {
 	}
 }
 
-//@route	GET	/viewArticle/:article_id
+//@route	GET	/viewArticle
 //@descr	Get an article by id
 //@access	Public
 
 const viewArticle = async (req,res) => {
 	try {
-		const {article_id} = req.params;
+		const {article_id} = req.body;
 		const findArticle = await Article.findById(article_id);
 		
 		if(findArticle) {
