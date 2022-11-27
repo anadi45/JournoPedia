@@ -70,6 +70,7 @@ function Profile(props) {
 	} else
 		return (
 			<div className="profile-div">
+			<div className="glass_profile">
 				<div className="user-image-div">
 					{imageUpload && (
 						<div className="user-img-spinner">
@@ -124,9 +125,10 @@ function Profile(props) {
 						{userInfo.country}
 					</div>
 				</div>
+				</div>
 				<div>
 					<div
-						className="circle"
+						className="circle left"
 						style={{
 							border: "8px solid #00D100",
 							background: "rgb(158 232 158)",
@@ -135,7 +137,7 @@ function Profile(props) {
 						{userInfo.total_accepted} <span>Accepted Articles</span>
 					</div>
 					<div
-						className="circle"
+						className="circle center"
 						style={{
 							border: "8px solid #FF0000",
 							background: "rgb(216 130 130)",
@@ -144,7 +146,7 @@ function Profile(props) {
 						{userInfo.total_rejected} <span>Rejected Articles</span>
 					</div>
 					<div
-						className="circle"
+						className="circle right"
 						style={{ border: "8px solid blue", background: "#9a9ae4" }}
 					>
 						{userInfo.total_submitted} <span>Submitted Articles</span>
