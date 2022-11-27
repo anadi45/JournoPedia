@@ -6,6 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Tabs, Tab } from "react-bootstrap";
 import { PuffLoader } from "react-spinners";
+import AddEditorsPopup from "./AddEditorsPopup";
 
 function JournalPage(props) {
 	const [img, setImg] = useState("");
@@ -16,11 +17,20 @@ function JournalPage(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [volumes, setVolumes] = useState([]);
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
+	const [userRole, setUserRole] = useState("");
 	let navigate = useNavigate();
 
 	useEffect(() => {
 		if (cookies.token) props.setDisplayItems(["none", "none", "inline"]);
 		else props.setDisplayItems(["inline", "inline", "none"]);
+
+		const config = {
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
 
 		axios
 			.get(`http://localhost:5000/viewJournal/${props.journalId}`)
@@ -46,6 +56,9 @@ function JournalPage(props) {
 				console.log(res.data);
 				setVolumes(res.data.volumes);
 			});
+		axios.get(`http://localhost:5000/userDetailsToken`, config).then((res) => {
+			setUserRole(res.data.userRole);
+		});
 	}, []);
 
 	if (spinnerVisible === "visible") {
@@ -90,7 +103,12 @@ function JournalPage(props) {
 							<div className="editorial-board-div">
 								<h5>Editor in Chief</h5>
 								<p className="">{author}</p>
-								<h5>Editorial Board Members</h5>
+								<h5>
+									Editorial Board Members{" "}
+									{userRole === "Admin" && (
+										<AddEditorsPopup journalId={props.journalId} />
+									)}
+								</h5>
 								<ul>
 									{otherAuthor.map((author) => (
 										<li className="">{author}</li>

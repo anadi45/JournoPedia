@@ -17,16 +17,7 @@ function AddPeerResponse(props) {
 		else props.setDisplayItems(["none", "none", "inline"]);
 
 		setCookie("articleId", props.openedArticleId, { path: "/" });
-		// console.log(localStorage.getItem("SelectedArticleId"));
-		// if (localStorage.getItem("SelectedArticleId")) {
-		// 	setArticleId(localStorage.getItem("SelectedArticleId"));
-		// } else
-		// 	localStorage.setItem(
-		// 		"SelectedArticleId",
-		// 		JSON.stringify(props.openedArticleId)
-		// 	);
 
-		console.log("article id : ", cookies.articleId);
 		const config = {
 			headers: {
 				"Content-Type": "application/json",
@@ -66,45 +57,68 @@ function AddPeerResponse(props) {
 		return (
 			<div className="add-peer-response-div">
 				<div className="review-article-heading">
-					{/* Submit Peer Response for "{article.article_name}" */}
+					Submit Peer Response for "{article.article_name}"
 				</div>
 				{/* {articles.map((article) => {
 					if (article.status === "Under Peer Review")
 						return article.article_name;
 				})} */}
-				<>
-					<div className="auth-inner mb-3">
-						<button
-							className="btn btn-primary add-author-btn"
-							onClick={handleClick}
-						>
-							Add New Author
-						</button>
 
-						{Array.from(Array(counter)).map((c, index) => {
-							return (
-								<div className="reviewer-div">
-									<label className="reviewer-heading">Author {index + 1}</label>
-									<input
-										type="text"
-										// name="reviewer1"
-										placeholder="Name"
-										className="form-control reviewer-input reviewer-name"
-										autoComplete="off"
-										value={"reviewer-1"}
-									/>
-								</div>
-							);
-						})}
-					</div>
-					<button
-						type="submit"
-						className="btn btn-primary final-submit-btn"
-						// onClick={props.handleSubmit}
-					>
-						Submit
-					</button>
-				</>
+				<div className="auth-inner mb-3">
+					Peer Review 1{" "}
+					{article.peer_review_1.status ? (
+						article.peer_review_1.status
+					) : article.peer_review_1.path ? (
+						"Verification pending"
+					) : (
+						<form>
+							<input type="file"></input>
+							<button type="submit">Submit</button>
+						</form>
+					)}
+				</div>
+
+				<div className="auth-inner mb-3">
+					Peer Review 2{" "}
+					{article.peer_review_2.status ? (
+						article.peer_review_2.status
+					) : article.peer_review_2.path ? (
+						"Verification pending"
+					) : (
+						<form>
+							<input type="file"></input>
+							<button type="submit">Submit</button>
+						</form>
+					)}
+				</div>
+
+				<div className="auth-inner mb-3">
+					Peer Review 3{" "}
+					{article.peer_review_3.status ? (
+						article.peer_review_3.status
+					) : article.peer_review_3.path ? (
+						"Verification pending"
+					) : (
+						<form>
+							<input type="file"></input>
+							<button type="submit">Submit</button>
+						</form>
+					)}
+				</div>
+
+				<div className="auth-inner mb-3">
+					Peer Review 4{" "}
+					{article.peer_review_4.status ? (
+						article.peer_review_4.status
+					) : article.peer_review_4.path ? (
+						"Verification pending"
+					) : (
+						<form>
+							<input type="file"></input>
+							<button type="submit">Submit</button>
+						</form>
+					)}
+				</div>
 			</div>
 		);
 }
