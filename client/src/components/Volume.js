@@ -115,7 +115,7 @@ function Volume(props) {
 									value={article._id}
 									onClick={handleDownload}
 								>
-									Download
+									Download <i class="fas fa-download"></i>
 								</button>
 							</div>
 						);

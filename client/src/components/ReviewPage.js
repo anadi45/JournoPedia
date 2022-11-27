@@ -167,7 +167,7 @@ function ReviewPage(props) {
 													value={item._id}
 													onClick={handleDownload}
 												>
-													Download
+													Download <i class="fas fa-download"></i>
 												</button>
 												<Dropdown
 													className="review-dropdown"
@@ -232,9 +232,10 @@ function ReviewPage(props) {
 													value={item._id}
 													onClick={handleDownload}
 												>
-													Download
+													Download <i class="fas fa-download"></i>
 												</button>
-												<button className="download-btn">
+												<button className="download-btn" style={item.status === "Under Peer Review" ||
+													item.status === "Peer Accepted"?{background: "#4db8db"}: {background:"#e96262"}}>
 													{item.status === "Under Peer Review" ||
 													item.status === "Peer Accepted"
 														? "Approved"
