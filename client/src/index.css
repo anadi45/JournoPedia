@@ -113,19 +113,19 @@ html,
 .login-link,
 .home-link {
   margin-left: 50px;
-  top: 10px;
+  /* top: 10px; */
   position: relative;
 }
 .sign-up-link,
 .publish-link {
   position: fixed;
   left: 330px;
-  top: 18px;
+  /* top: 18px; */
 }
 .logout-link {
   position: fixed;
   right: 20px;
-  top: 18px;
+  /* top: 18px; */
 }
 .auth-wrapper {
   margin-top: 60px;
