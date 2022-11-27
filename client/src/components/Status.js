@@ -4,14 +4,15 @@ import axios from "axios";
 import { PuffLoader } from "react-spinners";
 import { ProgressBar } from "react-milestone";
 import "../css/Status.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Status(props) {
-	const [cookies, setCookie] = useCookies(["token"]);
+	const [cookies, setCookie, removeCookie] = useCookies(["token", "articleId"]);
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [journalNames, setJournalNames] = useState([]);
 	const [journalIds, setJournalIds] = useState([]);
+	const navigate = useNavigate();
 
 	const progress = {
 		Submitted: 0,
@@ -34,12 +35,14 @@ function Status(props) {
 		axios
 			.post(`http://localhost:5000/withdrawArticle/${article_id}`, {}, config)
 			.then((res) => {
+				console.log(res.data);
 				window.location.reload();
 			});
 	};
 
 	useEffect(() => {
 		props.setDisplayItems(["none", "none", "inline"]);
+		removeCookie("articleId");
 		const config = {
 			headers: {
 				"Content-Type": "multipart/form-data",

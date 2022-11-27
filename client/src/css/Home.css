@@ -17,8 +17,8 @@
 .card:hover {
   transform: scale(1.06);
   z-index: 2;
-  color: white;
-  background-color: #23a6d5;
+  color: black;
+  /* background-color: #23a6d5; */
 }
 .card-link {
   text-decoration: none;

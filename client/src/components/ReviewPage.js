@@ -48,21 +48,21 @@ function ReviewPage(props) {
 				var articlesForReviewCount = 0;
 				for (var i = 0; i < res.data.length; i++)
 					if (res.data[i].status === "Under Review") articlesForReviewCount++;
-				
+
 				let count = 0;
-				res.data.map((article)=>{
-					if(article.status !== "Withdrawn") {
+				res.data.map((article) => {
+					if (article.status !== "Withdrawn") {
 						count++;
 					}
-				})
+				});
 				setArticlesCount(count);
 				setArticlesForReviewCount(articlesForReviewCount);
 				setSpinnerVisible("hidden");
 				// console.log(res.data);
 			});
 	}, []);
-	
-	useEffect(()=>{
+
+	useEffect(() => {
 		const config = {
 			headers: {
 				"Content-Type": "application/json;charset=UTF-8",
@@ -116,12 +116,9 @@ function ReviewPage(props) {
 			.then((res) => {
 				console.log(res.data);
 				window.location.reload();
-				// setArticlesForReviewCount(articlesForReviewCount - 1);
-				// setArticles(articles);
-				// navigate("/review-article");
 			});
 	}
-	console.log(journalNames)
+	console.log(journalNames);
 	if (spinnerVisible === "visible") {
 		return (
 			<div className="loading-div">
@@ -209,7 +206,7 @@ function ReviewPage(props) {
 								if (
 									item.status === "Under Peer Review" ||
 									item.status === "Peer Accepted" ||
-									item.status === "Rejected" 
+									item.status === "Rejected"
 								)
 									return (
 										<tr className="articles-tr">
@@ -234,8 +231,15 @@ function ReviewPage(props) {
 												>
 													Download <i class="fas fa-download"></i>
 												</button>
-												<button className="download-btn" style={item.status === "Under Peer Review" ||
-													item.status === "Peer Accepted"?{background: "#4db8db"}: {background:"#e96262"}}>
+												<button
+													className="download-btn"
+													style={
+														item.status === "Under Peer Review" ||
+														item.status === "Peer Accepted"
+															? { background: "#4db8db" }
+															: { background: "#e96262" }
+													}
+												>
 													{item.status === "Under Peer Review" ||
 													item.status === "Peer Accepted"
 														? "Approved"

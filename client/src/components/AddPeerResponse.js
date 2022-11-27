@@ -17,8 +17,13 @@ function AddPeerResponse(props) {
 		if (!cookies.token) props.setDisplayItems(["inline", "inline", "none"]);
 		else props.setDisplayItems(["none", "none", "inline"]);
 
-		if (!cookies.articleId)
+		if (!cookies.articleId) {
+			console.log("here");
 			setCookie("articleId", props.openedArticleId, { path: "/" });
+		}
+	}, []);
+
+	useEffect(() => {
 		console.log("article id ", cookies.articleId);
 
 		const config = {
@@ -35,7 +40,7 @@ function AddPeerResponse(props) {
 				setIsLoading(false);
 				setArticle(res.data);
 			});
-	}, []);
+	}, [cookies.articleId]);
 
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -85,20 +90,17 @@ function AddPeerResponse(props) {
 				<div className="review-article-heading">
 					Submit Peer Response for "{article.article_name}"
 				</div>
-				{/* {articles.map((article) => {
-					if (article.status === "Under Peer Review")
-						return article.article_name;
-				})} */}
 
 				<div className="auth-inner mb-3">
 					Peer Review 1{" "}
 					{article.peer_review_1.status ? (
 						article.peer_review_1.status
 					) : article.peer_review_1.path ? (
-						"Verification pending"
+						<div>"Verification pending"</div>
 					) : (
 						<form>
 							<input
+								className="form-control peer-response-input"
 								type="file"
 								onChange={(e) => {
 									let arr = proofs;
@@ -107,6 +109,7 @@ function AddPeerResponse(props) {
 								}}
 							></input>
 							<button
+								className="peer-response-submit-btn"
 								type="submit"
 								onClick={(e) => {
 									e.preventDefault();
@@ -124,10 +127,11 @@ function AddPeerResponse(props) {
 					{article.peer_review_2.status ? (
 						article.peer_review_2.status
 					) : article.peer_review_2.path ? (
-						"Verification pending"
+						<div>"Verification pending"</div>
 					) : (
 						<form>
 							<input
+								className="form-control peer-response-input"
 								type="file"
 								onChange={(e) => {
 									let arr = proofs;
@@ -136,6 +140,7 @@ function AddPeerResponse(props) {
 								}}
 							></input>
 							<button
+								className="peer-response-submit-btn"
 								type="submit"
 								onClick={(e) => {
 									e.preventDefault();
@@ -153,10 +158,11 @@ function AddPeerResponse(props) {
 					{article.peer_review_3.status ? (
 						article.peer_review_3.status
 					) : article.peer_review_3.path ? (
-						"Verification pending"
+						<div>"Verification pending"</div>
 					) : (
 						<form>
 							<input
+								className="form-control peer-response-input"
 								type="file"
 								onChange={(e) => {
 									let arr = proofs;
@@ -165,6 +171,7 @@ function AddPeerResponse(props) {
 								}}
 							></input>
 							<button
+								className="peer-response-submit-btn"
 								type="submit"
 								onClick={(e) => {
 									e.preventDefault();
@@ -182,10 +189,11 @@ function AddPeerResponse(props) {
 					{article.peer_review_4.status ? (
 						article.peer_review_4.status
 					) : article.peer_review_4.path ? (
-						"Verification pending"
+						<div>"Verification pending"</div>
 					) : (
 						<form>
 							<input
+								className="form-control peer-response-input"
 								type="file"
 								onChange={(e) => {
 									let arr = proofs;
@@ -194,6 +202,7 @@ function AddPeerResponse(props) {
 								}}
 							></input>
 							<button
+								className="peer-response-submit-btn"
 								type="submit"
 								onClick={(e) => {
 									e.preventDefault();
