@@ -64,34 +64,42 @@ const articleSchema = new mongoose.Schema({
     },
     peer_review_1: {
         path:{
-            type: String
+            type: String,
+            default:''
         },
         status: {
-            type: String
+            type: String,
+            default:''
         }
     },
     peer_review_2: {
         path:{
-            type: String
+            type: String,
+            default:''
         },
         status: {
-            type: String
+            type: String,
+            default:''
         }
     },
     peer_review_3: {
         path:{
-            type: String
+            type: String,
+            default:''
         },
         status: {
-            type: String
+            type: String,
+            default:''
         }
     },
     peer_review_4: {
         path:{
-            type: String
+            type: String,
+            default:''
         },
         status: {
-            type: String
+            type: String,
+            default:''
         }
     },
     peer_review_score: {

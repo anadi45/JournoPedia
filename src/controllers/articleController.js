@@ -181,7 +181,8 @@ const referArticle = async (req, res) => {
 		const article = await Article.findById(article_id);
 		const journal_id = article.journal;
 		const journal = await Journal.findById(journal_id);
-		const editorList = journal.editors;
+		let editorList = journal.editors;
+		editorList.push(journal.author);
 		const author = await User.findById(article.submitted_by);
 
 		let mailingList = [];
@@ -306,8 +307,8 @@ const articleStatus = async (req, res) => {
 const getNumberVolumes = async (req, res) => {
 	try {
 		const { journal_id } = req.params;
-
-		const allArticles = await Article.find({ journal: journal_id });
+		const statuses = ["Under Peer Review", "Peer Acccepted"];
+		const allArticles = await Article.find({ journal: journal_id , status: {$in :statuses}});
 
 		let yearList = new Set();
 		for (let i = 0; i < allArticles.length; i++) {
