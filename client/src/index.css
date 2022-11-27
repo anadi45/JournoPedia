@@ -25,7 +25,6 @@ body {
 }
 .border_article {
 padding: 2rem;
-border-style: double;
 margin-right:2.0rem;
 }
 .brand-color,
@@ -42,6 +41,10 @@ margin-right:2.0rem;
 .brand-color:hover {
   color: #00d2ff;
   /* transform: scale(1.06); */
+}
+
+.nav-item {
+  margin-top:8px;;
 }
 .login-color:hover {
   color: #0d6efd;

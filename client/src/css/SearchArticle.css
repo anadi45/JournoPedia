@@ -24,7 +24,7 @@
     width: 60%;
     margin-left: 50px;
 }
-.from-date-input{   
+.from-date-input{
     padding: 5px;
     display: inline-block;
     width: 60%;
@@ -93,8 +93,12 @@
 
 .found-articles-div{
     margin: 120px;
+    display: flex;
 }
 .found-article-name{
     cursor: pointer;
-    width: fit-content;
+margin:2rem;
+background-color: #add8e6;
+border-radius: 0.4rem;
+padding:0.4rem 1rem;;
 }

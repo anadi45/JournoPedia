@@ -176,7 +176,7 @@ function App() {
 											</Dropdown.Item>
 											<Dropdown.Item>
 												<Link className="nav-link" to="/logout">
-													<span>Log out</span>
+													<span className="logout-color">Log out</span>
 												</Link>
 											</Dropdown.Item>
 										</Dropdown.Menu>
