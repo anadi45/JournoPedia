@@ -139,7 +139,7 @@ function VerifyPeerResponse(props) {
 												Submit
 											</button>
 										</div>
-										</div>):(<div>No proof added</div>)}
+										</div>):(<div>No Proof Added for Peer Reviewer 1</div>)}
 								</div>)}
 								{article.peer_review_2 && article.peer_review_2.status?  (<div>Peer Response 2 - {article.peer_review_2.status}
 									<button className="submit-btn" onClick={()=>{
@@ -169,7 +169,7 @@ function VerifyPeerResponse(props) {
 										>
 											Submit
 										</button>
-										</div>):(<div>No proof added</div>)}
+										</div>):(<div>No Proof Added for Peer Reviewer 2</div>)}
 								</div>)}
 								{article.peer_review_3 && article.peer_review_3.status?  (<div>Peer Response 3 - {article.peer_review_3.status}
 									<button className = "submit-btn"onClick={()=>{
@@ -199,7 +199,7 @@ function VerifyPeerResponse(props) {
 										>
 											Submit
 										</button>
-										</div>):(<div>No proof added</div>)}
+										</div>):(<div>No Proof Added for Peer Reviewer 3</div>)}
 								</div>)}
 								{article.peer_review_4 && article.peer_review_4.status?  (<div>Peer Response 4 - {article.peer_review_4.status}
 									<button className = "submit-btn" onClick={()=>{
@@ -229,7 +229,7 @@ function VerifyPeerResponse(props) {
 										>
 											Submit
 										</button>
-										</div>):(<div>No proof added</div>)}
+										</div>):(<div>No Proof Added for Reviewer 4</div>)}
 								</div>)}
 								<div>DOS -
 								{new Date(article.date_of_submission).toLocaleDateString(
