@@ -92,13 +92,21 @@
 }
 
 .found-articles-div{
-    margin: 120px;
+    margin: 100px 90px;
     display: flex;
+}
+.not-found-articles-div{
+    margin: 150px 455px;
+    display: inline-block;
+    font-size: 1.1rem;
+    background-color: #ff8282;
+    padding: 10px 20px; 
+    border-radius: 20px;
 }
 .found-article-name{
     cursor: pointer;
-margin:2rem;
-background-color: #add8e6;
-border-radius: 0.4rem;
-padding:0.4rem 1rem;;
+    margin:2rem;
+    background-color: #add8e6;
+    border-radius: 0.4rem;
+    padding:0.4rem 1rem;;
 }

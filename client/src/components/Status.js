@@ -219,8 +219,6 @@ function Status(props) {
 									</div>
 								</>
 							)}
-
-							{/* {article.status} */}
 						</div>
 					);
 				})}
