@@ -16,10 +16,9 @@ function Status(props) {
 	const progress = {
 		Submitted: 0,
 		"Under Review": 24.5,
-		Rejected: 49.5,
+		Accepted: 49.5,
 		"Under Peer Review": 74.5,
-		Accepted: 100,
-		Rejected: 100,
+		"Peer Accepted": 101,
 	};
 
 	const withdraw = (e) => {
@@ -114,29 +113,30 @@ function Status(props) {
 						<div key={i} className="article-status-div">
 							<h4 className="article-heading">
 								{article.article_name}
-								{article.status !== "Withdrawn" && (
-									<div className="status-btn-div">
-										<button
-											className="btn article-status-buttons"
-											onClick={withdraw}
-											value={article._id}
-										>
-											Withdraw Article
-										</button>
-										{article.status === "Under Peer Review" && (
-											<Link to="/add-peer-response">
-												<button
-													className="btn article-status-buttons"
-													onClick={() => {
-														props.setOpenedArticleId(article._id);
-													}}
-												>
-													Submit Peer Review Proof
-												</button>
-											</Link>
-										)}
-									</div>
-								)}
+								{article.status !== "Withdrawn" &&
+									article.status !== "Rejected" && (
+										<div className="status-btn-div">
+											<button
+												className="btn article-status-buttons"
+												onClick={withdraw}
+												value={article._id}
+											>
+												Withdraw Article
+											</button>
+											{article.status === "Under Peer Review" && (
+												<Link to="/add-peer-response">
+													<button
+														className="btn article-status-buttons"
+														onClick={() => {
+															props.setOpenedArticleId(article._id);
+														}}
+													>
+														Submit Peer Review Proof
+													</button>
+												</Link>
+											)}
+										</div>
+									)}
 							</h4>
 							<div className="review-artcile-journal-div">
 								{journalNames[i]}
@@ -155,7 +155,15 @@ function Status(props) {
 									<span className="withdrawn-span">Withdrawn</span>
 								</div>
 							)}
-							{article.status !== "Withdrawn" && (
+							{article.status === "Rejected" && (
+								<div>
+									<div className="milestone-circle-cross">
+										<i class="fas fa-times-circle"></i>
+									</div>
+									<span className="withdrawn-span">Rejected</span>
+								</div>
+							)}
+							{article.status !== "Withdrawn" && article.status !== "Rejected" && (
 								<>
 									<div className="progress-div">
 										<ProgressBar
@@ -197,7 +205,7 @@ function Status(props) {
 											className={
 												"progress-bar-label" +
 												(article.status === "Peer Accepted"
-													? ""
+													? " accepted-right"
 													: " right-text")
 											}
 										>
