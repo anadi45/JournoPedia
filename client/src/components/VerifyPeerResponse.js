@@ -150,7 +150,7 @@ function VerifyPeerResponse(props) {
 										{article.peer_review_2 && article.peer_review_2.path ? (<div>
 											<p>Peer Response 2 - </p>
 											<Dropdown
-											className="peer-review-status"
+											className="peer-review-status peer-dropdown"
 											options={["Yes", "No"]}
 											onChange={(e) => {
 												setReview2(e.label);
