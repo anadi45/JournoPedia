@@ -1,5 +1,6 @@
 const { Journal } = require("../models/journal");
 const { User } = require("../models/user");
+const { Article } = require("../models/article");
 const fs = require("fs");
 
 //@route    POST /createJournal
@@ -314,6 +315,35 @@ const journalNameByIds = async (req,res) => {
 	}
 }
 
+//@route	GET /journalScore/:journal_id
+//@descr	Get journal score
+//@access	Public
+
+const journalScore = async (req,res) => {
+	try {
+		const {journal_id} = req.params;
+
+		const allArticles = await Article.find({journal: journal_id});
+		let score = 0;
+		for (let i = 0; i < allArticles.length; i++) {
+			if(allArticles[i].status == "Under Peer Review") {
+				score += 0.5;
+			} else if(allArticles[i].status == "Peer Accepted") {
+				score += 1;
+			} else {
+				score += 0;
+			}
+		}
+
+		score = score/(allArticles.length);
+		score = score*100;
+		res.send({score});
+
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
 	createJournal, 
 	editJournal, 
@@ -324,5 +354,6 @@ module.exports = {
 	removeEditors,
 	changeAuthor, 
 	deleteJournal,
-	journalNameByIds
+	journalNameByIds,
+	journalScore
 };

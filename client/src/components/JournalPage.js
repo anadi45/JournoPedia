@@ -17,6 +17,7 @@ function JournalPage(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [volumes, setVolumes] = useState([]);
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
+	const [score, setScore] = useState(0);
 	const [userRole, setUserRole] = useState("");
 	let navigate = useNavigate();
 
@@ -35,7 +36,6 @@ function JournalPage(props) {
 		axios
 			.get(`http://localhost:5000/viewJournal/${props.journalId}`)
 			.then((res) => {
-				// console.log(res.data);
 				setImg(res.data.journal.image.substr(14));
 				setJournalName(res.data.journal.journal_name);
 				setSynopsis(res.data.journal.synopsis);
@@ -53,8 +53,12 @@ function JournalPage(props) {
 		axios
 			.get(`http://localhost:5000/getNumberVolumes/${props.journalId}`)
 			.then((res) => {
-				console.log(res.data);
 				setVolumes(res.data.volumes);
+			});
+		axios
+			.get(`http://localhost:5000/journalScore/${props.journalId}`)
+			.then((res) => {
+				setScore(res.data.score);
 			});
 		axios.get(`http://localhost:5000/userDetailsToken`, config).then((res) => {
 			setUserRole(res.data.userRole);
@@ -88,7 +92,7 @@ function JournalPage(props) {
 						<h5>Editor in Chief</h5>
 						<p className="">{author}</p>
 						<h5>Journal Score</h5>
-						<p className="">1.5</p>
+						<p className="">{score}/100</p>
 					</div>
 					<div className="synopsis-div">
 						<h5>Synopsis</h5>
