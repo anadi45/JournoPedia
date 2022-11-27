@@ -276,7 +276,7 @@ function SearchArticle(props) {
 									handleDownload(article._id);
 								}}
 							>
-								<div className="found-article-name">{article.article_name}</div>
+								<div className="found-article-name">{article.article_name} <i class="fas fa-download"></i></div>
 							</div>
 						);
 					})}

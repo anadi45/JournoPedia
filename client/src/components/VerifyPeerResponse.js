@@ -112,7 +112,7 @@ function VerifyPeerResponse(props) {
 								{article.peer_review_1 && article.peer_review_1.status?  (<div>Peer Response 1 - {article.peer_review_1.status}
 									<button className = "submit-btn peer-btn" onClick={()=>{
 										handleDownload(article._id,1)
-									}}>Proof</button>
+									}}>Proof <i class="fas fa-download"></i></button>
 								</div>)
 								:  (<div className="peer-review-status peer-div">
 										{article.peer_review_1 && article.peer_review_1.path ? (<div>
@@ -129,7 +129,7 @@ function VerifyPeerResponse(props) {
 										<div className="btn-div">
 											<button className = "submit-btn peer-btn"onClick={()=>{
 												handleDownload(article._id,1)
-											}}>Proof</button>
+											}}>Proof <i class="fas fa-download"></i></button>
 											<button
 												className="submit-btn peer-btn"
 												onClick={() => {
@@ -144,7 +144,7 @@ function VerifyPeerResponse(props) {
 								{article.peer_review_2 && article.peer_review_2.status?  (<div>Peer Response 2 - {article.peer_review_2.status}
 									<button className="submit-btn" onClick={()=>{
 										handleDownload(article._id,2)
-									}}>Proof</button>
+									}}>Proof <i class="fas fa-download"></i></button>
 								</div>)
 								:  (<div className="peer-review-status peer-div">
 										{article.peer_review_2 && article.peer_review_2.path ? (<div>
@@ -160,7 +160,7 @@ function VerifyPeerResponse(props) {
 										/>
 										<button className = "submit-btn"onClick={()=>{
 											handleDownload(article._id,2)
-										}}>Proof</button>
+										}}>Proof <i class="fas fa-download"></i></button>
 										<button
 											className="submit-btn"
 											onClick={() => {
@@ -174,7 +174,7 @@ function VerifyPeerResponse(props) {
 								{article.peer_review_3 && article.peer_review_3.status?  (<div>Peer Response 3 - {article.peer_review_3.status}
 									<button className = "submit-btn"onClick={()=>{
 										handleDownload(article._id,3)
-									}}>Proof</button>
+									}}>Proof <i class="fas fa-download"></i></button>
 								</div>)
 								:  (<div className="peer-review-status peer-div">
 										{article.peer_review_3 && article.peer_review_3.path ? (<div>
@@ -190,7 +190,7 @@ function VerifyPeerResponse(props) {
 										/>
 										<button className = "submit-btn"onClick={()=>{
 											handleDownload(article._id,3)
-										}}>Proof</button>
+										}}>Proof <i class="fas fa-download"></i></button>
 										<button
 											className="submit-btn"
 											onClick={() => {
