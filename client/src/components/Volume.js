@@ -91,7 +91,7 @@ function Volume(props) {
 				<div className="volume-articles-div">
 					{articles.map((article, index) => {
 						return (
-							<div>
+							<div className="border_article">
 								<span>{index + 1}. </span>
 								<span>{article.article_name}</span>
 								<div>Author - {authorNames[index]}</div>

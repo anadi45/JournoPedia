@@ -4,7 +4,17 @@
     margin: -10px auto;
     background-color: white;
 }
-
+/* .glass_profile{
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0 2rem;
+background: rgba(255, 255, 255, 0.2);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(12.1px);
+-webkit-backdrop-filter: blur(12.1px);
+border: 1px solid rgba(255, 255, 255, 1);
+} */
 .user-image-div{
     display: inline-block;
     width: fit-content;
@@ -57,6 +67,7 @@
     font-size: 19px;
     margin-top: 18px;
 }
+
 .circle{
     border-radius: 50%;
     width: 200px;
@@ -66,7 +77,40 @@
     font-size: 60px;
     text-align: center;
     padding-top: 50px;
+
 }
+
+/* .right{
+display:inline-block;
+animation: animate1 2s ease;
+opacity:1;
+}
+.left{
+  animation: animate2 2s ease;
+  opacity:1;
+}
+@keyframes animate1 {
+0% {transform:translateX(-24.28vw);
+  opacity:0;
+}
+100% { transform:translateX(0);
+}
+}
+@keyframes animate2 {
+0% {transform:translateX(24.28vw);
+  opacity:0;
+}
+100% { transform:translateX(0);}
+}
+.center{
+  opacity:1;
+  animation: animate3 4s ease;
+  opacity:1;
+}
+@keyframes animate3 {
+0% {opacity:0};
+100% {opacity:1;}
+} */
 .circle span{
     font-size: 18px;
     display: block;

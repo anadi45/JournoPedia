@@ -35,6 +35,9 @@
 .download-btn{
   margin-top : 2rem;
   margin-left: 0;
+  background-color: green;
+  color:white;
+  margin-right: 1rem;
 }
 
 .download-btn:hover {
