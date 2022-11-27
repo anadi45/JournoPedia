@@ -5,7 +5,7 @@ import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import "../css/VerifyPeerResponse.css";
 
-function VerifyPeerResponse() {
+function VerifyPeerResponse(props) {
 	const [cookies, setCookie] = useCookies(["token"]);
 	const [articles, setArticles] = useState([]);
 	const [review1, setReview1] = useState("");
@@ -13,13 +13,78 @@ function VerifyPeerResponse() {
 	const [review3, setReview3] = useState("");
 	const [review4, setReview4] = useState("");
 
-	function handleDownload(e) {
-		// window.location.replace(
-		// 	`http://localhost:5000/downloadArticle/${articleId}`
-		// );
+	function handleDownload(id,num) {
+		window.location.replace(
+			`http://localhost:5000/${id}/peerReviewProof/${num}`
+		);
+	}
+
+	function handleSubmit(id,num) {
+		const config = {
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
+		if(num === 1) {
+			axios
+				.patch(
+					`http://localhost:5000/scoreArticle/${id}`,
+					{
+						review_number: 1,
+						review: review1
+					},
+					config
+				)
+				.then((res) => {
+					window.location.reload();
+				});		
+		} else if (num ===2) {
+			axios
+			.patch(
+				`http://localhost:5000/scoreArticle/${id}`,
+				{
+					review_number: 2,
+					review: review2
+				},
+				config
+			)
+			.then((res) => {
+				window.location.reload();
+			});	
+		} else if (num === 3) {
+			axios
+			.patch(
+				`http://localhost:5000/scoreArticle/${id}`,
+				{
+					review_number: 3,
+					review: review3
+				},
+				config
+			)
+			.then((res) => {
+				window.location.reload();
+			});	
+		} else {
+			axios
+			.patch(
+				`http://localhost:5000/scoreArticle/${id}`,
+				{
+					review_number: 4,
+					review: review4
+				},
+				config
+			)
+			.then((res) => {
+				window.location.reload();
+			});	
+		}
 	}
 
 	useEffect(()=>{
+		if (!cookies.token) props.setDisplayItems(["inline", "inline", "none"]);
+		else props.setDisplayItems(["none", "none", "inline"]);
 		const config = {
 			headers: {
 				"Content-Type": "application/json;charset=UTF-8",
@@ -34,96 +99,132 @@ function VerifyPeerResponse() {
 		});
 	},[])
 	return (
-		<div>
+		<div className="review-page-div">
+				<div className="review-article-heading">
+					Verify Peer Responses 
+				</div>
 			{
 				articles.map((article)=>{
 					return (
-						<div className="status-div">
-							<div className="article-status-div">{article.article_name}
+						<div key = {article.article_id} >
+							<div className="article-status-div">
+								<div className="article-heading">{article.article_name}</div>
 								{article.peer_review_1 && article.peer_review_1.status?  (<div>Peer Response 1 - {article.peer_review_1.status}
-									<button onClick={handleDownload(article.peer_review_1.path)}>Proof</button>
+									<button className = "submit-btn peer-btn" onClick={()=>{
+										handleDownload(article._id,1)
+									}}>Proof</button>
 								</div>)
-								:  (<div className="peer-review-status">
+								:  (<div className="peer-review-status peer-div">
 										{article.peer_review_1 && article.peer_review_1.path ? (<div>
+											<p>Peer Response 1 - </p>
 											<Dropdown
-											className="peer-review-status"
+											className="peer-review-status peer-dropdown"
 											options={["Yes", "No"]}
 											onChange={(e) => {
-												// setPassForReview(e.label);
+												setReview1(e.label);
 											}}
 											// value={defaultOption}
 											placeholder="Verify Peer Response 1"
 										/>
-										<button
-											className="submit-btn"
-											onClick={() => {
-												// handleSubmit(item._id);
-											}}
-										>
-											Submit
-										</button>
+										<div className="btn-div">
+											<button className = "submit-btn peer-btn"onClick={()=>{
+												handleDownload(article._id,1)
+											}}>Proof</button>
+											<button
+												className="submit-btn peer-btn"
+												onClick={() => {
+													handleSubmit(article._id,1);
+												}}
+											>
+												Submit
+											</button>
+										</div>
 										</div>):(<div>No proof added</div>)}
 								</div>)}
-								{article.peer_review_2 && article.peer_review_2.status?  (<div>Peer Response 2 - {article.peer_review_2.status}</div>)
-								:  (<div className="peer-review-status">
+								{article.peer_review_2 && article.peer_review_2.status?  (<div>Peer Response 2 - {article.peer_review_2.status}
+									<button className="submit-btn" onClick={()=>{
+										handleDownload(article._id,2)
+									}}>Proof</button>
+								</div>)
+								:  (<div className="peer-review-status peer-div">
 										{article.peer_review_2 && article.peer_review_2.path ? (<div>
+											<p>Peer Response 2 - </p>
 											<Dropdown
 											className="peer-review-status"
 											options={["Yes", "No"]}
 											onChange={(e) => {
-												// setPassForReview(e.label);
+												setReview2(e.label);
 											}}
 											// value={defaultOption}
 											placeholder="Verify Peer Response 2"
 										/>
+										<button className = "submit-btn"onClick={()=>{
+											handleDownload(article._id,2)
+										}}>Proof</button>
 										<button
 											className="submit-btn"
 											onClick={() => {
-												// handleSubmit(item._id);
+												handleSubmit(article._id,2);
 											}}
 										>
 											Submit
 										</button>
 										</div>):(<div>No proof added</div>)}
 								</div>)}
-								{article.peer_review_3 && article.peer_review_3.status?  (<div>Peer Response 3 - {article.peer_review_3.status}</div>)
-								:  (<div className="peer-review-status">
+								{article.peer_review_3 && article.peer_review_3.status?  (<div>Peer Response 3 - {article.peer_review_3.status}
+									<button className = "submit-btn"onClick={()=>{
+										handleDownload(article._id,3)
+									}}>Proof</button>
+								</div>)
+								:  (<div className="peer-review-status peer-div">
 										{article.peer_review_3 && article.peer_review_3.path ? (<div>
+											<p>Peer Response 3 - </p>
 											<Dropdown
-											className="peer-review-status"
+											className="peer-review-status peer-dropdown"
 											options={["Yes", "No"]}
 											onChange={(e) => {
-												// setPassForReview(e.label);
+												setReview3(e.label);
 											}}
 											// value={defaultOption}
 											placeholder="Verify Peer Response 3"
 										/>
+										<button className = "submit-btn"onClick={()=>{
+											handleDownload(article._id,3)
+										}}>Proof</button>
 										<button
 											className="submit-btn"
 											onClick={() => {
-												// handleSubmit(item._id);
+												handleSubmit(article._id,3);
 											}}
 										>
 											Submit
 										</button>
 										</div>):(<div>No proof added</div>)}
 								</div>)}
-								{article.peer_review_4 && article.peer_review_4.status?  (<div>Peer Response 4 - {article.peer_review_4.status}</div>)
-								:  (<div className="peer-review-status">
+								{article.peer_review_4 && article.peer_review_4.status?  (<div>Peer Response 4 - {article.peer_review_4.status}
+									<button className = "submit-btn" onClick={()=>{
+										handleDownload(article._id,4)
+									}}>Proof</button>
+								</div>)
+								:  (<div className="peer-review-status peer-div">
 										{article.peer_review_4 && article.peer_review_4.path ? (<div>
+											<p>Peer Response 4 - </p>
 											<Dropdown
-											className="peer-review-status"
+											className="peer-review-status peer-dropdown"
 											options={["Yes", "No"]}
 											onChange={(e) => {
-												// setPassForReview(e.label);
+												setReview4(e.label);
 											}}
 											// value={defaultOption}
 											placeholder="Verify Peer Response 4"
 										/>
+										<button className = "submit-btn"onClick={()=>{
+											handleDownload(article._id,4)
+										}}>Proof</button>
 										<button
 											className="submit-btn"
 											onClick={() => {
-												// handleSubmit(item._id);
+												handleSubmit(article._id,4);
 											}}
 										>
 											Submit

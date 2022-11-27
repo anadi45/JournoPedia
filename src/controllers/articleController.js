@@ -586,6 +586,44 @@ const viewArticle = async (req, res) => {
 	}
 };
 
+//@route	GET /:article_id/peerReviewProof/:review_num
+//@descr	Download peer review proof
+//@access	Public
+
+const peerReviewProof = async (req,res) => {
+	try {
+		const {article_id,review_num} = req.params;
+
+		const findArticle = await Article.findById(article_id);
+		let path;
+
+		if(findArticle) {
+			if(review_num == 1) {
+				path = findArticle.peer_review_1.path;
+			} else if(review_num == 2) {
+				path = findArticle.peer_review_2.path;
+			} else if(review_num == 3) {
+				path = findArticle.peer_review_3.path;
+			} else {
+				path = findArticle.peer_review_4.path;
+			}
+			if(path) {
+				res.download(path);
+			} else {
+				res.send({
+					message: "Proof not found"
+				});
+			}
+		} else {
+			res.send({
+				message: "Proof not found"
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
 	addArticle,
 	downloadArticle,
@@ -600,4 +638,5 @@ module.exports = {
 	scoreArticle,
 	allArticlesPeerResponseVerification,
 	viewArticle,
+	peerReviewProof
 };
