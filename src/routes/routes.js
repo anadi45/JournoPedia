@@ -40,7 +40,8 @@ const {
   searchArticles,
   addPeerReviewDetails,
   scoreArticle,
-  allArticlesPeerResponseVerification
+  allArticlesPeerResponseVerification,
+  viewArticle
 } = require("../controllers/articleController");
 
 // User Routes
@@ -80,6 +81,7 @@ router.post("/searchArticles", searchArticles);
 router.post("/addPeerReviewDetails/:article_id", isLoggedIn,imageUpload.single("image"), addPeerReviewDetails);
 router.patch("/scoreArticle/:article_id", isLoggedIn, scoreArticle);
 router.get("/allArticlesPeerResponseVerification", isLoggedIn, allArticlesPeerResponseVerification);
+router.get("/viewArticle/:article_id", viewArticle);
  
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);
