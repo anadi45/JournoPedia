@@ -5,34 +5,42 @@ import { PuffLoader } from "react-spinners";
 import axios from "axios";
 
 function AddPeerResponse(props) {
-	const [cookies, setCookie] = useCookies(["token"]);
-	const [articles, setArticles] = useState([]);
+	const [cookies, setCookie] = useCookies(["token", "articleId"]);
+	const [article, setArticle] = useState();
 	const [isLoading, setIsLoading] = useState(true);
 	const [counter, setCounter] = useState(0);
 	const [numAuthors, setNumAuthors] = useState(0);
+	const [articleId, setArticleId] = useState(props.openedArticleId);
 
 	useEffect(() => {
 		if (!cookies.token) props.setDisplayItems(["inline", "inline", "none"]);
 		else props.setDisplayItems(["none", "none", "inline"]);
 
-		// console.log("article id : ", props.openedArticleId);
+		setCookie("articleId", props.openedArticleId, { path: "/" });
+		// console.log(localStorage.getItem("SelectedArticleId"));
+		// if (localStorage.getItem("SelectedArticleId")) {
+		// 	setArticleId(localStorage.getItem("SelectedArticleId"));
+		// } else
+		// 	localStorage.setItem(
+		// 		"SelectedArticleId",
+		// 		JSON.stringify(props.openedArticleId)
+		// 	);
+
+		console.log("article id : ", cookies.articleId);
 		const config = {
 			headers: {
-				"Content-Type": "multipart/form-data",
+				"Content-Type": "application/json",
 				"access-control-allow-origin": "*",
 				Authorization: "Bearer " + cookies.token,
 			},
 		};
-		axios.get(`http://localhost:5000/articleStatus`, config).then((res) => {
-			setArticles(res.data);
-			setIsLoading(false);
-			// setJournalIds(
-			// 	res.data.map((journal) => {
-			// 		return journal.journal;
-			// 	})
-			// );
-			console.log(res.data);
-		});
+		axios
+			.get(`http://localhost:5000/viewArticle/${cookies.articleId}`, config)
+			.then((res) => {
+				console.log(res.data);
+				setIsLoading(false);
+				setArticle(res.data);
+			});
 	}, []);
 
 	const handleClick = (e) => {
@@ -57,7 +65,9 @@ function AddPeerResponse(props) {
 	} else
 		return (
 			<div className="add-peer-response-div">
-				<div className="review-article-heading">Submit Peer Response</div>
+				<div className="review-article-heading">
+					{/* Submit Peer Response for "{article.article_name}" */}
+				</div>
 				{/* {articles.map((article) => {
 					if (article.status === "Under Peer Review")
 						return article.article_name;
