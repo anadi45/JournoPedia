@@ -11,12 +11,15 @@ function AddPeerResponse(props) {
 	const [counter, setCounter] = useState(0);
 	const [numAuthors, setNumAuthors] = useState(0);
 	const [articleId, setArticleId] = useState(props.openedArticleId);
+	const [proofs, setProofs] = useState([]);
 
 	useEffect(() => {
 		if (!cookies.token) props.setDisplayItems(["inline", "inline", "none"]);
 		else props.setDisplayItems(["none", "none", "inline"]);
 
-		setCookie("articleId", props.openedArticleId, { path: "/" });
+		if (!cookies.articleId)
+			setCookie("articleId", props.openedArticleId, { path: "/" });
+		console.log("article id ", cookies.articleId);
 
 		const config = {
 			headers: {
@@ -38,6 +41,28 @@ function AddPeerResponse(props) {
 		e.preventDefault();
 		setCounter(counter + 1);
 		setNumAuthors(numAuthors + 1);
+	};
+
+	const handleSubmit = (num) => {
+		console.log(num);
+		const config = {
+			headers: {
+				"Content-Type": "multipart/form-data",
+				"access-control-allow-origin": "*",
+				Authorization: "Bearer " + cookies.token,
+			},
+		};
+		axios
+			.post(
+				`http://localhost:5000/addPeerReviewDetails/${cookies.articleId}`,
+				{
+					image: proofs[num - 1],
+				},
+				config
+			)
+			.then((res) => {
+				console.log(res.data);
+			});
 	};
 
 	if (isLoading) {
@@ -72,8 +97,23 @@ function AddPeerResponse(props) {
 						"Verification pending"
 					) : (
 						<form>
-							<input type="file"></input>
-							<button type="submit">Submit</button>
+							<input
+								type="file"
+								onChange={(e) => {
+									let arr = proofs;
+									arr[0] = e.target.files[0];
+									setProofs(arr);
+								}}
+							></input>
+							<button
+								type="submit"
+								onClick={(e) => {
+									e.preventDefault();
+									handleSubmit(1);
+								}}
+							>
+								Submit
+							</button>
 						</form>
 					)}
 				</div>
@@ -86,8 +126,23 @@ function AddPeerResponse(props) {
 						"Verification pending"
 					) : (
 						<form>
-							<input type="file"></input>
-							<button type="submit">Submit</button>
+							<input
+								type="file"
+								onChange={(e) => {
+									let arr = proofs;
+									arr[1] = e.target.files[0];
+									setProofs(arr);
+								}}
+							></input>
+							<button
+								type="submit"
+								onClick={(e) => {
+									e.preventDefault();
+									handleSubmit(2);
+								}}
+							>
+								Submit
+							</button>
 						</form>
 					)}
 				</div>
@@ -100,8 +155,23 @@ function AddPeerResponse(props) {
 						"Verification pending"
 					) : (
 						<form>
-							<input type="file"></input>
-							<button type="submit">Submit</button>
+							<input
+								type="file"
+								onChange={(e) => {
+									let arr = proofs;
+									arr[2] = e.target.files[0];
+									setProofs(arr);
+								}}
+							></input>
+							<button
+								type="submit"
+								onClick={(e) => {
+									e.preventDefault();
+									handleSubmit(3);
+								}}
+							>
+								Submit
+							</button>
 						</form>
 					)}
 				</div>
@@ -114,8 +184,23 @@ function AddPeerResponse(props) {
 						"Verification pending"
 					) : (
 						<form>
-							<input type="file"></input>
-							<button type="submit">Submit</button>
+							<input
+								type="file"
+								onChange={(e) => {
+									let arr = proofs;
+									arr[3] = e.target.files[0];
+									setProofs(arr);
+								}}
+							></input>
+							<button
+								type="submit"
+								onClick={(e) => {
+									e.preventDefault();
+									handleSubmit(4);
+								}}
+							>
+								Submit
+							</button>
 						</form>
 					)}
 				</div>
