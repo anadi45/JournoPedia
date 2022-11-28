@@ -36,6 +36,7 @@ function SearchArticle(props) {
 	const [found, setFound] = useState(false);
 	const [initialSpinnerVisible, setInitialSpinnerVisible] = useState(true);
 	const [spinnerVisible, setSpinnerVisible] = useState("hidden");
+	const [searched, setSearched] = useState(false);
 
 	useEffect(() => {
 		props.setDisplayItems(["none", "none", "inline"]);
@@ -87,6 +88,7 @@ function SearchArticle(props) {
 				setFoundArticles(res.data);
 				if (res.data.length !== 0) setFound(true);
 				setSpinnerVisible("hidden");
+				setSearched(true);
 			});
 	};
 
@@ -301,7 +303,7 @@ function SearchArticle(props) {
 						})}
 					</div>
 				)}
-				{!found && (
+				{!found && searched && (
 					<div className="not-found-articles-div">No Articles Found</div>
 				)}
 			</div>
