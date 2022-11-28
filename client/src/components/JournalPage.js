@@ -20,7 +20,7 @@ function JournalPage(props) {
 	const [score, setScore] = useState(0);
 	const [userRole, setUserRole] = useState("");
 	let navigate = useNavigate();
-
+	console.log(score)
 	useEffect(() => {
 		if (cookies.token) props.setDisplayItems(["none", "none", "inline"]);
 		else props.setDisplayItems(["inline", "inline", "none"]);
@@ -92,7 +92,7 @@ function JournalPage(props) {
 						<h5>Editor in Chief</h5>
 						<p className="">{author}</p>
 						<h5>Journal Score</h5>
-						<p className="">{score}/100</p>
+						<p className="">{score === null?0:score}/100</p>
 					</div>
 					<div className="synopsis-div">
 						<h5>Synopsis</h5>

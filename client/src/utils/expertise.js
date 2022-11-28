@@ -5,6 +5,7 @@ export const expertise = [
 	{ label: "Automata theory", value: "Automata theory" },
 	{ label: "Automated reasoning", value: "Automated reasoning" },
 	{ label: "Bioinformatics", value: "Bioinformatics" },
+	{ label: "Cloud computing", value: "Cloud computing" },
 	{ label: "Coding theory", value: "Coding theory" },
 	{ label: "Compiler theory", value: "Compiler theory" },
 	{ label: "Computability theory", value: "Computability theory" },
@@ -20,6 +21,7 @@ export const expertise = [
 	{ label: "Concurrency", value: "Concurrency" },
 	{ label: "Cryptography", value: "Cryptography" },
 	{ label: "Data mining", value: "Data mining" },
+	{ label: "Data science", value: "Data science" },
 	{ label: "Data structures", value: "Data structures" },
 	{ label: "Discrete Mathematics", value: "Discrete Mathematics" },
 	{ label: "Distributed computing", value: "Distributed computing" },
@@ -33,6 +35,7 @@ export const expertise = [
 	{ label: "Information visualization", value: "Information visualization" },
 	{ label: "Machine learning", value: "Machine learning" },
 	{ label: "Mathematical logic", value: "Mathematical logic" },
+	{ label: "Mobile computing", value: "Mobile computing"},
 	{ label: "Natural language processing", value: "Natural language processing" },
 	{ label: "Networking", value: "Networking" },
 	{ label: "Number theory", value: "Number theory" },
@@ -49,4 +52,5 @@ export const expertise = [
 	{ label: "Structured Storage", value: "Structured Storage" },
 	{ label: "Symbolic computation", value: "Symbolic computation" },
 	{ label: "Type theory", value: "Type theory" },
+	{ label: "Web development", value: "Web development" }
 ];
