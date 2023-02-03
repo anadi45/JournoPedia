@@ -28,7 +28,7 @@ function StepThree(props) {
 		props.setPeerChoice(peerChoice);
 	}, [names, emails, phones, countryValues]);
 
-	console.log(names, phones, emails, countryValues);
+	// console.log(names, phones, emails, countryValues);
 	return (
 		<div className="auth-inner mb-3 add-reviewer-form">
 			{/**************************************** Reviewer - 1******************8****************************/}

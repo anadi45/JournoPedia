@@ -21,7 +21,6 @@ function AddJournal(props) {
 	const [messageColor, setMessageColor] = useState("");
 	const [spinnerVisible, setSpinnerVisible] = useState("hidden");
 	const [cookies, setCookie] = useCookies(["token"]);
-	// const [volumes, setVolumes] = useState();
 	let navigate = useNavigate();
 
 	useEffect(() => {
@@ -30,7 +29,6 @@ function AddJournal(props) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// console.log(typeof volumes);
 		setSpinnerVisible("visible");
 		const config = {
 			headers: {
@@ -45,13 +43,11 @@ function AddJournal(props) {
 				{
 					journal_name: journalName,
 					synopsis: synopsis,
-					image: image,
-					//   topics_covered: topics,
+					image: image
 				},
 				config
 			)
 			.then((res) => {
-				// console.log(res.data);
 				setSpinnerVisible("hidden");
 				setMessage(res.data.message);
 				setMessageDisplay("inline");
@@ -65,7 +61,7 @@ function AddJournal(props) {
 	return (
 		<div className="auth-inner add-journal-div">
 			<form>
-				<h3>Publish</h3>
+				<h3>Create Journal</h3>
 				<div className="mb-3">
 					<label>Journal Name</label>
 					<input

@@ -43,7 +43,6 @@ function SignUp() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setSpinnerVisible("visible");
-		console.log(email, password, topics, country);
 		setEmailExists(false);
 		setPhoneExists(false);
 		await axios
@@ -59,7 +58,6 @@ function SignUp() {
 			})
 			.then((res) => {
 				setSpinnerVisible("hidden");
-				console.log(res.data);
 				if (res.data.token) {
 					setCookie("token", res.data.token, { path: "/" });
 					setEmailExists(false);
@@ -174,7 +172,6 @@ function SignUp() {
 						onChange={(e) => {
 							setCountry(e.label);
 						}}
-						// value={defaultOption}
 						placeholder="Select an option"
 					/>
 				</div>
@@ -197,11 +194,11 @@ function SignUp() {
 					{emailExists
 						? "Email already exists"
 						: phoneExists
-						? "Phone No already exists"
-						: ""}
+							? "Phone No already exists"
+							: ""}
 				</div>
 				<p className="forgot-password text-right">
-					Already registered <a href="/sign-in">sign in?</a>
+					Already registered? <a href="/sign-in">Sign In</a>
 				</p>
 			</form>
 		</div>

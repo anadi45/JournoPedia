@@ -131,7 +131,7 @@ function App() {
 											{userRole === "Admin" && (
 												<Dropdown.Item>
 													<Link className="nav-link" to={"/publish-journal"}>
-														Publish Journal
+														Create Journal
 													</Link>
 												</Dropdown.Item>
 											)}

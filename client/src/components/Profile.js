@@ -22,10 +22,8 @@ function Profile(props) {
 			},
 		};
 		axios.get(`http://localhost:5000/userDetailsToken`, config).then((res) => {
-			console.log(res.data);
 			setUserInfo(res.data);
-			setSpinnerVisible("hidden");
-			// console.log(res.data.image_path.slice(14));
+			setSpinnerVisible("hidden");			
 		});
 	}, []);
 
@@ -47,7 +45,6 @@ function Profile(props) {
 				config
 			)
 			.then((res) => {
-				console.log(res.data);
 				setImage(e.target.files[0]);
 				setImageUpload(false);
 			});
@@ -95,7 +92,7 @@ function Profile(props) {
 					></img>
 					<div className="add-photo-div">
 						<label htmlFor="filePicker" style={{ cursor: "pointer" }}>
-							<i class="fas fa-camera"></i>
+							<i className="fas fa-camera"></i>
 						</label>
 						<input
 							id="filePicker"
@@ -172,7 +169,7 @@ function Profile(props) {
 						<div>
 							{userInfo.expertise &&
 								userInfo.expertise.map((topic, i) => {
-									console.log(topic);
+									// console.log(topic);
 									return (i > 0 ? ", " : "") + topic;
 								})}
 						</div>
