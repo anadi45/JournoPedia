@@ -91,7 +91,7 @@ function AddArticle(props) {
 		background: "#33c2ef",
 		color: "white",
 	};
-	console.log("peer choice : ", peerChoice);
+	// console.log("peer choice : ", peerChoice);
 	// 				article_name: articleName,
 	// 				peer_choice: reviewer,
 	// 				article: article,

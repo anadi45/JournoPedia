@@ -9,6 +9,13 @@ import { PuffLoader } from "react-spinners";
 import AddEditorsPopup from "./AddEditorsPopup";
 
 function JournalPage(props) {
+	const btnStyle = {
+		border: "none",
+		padding: "8px 45px",
+		borderRadius: "8px",
+		background: "#33c2ef",
+		color: "white",
+	};
 	const [img, setImg] = useState("");
 	const [journalName, setJournalName] = useState("");
 	const [author, setAuthor] = useState("");
@@ -20,7 +27,7 @@ function JournalPage(props) {
 	const [score, setScore] = useState(0);
 	const [userRole, setUserRole] = useState("");
 	let navigate = useNavigate();
-	console.log(score)
+	// console.log(score)
 	useEffect(() => {
 		if (cookies.token) props.setDisplayItems(["none", "none", "inline"]);
 		else props.setDisplayItems(["inline", "inline", "none"]);
@@ -135,6 +142,14 @@ function JournalPage(props) {
 										All our articles go through a double-blind review process.
 									</li>
 									<li>There are no charges for publishing with JournoPedia.</li>
+									<button className="btn btn-primary" style={btnStyle}>
+										<Link to="/add-article" style={
+											{
+												color: "white",
+												textDecoration: "none"
+											}
+											}>Add Article</Link>
+									</button>
 								</ul>
 							</div>
 						</Tab>
