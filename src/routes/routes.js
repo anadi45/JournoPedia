@@ -90,5 +90,6 @@ router.get("/:article_id/peerReviewProof/:review_num", peerReviewProof);
 // --------- Change ----------
 // router.get("/downloadJournal/:journal_id", downloadJournal);
 // router.delete("/deleteJournal/:journal_id", deleteJournal);
-
+const {articleRecommender} = require("../recommenders/articleRecommender");
+router.get("/test/:articleId", articleRecommender);
 module.exports = { router };

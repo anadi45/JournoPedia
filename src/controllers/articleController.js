@@ -10,7 +10,7 @@ const { mail } = require("../utils/mailing");
 
 const addArticle = async (req, res) => {
 	try {
-		const { journal_id, peer_choice, article_name, authors, article_type } =
+		const { journal_id, peer_choice, article_name, authors, article_type, abstract } =
 			req.body;
 
 		let country = new Set();
@@ -53,6 +53,7 @@ const addArticle = async (req, res) => {
 			peer_choice: peer_choice,
 			authors: authors,
 			article_type: article_type,
+			abstract: abstract
 		});
 
 		const journal = await Journal.findById(journal_id);
