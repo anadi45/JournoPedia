@@ -35,7 +35,6 @@ vectors = cv.fit_transform(df['tags']).toarray()
 from sklearn.metrics.pairwise import cosine_similarity
 similarity = cosine_similarity(vectors)
 
-
 # Recommender
 def recommend(id):
     index = df[df['id'] == id].index[0]
@@ -44,7 +43,6 @@ def recommend(id):
 
     for i in article_list:
         print(df.iloc[i[0]].id)
-    # print(article_list)
     
 recommend(id)
 
