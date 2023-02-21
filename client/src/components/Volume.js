@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { PuffLoader } from "react-spinners";
@@ -29,11 +29,6 @@ function Volume(props) {
 					})
 				);
 			});
-		// console.log(articles);
-		// const authorFetch = async () => {
-
-		// };
-		// authorFetch();
 	}, []);
 
 	useEffect(() => {
@@ -54,7 +49,6 @@ function Volume(props) {
 				config
 			)
 			.then((res) => {
-				// console.log(res.data);
 				setAuthorNames(
 					res.data.map((author) => {
 						return author.name;
@@ -63,13 +57,6 @@ function Volume(props) {
 				setIsLoading(false);
 			});
 	}, [authorIDs]);
-
-	function handleDownload(e) {
-		const articleId = e.target.value;
-		window.location.replace(
-			`http://localhost:5000/downloadArticle/${articleId}`
-		);
-	}
 
 	if (isLoading) {
 		return (
@@ -91,33 +78,27 @@ function Volume(props) {
 				<div className="volume-articles-div">
 					{articles.map((article, index) => {
 						return (
-							<div className="border_article">
-								<span>{index + 1}. </span>
-								<span>{article.article_name}</span>
-								<div>Author - {authorNames[index]}</div>
-								<div>Co-Authors - </div>
-								{article.authors.map((author) => {
-									return (
-										<p>
-											{author.name}, {author.email}, {author.country} <br></br>
-										</p>
-									);
-								})}
-								<div>
-									Date of Submission -{" "}
-									{new Date(article.date_of_submission).toLocaleDateString(
-										"en-GB"
-									)}
+							<Link to={`/article/${article._id}`} style={{ color: 'inherit', textDecoration: 'inherit'}} key={index}	>
+								<div className="border_article">
+									<span>{index + 1}. </span>
+									<span>{article.article_name}</span><br></br>
+									<span className="authors">{authorNames[index]}
+										{article.authors.map((author,idx) => {
+											return (
+												<span key={idx} className="authors">
+													,{author.name}
+												</span>
+											);
+										})}
+									</span>
+									<div>
+										Date of Submission -{" "}
+										{new Date(article.date_of_submission).toLocaleDateString(
+											"en-GB"
+										)}
+									</div>
 								</div>
-								<div>Status - {article.status}</div>
-								<button
-									className="download-btn"
-									value={article._id}
-									onClick={handleDownload}
-								>
-									Download <i class="fas fa-download"></i>
-								</button>
-							</div>
+							</Link>
 						);
 					})}
 				</div>

@@ -27,6 +27,7 @@ import Volume from "./components/Volume";
 import SearchArticle from "./components/SearchArticle";
 import AddPeerResponse from "./components/AddPeerResponse";
 import VerifyPeerResponse from "./components/VerifyPeerResponse";
+import Article from "./components/Article";
 
 function App() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -305,6 +306,11 @@ function App() {
 						<Route
 							path="/:journal_id/volume/:year"
 							element={<Volume setDisplayItems={setDisplayItems} />}
+						/>
+
+						<Route
+							path="/article/:article_id"
+							element={<Article setDisplayItems={setDisplayItems} />}
 						/>
 					</Routes>
 				</div>

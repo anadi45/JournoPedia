@@ -160,7 +160,7 @@ function JournalPage(props) {
 							{volumes.map((volume, index) => {
 								return (
 									<Link to={`/${props.journalId}/volume/${volume}`}>
-										Volume {volumes.length - index}
+										<button className="btn btn-primary" style={btnStyle}>Volume {volumes.length - index}</button>
 										<br></br>
 									</Link>
 								);
