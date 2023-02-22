@@ -19,8 +19,7 @@ function Article(props) {
 
     function handleDownload(e) {
 		const articleId = e;
-		// const articleId = e.target.value;
-
+        console.log(e);
 		window.location.replace(
 			`http://localhost:5000/downloadArticle/${articleId}`
 		);
@@ -138,7 +137,7 @@ function Article(props) {
                         )}
                     </p>
                     <p><span>Downloads - </span>{article.downloads}</p>
-                    <button className="download-btn" value={article._id} onClick={()=>{handleDownload(article_id)}}>
+                    <button className="download-btn" value={article._id} onClick={()=>{handleDownload(article._id)}}>
                         Download <i class="fas fa-download"></i>
                     </button>
                 </div>

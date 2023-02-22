@@ -105,7 +105,14 @@ const articleSchema = new mongoose.Schema({
     peer_review_score: {
         type: Number,
         default: 0
-    }
+    },
+    ratings:[{
+        user:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        rating: Number
+    }]
 });
 
 const Article = new mongoose.model("Article",articleSchema);

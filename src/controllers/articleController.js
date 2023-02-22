@@ -117,13 +117,12 @@ const addArticle = async (req, res) => {
 const downloadArticle = async (req, res) => {
 	try {
 		const { article_id } = req.params;
-		const findArticle = await Article.findById(article_id);
 
 		const updateArticle = await Article.findByIdAndUpdate(article_id, {
 			$inc: { downloads: 1 },
 		});
 		if (updateArticle) {
-			res.download(findArticle.path);
+			res.download(updateArticle.path);
 		}
 	} catch (error) {
 		console.log(error);
