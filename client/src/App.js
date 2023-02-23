@@ -28,6 +28,7 @@ import SearchArticle from "./components/SearchArticle";
 import AddPeerResponse from "./components/AddPeerResponse";
 import VerifyPeerResponse from "./components/VerifyPeerResponse";
 import Article from "./components/Article";
+import TopArticles from "./components/TopArticles";
 
 function App() {
 	const [cookies, setCookie] = useCookies(["token"]);
@@ -75,7 +76,10 @@ function App() {
 				<nav className="navbar navbar-expand-lg navbar-light fixed-top">
 					<div className="container">
 						<Link className="navbar-brand" to={"/"}>
-							<span class="brand-color">JournoPedia</span>
+							<span className="brand-color">JournoPedia</span>
+						</Link>
+						<Link to={"/top-articles"}>
+							<span className="nav-links">Top Articles</span>
 						</Link>
 						<div className="collapse navbar-collapse" id="navbarTogglerDemo02">
 							<ul className="navbar-nav ml-auto">
@@ -84,7 +88,7 @@ function App() {
 									style={{ display: displayItems[0] }}
 								>
 									<Link className="nav-link" to={"/sign-in"}>
-										<span class="login-color">Login</span>
+										<span className="login-color">Login</span>
 									</Link>
 								</li>
 								<li
@@ -311,6 +315,11 @@ function App() {
 						<Route
 							path="/article/:article_id"
 							element={<Article setDisplayItems={setDisplayItems} />}
+						/>
+
+						<Route
+							path="/top-articles"
+							element={<TopArticles setDisplayItems={setDisplayItems}/>}
 						/>
 					</Routes>
 				</div>

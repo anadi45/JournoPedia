@@ -629,6 +629,26 @@ const peerReviewProof = async (req,res) => {
 	}
 }
 
+//@route	GET /topArticles/:params
+//@descr	Top downloaded articles
+//@access	Public
+
+const topArticles = async (req,res) => {
+	try {
+		const {param} = req.params;
+		const articles = await Article.find({status:"Peer Accepted"}).sort({[param]: -1});
+		if(articles) {
+			res.send(articles);
+		} else {
+			res.send({
+				message: "No Articles Found"
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 module.exports = {
 	addArticle,
 	downloadArticle,
@@ -643,5 +663,6 @@ module.exports = {
 	scoreArticle,
 	allArticlesPeerResponseVerification,
 	viewArticle,
-	peerReviewProof
+	peerReviewProof,
+	topArticles
 };

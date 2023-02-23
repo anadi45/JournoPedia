@@ -43,7 +43,8 @@ const {
 	scoreArticle,
 	allArticlesPeerResponseVerification,
 	viewArticle,
-	peerReviewProof
+	peerReviewProof,
+	topArticles
 } = require("../controllers/articleController");
 
 const { articleRecommender } = require("../recommenders/articleRecommender");
@@ -88,6 +89,7 @@ router.patch("/scoreArticle/:article_id", isLoggedIn, scoreArticle);
 router.get("/allArticlesPeerResponseVerification", isLoggedIn, allArticlesPeerResponseVerification);
 router.get("/viewArticle/:article_id", viewArticle);
 router.get("/:article_id/peerReviewProof/:review_num", peerReviewProof);
+router.get("/topArticles/:param", topArticles);
 
 // Recommendation Operations
 

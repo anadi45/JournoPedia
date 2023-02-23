@@ -19,7 +19,6 @@ function Article(props) {
 
     function handleDownload(e) {
 		const articleId = e;
-        console.log(e);
 		window.location.replace(
 			`http://localhost:5000/downloadArticle/${articleId}`
 		);
