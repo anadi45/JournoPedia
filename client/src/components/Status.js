@@ -120,7 +120,7 @@ function Status(props) {
 									article.status !== "Rejected" && (
 										<div className="status-btn-div">
 											<button
-												className="btn article-status-buttons"
+												className="btn article-status-buttons btn-danger"
 												onClick={withdraw}
 												value={article._id}
 											>

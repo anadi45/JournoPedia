@@ -65,6 +65,7 @@
     border-radius: 10px;
     background: #33c2ef;
     color: white;
+    font-size:23px;
 }
 .filter-search-btn:hover{
     background: #23a6d5;

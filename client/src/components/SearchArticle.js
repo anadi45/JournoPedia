@@ -57,10 +57,7 @@ function SearchArticle(props) {
 			start: formatDate(dateOfSubmission.start),
 			end: formatDate(dateOfSubmission.end),
 		});
-		console.log(selectedJournals);
-		console.log(dateOfSubmission);
-		console.log(articleType);
-		console.log(status);
+
 		if (selectedJournals.length === 0) {
 			setErrorDisplay("block");
 			return;

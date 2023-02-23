@@ -259,6 +259,13 @@ html,
   color: #23a6d5;
 }
 
+#search-link {
+  left: 315px;
+  position: absolute;
+  top: 28px;
+  transition: 1s;
+}
+
 @media only screen and (max-width: 600px) {
   .card-title {
     font-size: 10px;

@@ -83,12 +83,12 @@
     right:20;
     text-align: end;
     font-size: 15px;
-    text-decoration: underline;
+    /* text-decoration: underline; */
     opacity: 0.8;
     bottom: 2px;
 }
 .article-status-buttons:hover{
-    color: black;
+    /* color: black; */
     opacity: 1;
 }
 .status-btn-div{

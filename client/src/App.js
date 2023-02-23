@@ -81,6 +81,9 @@ function App() {
 						<Link to={"/top-articles"}>
 							<span className="nav-links">Top Articles</span>
 						</Link>
+						<Link to={"/search-article"}>
+							<span className="nav-links" id="search-link">Search Articles</span>
+						</Link>
 						<div className="collapse navbar-collapse" id="navbarTogglerDemo02">
 							<ul className="navbar-nav ml-auto">
 								<li
@@ -145,11 +148,11 @@ function App() {
 													Add Article
 												</Link>
 											</Dropdown.Item>
-											<Dropdown.Item>
+											{/* <Dropdown.Item>
 												<Link className="nav-link" to="/search-article">
 													Search Article
 												</Link>
-											</Dropdown.Item>
+											</Dropdown.Item> */}
 											<Dropdown.Item>
 												<Link className="nav-link" to="/review-article">
 													Review Article

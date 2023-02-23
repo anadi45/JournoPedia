@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/JournalPage.css";
-// import img from '../../public/images/'
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { Tabs, Tab } from "react-bootstrap";
 import { PuffLoader } from "react-spinners";
@@ -11,8 +10,8 @@ import AddEditorsPopup from "./AddEditorsPopup";
 function JournalPage(props) {
 	const btnStyle = {
 		border: "none",
-		padding: "8px 45px",
-		borderRadius: "8px",
+		padding: "2px 6px",
+		borderRadius: "5px",
 		background: "#33c2ef",
 		color: "white",
 	};
@@ -26,8 +25,7 @@ function JournalPage(props) {
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
 	const [score, setScore] = useState(0);
 	const [userRole, setUserRole] = useState("");
-	let navigate = useNavigate();
-	// console.log(score)
+
 	useEffect(() => {
 		if (cookies.token) props.setDisplayItems(["none", "none", "inline"]);
 		else props.setDisplayItems(["inline", "inline", "none"]);
@@ -142,14 +140,16 @@ function JournalPage(props) {
 										All our articles go through a double-blind review process.
 									</li>
 									<li>There are no charges for publishing with JournoPedia.</li>
-									<button className="btn btn-primary" style={btnStyle}>
-										<Link to="/add-article" style={
-											{
-												color: "white",
-												textDecoration: "none"
-											}
+									<div className="container text-center mt-5">
+										<button className="btn btn-primary" style={btnStyle}>
+											<Link to="/add-article" style={
+												{
+													color: "white",
+													textDecoration: "none"
+												}
 											}>Add Article</Link>
-									</button>
+										</button>
+									</div>
 								</ul>
 							</div>
 						</Tab>
