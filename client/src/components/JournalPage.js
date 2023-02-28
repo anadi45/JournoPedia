@@ -97,7 +97,7 @@ function JournalPage(props) {
 						<h5>Editor in Chief</h5>
 						<p className="">{author}</p>
 						<h5>Journal Score</h5>
-						<p className="">{score === null?0:score}/100</p>
+						<p className="">{score === null?0:(score).toFixed(2)}/100</p>
 					</div>
 					<div className="synopsis-div">
 						<h5>Synopsis</h5>

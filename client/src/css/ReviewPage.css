@@ -24,7 +24,7 @@
   margin-left: 10px;
 }
 .download-btn,
-.submit-btn {
+.submit-btn, .reject-btn {
   margin-left: 40px;
   border: none;
   padding: 5px 10px;
@@ -40,11 +40,16 @@
   margin-right: 1rem;
 }
 
+
 .download-btn:hover {
   opacity: 0.7;
 }
 .submit-btn:hover {
   background-color: #00D100;
+  color: white;
+}
+.reject-btn:hover {
+  background-color: #bb2d3b;
   color: white;
 }
 .review-dropdown {
@@ -62,10 +67,30 @@
   bottom: 12px;
 }
 .article-heading-journal-name{
-  color: darkgrey;
+  color: rgb(0, 0, 0);
   font-size: 15px;
 }
 .no-articles-pic{
   width: 50%;
   margin: 50px 300px;
 }
+
+.border_article_review{
+  margin-top:2rem;
+  transition:0.4s;
+  background-color: #add8e6;
+  border-radius: 0.4rem;
+  opacity: 0.8;
+}
+.border_article_review:hover{
+  box-shadow: 10px;
+  opacity: 1;
+}
+
+.review_container {
+  display: flex;
+  flex-direction: inherit;
+  padding-bottom: 15px;
+  margin-top:24px;
+}
+

@@ -176,7 +176,7 @@ const withdrawArticle = async (req, res) => {
 const referArticle = async (req, res) => {
 	try {
 		const { article_id } = req.params;
-		const { option } = req.body;
+		const { option, review } = req.body;
 
 		const article = await Article.findById(article_id);
 		const journal_id = article.journal;
@@ -216,11 +216,12 @@ const referArticle = async (req, res) => {
 
 		if (editorList.includes(req.rootuser._id)) {
 			if (option == "Yes") {
-				mail(mailingList, mailBody, attachments);
+				// mail(mailingList, mailBody, attachments);
 				updateStatus = await Article.findByIdAndUpdate(article_id, {
 					status: "Under Peer Review",
 					reviewed_by: req.rootuser,
 					date_of_review: new Date(),
+					review: review
 				});
 
 				updateUser = await User.findByIdAndUpdate(article.submitted_by, {
@@ -231,6 +232,7 @@ const referArticle = async (req, res) => {
 					status: "Rejected",
 					reviewed_by: req.rootuser,
 					date_of_review: new Date(),
+					review: review
 				});
 				updateUser = await User.findByIdAndUpdate(article.submitted_by, {
 					$inc: { total_rejected: 1 },

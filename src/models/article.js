@@ -112,7 +112,10 @@ const articleSchema = new mongoose.Schema({
             ref: 'User'
         },
         rating: Number
-    }]
+    }],
+    review: {
+        type: String
+    }
 });
 
 const Article = new mongoose.model("Article",articleSchema);

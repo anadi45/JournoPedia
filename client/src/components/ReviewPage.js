@@ -17,6 +17,7 @@ function ReviewPage(props) {
 	const [spinnerVisible, setSpinnerVisible] = useState("visible");
 	const [journalNames, setJournalNames] = useState([]);
 	const [journalIds, setJournalIds] = useState([]);
+	const [review, setReview] = useState("");
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -31,7 +32,6 @@ function ReviewPage(props) {
 		axios
 			.get(`http://localhost:5000/allArticlesForReferral`, config)
 			.then((res) => {
-				// setSpinnerVisible("hidden");
 				if (res.data.message === "No articles for review") {
 					setNoArticlesMessage(res.data.message);
 				}
@@ -58,7 +58,6 @@ function ReviewPage(props) {
 				setArticlesCount(count);
 				setArticlesForReviewCount(articlesForReviewCount);
 				setSpinnerVisible("hidden");
-				// console.log(res.data);
 			});
 	}, []);
 
@@ -94,9 +93,9 @@ function ReviewPage(props) {
 			`http://localhost:5000/downloadArticle/${articleId}`
 		);
 	}
+	
 
-	async function handleSubmit(id) {
-		// e.preventDefault();
+	async function handleReview(id, option) {
 		const config = {
 			headers: {
 				"Content-Type": "application/json;charset=UTF-8",
@@ -104,12 +103,13 @@ function ReviewPage(props) {
 				Authorization: "Bearer " + cookies.token,
 			},
 		};
-		// console.log(passForReview);
+
 		await axios
 			.post(
 				`http://localhost:5000/referArticle/${id}`,
 				{
-					option: passForReview,
+					option: option,
+					review: review
 				},
 				config
 			)
@@ -118,7 +118,7 @@ function ReviewPage(props) {
 				window.location.reload();
 			});
 	}
-	console.log(journalNames);
+	
 	if (spinnerVisible === "visible") {
 		return (
 			<div className="loading-div">
@@ -152,40 +152,56 @@ function ReviewPage(props) {
 							{articles.map((item) => {
 								if (item.status === "Under Review")
 									return (
-										<tr className="articles-tr">
-											<td className="td-1">
-												<div className="article-heading">
-													{item.article_name}
-												</div>
-											</td>
-											<td className="td-2">
-												<button
-													className="download-btn"
-													value={item._id}
-													onClick={handleDownload}
-												>
-													Download <i class="fas fa-download"></i>
-												</button>
-												<Dropdown
-													className="review-dropdown"
-													options={["Yes", "No"]}
-													onChange={(e) => {
-														setPassForReview(e.label);
-													}}
-													// value={defaultOption}
-													placeholder="Pass for peer review"
-												/>
-												<button
-													// type="submit"
-													className="submit-btn"
-													onClick={() => {
-														handleSubmit(item._id);
-													}}
-												>
-													Submit
-												</button>
-											</td>
-										</tr>
+										<div className="border_article_review container">
+											<tr className="articles-tr">
+												<td className="td-1">
+													<div className="article-heading">
+														{item.article_name}
+													</div>
+												</td>
+												<td className="td-2">
+													<button
+														className="download-btn"
+														value={item._id}
+														onClick={handleDownload}
+													>
+														Download <i class="fas fa-download"></i>
+													</button>
+													<input className="form-control" placeholder="Enter Detailed Review" onChange={(e)=>{
+														setReview(e.target.value) 
+													}}/>
+
+													<div className="container review_container">
+														{/* <Dropdown
+															className="review-dropdown"
+															options={["Yes", "No"]}
+															onChange={(e) => {
+																setPassForReview(e.label);
+															}}
+															// value={defaultOption}
+															placeholder="Select Review"
+															/> */}
+														<button
+															className="submit-btn"
+															onClick={() => {
+																handleReview(item._id,"Yes");
+															}}
+															>
+															Submit
+														</button>
+														<button
+															className="reject-btn"
+															onClick={() => {
+																handleReview(item._id,"No");
+															}}
+															>
+															Reject
+														</button>
+
+													</div>
+												</td>
+											</tr>
+										</div>
 									);
 							})}
 						</table>
@@ -209,44 +225,47 @@ function ReviewPage(props) {
 									item.status === "Rejected"
 								)
 									return (
-										<tr className="articles-tr">
-											<td className="td-1">
-												<div className="article-heading">
-													{item.article_name}
-													<div className="article-heading-journal-name">
-														{journalNames[index]}
-														<br></br>
-														DOR -{" "}
-														{new Date(item.date_of_review).toLocaleDateString(
-															"en-GB"
-														)}
+										<div className="border_article_review container">
+											<tr className="articles-tr">
+												<td className="td-1">
+													<div className="article-heading">
+														{item.article_name}
+														<div className="article-heading-journal-name">
+															{/* {journalNames[index]} */}
+															{item.review}
+															<br></br>
+															DOR -{" "}
+															{new Date(item.date_of_review).toLocaleDateString(
+																"en-GB"
+															)}
+														</div>
 													</div>
-												</div>
-											</td>
-											<td className="td-2">
-												<button
-													className="download-btn"
-													value={item._id}
-													onClick={handleDownload}
-												>
-													Download <i class="fas fa-download"></i>
-												</button>
-												<button
-													className="download-btn"
-													style={
-														item.status === "Under Peer Review" ||
+												</td>
+												<td className="td-2">
+													<button
+														className="download-btn"
+														value={item._id}
+														onClick={handleDownload}
+													>
+														Download <i class="fas fa-download"></i>
+													</button>
+													<button
+														className="download-btn"
+														style={
+															item.status === "Under Peer Review" ||
+															item.status === "Peer Accepted"
+																? { background: "#4db8db" }
+																: { background: "#e96262" }
+														}
+													>
+														{item.status === "Under Peer Review" ||
 														item.status === "Peer Accepted"
-															? { background: "#4db8db" }
-															: { background: "#e96262" }
-													}
-												>
-													{item.status === "Under Peer Review" ||
-													item.status === "Peer Accepted"
-														? "Approved"
-														: "Rejected"}
-												</button>
-											</td>
-										</tr>
+															? "Approved"
+															: "Rejected"}
+													</button>
+												</td>
+											</tr>
+										</div>
 									);
 							})}
 						</table>
